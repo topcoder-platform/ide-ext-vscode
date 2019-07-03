@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import TCAuth = require('topcoder-api-utils/TCAuth');
 import * as constants from '../constants';
+import logger from '../common/logger';
 
 /**
  * Interacts with authentication APIs.
@@ -16,11 +17,11 @@ export default class AuthService {
     public static async fetchToken(): Promise<string> {
         const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
         const tcAuth = new TCAuth({
-            AUTHN_URL: config.get('auth.AUTHN_URL'),
-            AUTHZ_URL: config.get('auth.AUTHZ_URL'),
-            CLIENT_ID: config.get('auth.CLIENT_ID'),
-            CLIENT_V2CONNECTION: config.get('auth.CLIENT_V2CONNECTION')
-        }, console);
+            AUTHN_URL: constants.AUTHN_URL,
+            AUTHZ_URL: constants.AUTHZ_URL,
+            CLIENT_ID: constants.CLIENT_ID,
+            CLIENT_V2CONNECTION: constants.CLIENT_V2CONNECTION
+        }, logger);
 
         const username = config.get(constants.usernameConfig, '');
         const password = config.get(constants.passwordConfig, '');
@@ -45,7 +46,7 @@ export default class AuthService {
     public static async getToken(savedToken?: string) {
         // Missing token
         if (!savedToken) {
-            console.log('Fetching new token.');
+            logger.debug('Fetching new token.');
             return this.fetchToken();
         }
 
@@ -53,25 +54,23 @@ export default class AuthService {
 
         // Token is is invalid
         if (!decodedToken) {
-            console.log('Fetching new token.');
+            logger.debug('Fetching new token.');
             return this.fetchToken();
         }
 
-        const MINUTES_TO_EXPIRE = 5;
-
         // If the token is still fresh for at least another minute
         if (!this.isTokenExpired(decodedToken, 60)) {
-            // If the token will expire in the next 5 minutes, refresh it
-            if (this.isTokenExpired(decodedToken, 60 * MINUTES_TO_EXPIRE)) {
-                console.log('Token will expire in 5 minutes, Refreshing token.');
+            // If the token will expire in the next MINUTES_TO_EXPIRE minutes, refresh it
+            if (this.isTokenExpired(decodedToken, 60 * constants.MINUTES_TO_EXPIRE)) {
+                logger.debug('Token will expire in 5 minutes, Refreshing token.');
                 return this.refreshToken(savedToken);
             }
 
-            console.log('Using valid token.');
+            logger.debug('Using valid token.');
             return savedToken;
         }
 
-        console.log('Refreshing expired token.');
+        logger.debug('Refreshing expired token.');
         // The token is expired, refresh it
         return this.refreshToken(savedToken);
     }

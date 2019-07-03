@@ -20,12 +20,15 @@ This extension exposes the following settings:
 
 - `TCVSCodeIDE.credentials.username`: your topcoder username
 - `TCVSCodeIDE.credentials.password`: your topcoder password
-- `TCVSCodeIDE.auth.AUTHN_URL`: default is `https://topcoder.auth0.com/oauth/ro`
-- `TCVSCodeIDE.auth.AUTHZ_URL`: default is `https://api.topcoder.com/v3/authorizations`
-- `TCVSCodeIDE.auth.CLIENT_ID`: default is `6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P`
-- `TCVSCodeIDE.auth.CLIENT_V2CONNECTION`: default is `LDAP`
 
 These can be set in user preferences (`Ctrl+,` or `Cmd+,`)
+
+Before running the command _Topcoder: Upload submission_, create a `.topcoderrc` file in the root of the workspace and set the challenge id in JSON format:
+```javascript
+{
+    "challengeId": 332000
+}
+```
 
 ## Commands
 
@@ -34,6 +37,7 @@ The extension provides several commands in the Command Palette:
 - *Topcoder: Login* to login in Topcoder using your username and password.
 - *Topcoder: Logout* to clear the stored login token.
 - *Topcoder: View open challenges* to list active challenges in a tabular view.
+- *Topcoder: Upload submission* to upload the current workspace as a submission.
 
 All commands require you to provide your Topcoder username and password, so make sure to set them _before_ you execute them
 

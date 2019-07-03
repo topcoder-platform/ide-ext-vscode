@@ -27,25 +27,6 @@
 					"type": "string",
 					"default": "",
 					"description": "Your Topcoder password."
-				},
-				"TCVSCodeIDE.auth.AUTHN_URL": {
-					"type": "string",
-					"default": "https://topcoder.auth0.com/oauth/ro",
-					"description": "Authentication endpoint to get V2 token"
-				},
-				"TCVSCodeIDE.auth.AUTHZ_URL": {
-					"type": "string",
-					"default": "https://api.topcoder.com/v3/authorizations",
-					"description": "Authentication endpoint to get V3 token (and to refresh token)"
-				},
-				"TCVSCodeIDE.auth.CLIENT_ID": {
-					"type": "string",
-					"default": "6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P",
-					"description": "Client Id to connect with. You very rarely need to change this yourself."
-				},
-				"TCVSCodeIDE.auth.CLIENT_V2CONNECTION": {
-					"type": "string",
-					"default": "LDAP"
 				}
 			}
 		},
@@ -64,6 +45,11 @@
 				"command": "extension.viewOpenChallenges",
 				"title": "View open challenges",
 				"category": "Topcoder"
+			},
+			{
+				"command": "extension.uploadSubmission",
+				"title": "Upload submission",
+				"category": "Topcoder"
 			}
 		]
 	},
@@ -75,22 +61,33 @@
 		"test": "npm run compile && node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
+		"@types/archiver": "^3.0.0",
 		"@types/chai": "^4.1.7",
+		"@types/form-data": "^2.2.1",
 		"@types/jsonwebtoken": "^8.3.2",
 		"@types/lodash": "^4.14.132",
 		"@types/mocha": "^2.2.42",
+		"@types/mock-fs": "^3.6.30",
 		"@types/nock": "^10.0.3",
 		"@types/node": "^10.12.21",
+		"@types/uuid": "^3.4.4",
 		"chai": "^4.2.0",
+		"mock-fs": "^4.10.1",
 		"nock": "^10.0.6",
+		"node-stream-zip": "^1.8.0",
 		"tslint": "^5.12.1",
 		"typescript": "^3.3.1",
 		"vscode": "^1.1.28"
 	},
 	"dependencies": {
+		"archiver": "^3.0.0",
 		"axios": "^0.19.0",
+		"form-data": "^2.4.0",
+		"globby": "^9.2.0",
 		"jsonwebtoken": "^8.5.1",
 		"lodash": "^4.17.11",
-		"topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"
+		"topcoder-api-utils": "github:cwdcwd/topcoder-api-utils",
+		"uuid": "^3.3.2",
+		"winston": "^3.2.1"
 	}
 }

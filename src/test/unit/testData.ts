@@ -1,5 +1,11 @@
 // Test data for unit tests.
 
+export const createSubmissionResponse = {
+    "id": "fc726baa-9967-4e77-9900-8ec115aa95a0",
+    "type": "ContestSubmission",
+    "fileType": "zip"
+};
+
 export const v2Token = {
     "id_token": "id_token",
     "refresh_token": "refresh_token",
