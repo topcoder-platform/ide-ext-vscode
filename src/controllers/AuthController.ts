@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as _ from 'lodash';
 import AuthService from '../services/AuthService';
 import * as constants from '../constants';
 
@@ -31,13 +30,7 @@ export default class AuthController {
 
             vscode.window.showInformationMessage(constants.loggedInMessage);
         } catch (err) {
-            const message = _.get(err, 'response.body.error_description');
-
-            if (message) {
-                vscode.window.showErrorMessage(`${_.get(err, 'statusCode')} - ${message}`);
-            } else {
-                vscode.window.showErrorMessage(err.message);
-            }
+            vscode.window.showErrorMessage(err.toString());
         }
     }
 

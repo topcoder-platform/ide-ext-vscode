@@ -11,8 +11,8 @@ suite('AuthService Unit tests', () => {
         const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
 
         const refreshTokenUrl = url.parse(constants.refreshTokenUrl);
-        const AUTHN_URL = url.parse(constants.AUTHN_URL);
-        const AUTHZ_URL = url.parse(constants.AUTHZ_URL);
+        const AUTHN_URL = url.parse(<string>config.get('auth.AUTHN_URL'));
+        const AUTHZ_URL = url.parse(<string>config.get('auth.AUTHZ_URL'));
 
         nock(/\.com/)
         .persist()
