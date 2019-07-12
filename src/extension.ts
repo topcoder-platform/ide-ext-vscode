@@ -1,41 +1,66 @@
 import * as vscode from 'vscode';
 import AuthController from './controllers/AuthController';
 import ChallengeController from './controllers/ChallengeController';
-import ChallengesTableProvider from './providers/ChallengesTableProvider';
 import * as constants from './constants';
 
 // This method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
-	console.log('[tcvscodeide] The extension is active.');
+  console.log('[tcvscodeide] The extension is active.');
 
-	const authController = new AuthController(context);
-	const challengeController = new ChallengeController(context);
-	const challengesTableProvider = new ChallengesTableProvider(context);
+  const authController = new AuthController(context);
+  const challengeController = new ChallengeController(context);
 
-	context.subscriptions.push(
-		vscode.workspace.registerTextDocumentContentProvider(constants.scheme, challengesTableProvider)
-	);
+  // Register commands
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'extension.login',
+      authController.login.bind(authController)
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'extension.logout',
+      authController.logout.bind(authController)
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'extension.viewOpenChallenges',
+      async () =>
+        await loginThenAction(context, authController, challengeController.viewOpenChallenges.bind(challengeController))
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'extension.uploadSubmmission',
+      async () =>
+        await loginThenAction(context, authController, challengeController.uploadSubmmission.bind(challengeController))
+    )
+  );
 
-	// Register commands
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			'extension.login',
-			authController.login.bind(authController)
-		)
-	);
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			'extension.logout',
-			authController.logout.bind(authController)
-		)
-	);
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			'extension.viewOpenChallenges',
-			challengeController.viewOpenChallenges.bind(challengeController)
-		)
-	);
 }
 
 // This method is called when the extension is deactivated
-export function deactivate() {}
+/* tslint:disable-next-line */
+export function deactivate() { }
+
+/**
+ * Login first then take action
+ * @param context the extension context
+ * @param authController the auth controller
+ * @param action the action to take
+ */
+async function loginThenAction(
+  context: vscode.ExtensionContext,
+  authController: AuthController,
+  action: () => Promise<void>
+) {
+  let token = context.globalState.get(constants.tokenStateKey);
+  if (!token) {
+    await authController.login();
+  }
+  token = context.globalState.get(constants.tokenStateKey);
+  if (token) {
+    await action();
+  }
+}

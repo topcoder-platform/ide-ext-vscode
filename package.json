@@ -1,96 +1,88 @@
 {
-	"name": "tcvscodeide",
-	"displayName": "TCVSCodeIDE",
-	"description": "This extension is meant to closely integrate the Topcoder platform with the text editors, to allow the user to perform actions from within the editor, without having to open a browser.",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.34.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"*"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"configuration": {
-			"type": "object",
-			"title": "Topcoder Workflow",
-			"properties": {
-				"TCVSCodeIDE.credentials.username": {
-					"type": "string",
-					"default": "",
-					"description": "Your Topcoder username."
-				},
-				"TCVSCodeIDE.credentials.password": {
-					"type": "string",
-					"default": "",
-					"description": "Your Topcoder password."
-				},
-				"TCVSCodeIDE.auth.AUTHN_URL": {
-					"type": "string",
-					"default": "https://topcoder.auth0.com/oauth/ro",
-					"description": "Authentication endpoint to get V2 token"
-				},
-				"TCVSCodeIDE.auth.AUTHZ_URL": {
-					"type": "string",
-					"default": "https://api.topcoder.com/v3/authorizations",
-					"description": "Authentication endpoint to get V3 token (and to refresh token)"
-				},
-				"TCVSCodeIDE.auth.CLIENT_ID": {
-					"type": "string",
-					"default": "6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P",
-					"description": "Client Id to connect with. You very rarely need to change this yourself."
-				},
-				"TCVSCodeIDE.auth.CLIENT_V2CONNECTION": {
-					"type": "string",
-					"default": "LDAP"
-				}
-			}
-		},
-		"commands": [
-			{
-				"command": "extension.login",
-				"title": "Login",
-				"category": "Topcoder"
-			},
-			{
-				"command": "extension.logout",
-				"title": "Logout",
-				"category": "Topcoder"
-			},
-			{
-				"command": "extension.viewOpenChallenges",
-				"title": "View open challenges",
-				"category": "Topcoder"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"@types/chai": "^4.1.7",
-		"@types/jsonwebtoken": "^8.3.2",
-		"@types/lodash": "^4.14.132",
-		"@types/mocha": "^2.2.42",
-		"@types/nock": "^10.0.3",
-		"@types/node": "^10.12.21",
-		"chai": "^4.2.0",
-		"nock": "^10.0.6",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28"
-	},
-	"dependencies": {
-		"axios": "^0.19.0",
-		"jsonwebtoken": "^8.5.1",
-		"lodash": "^4.17.11",
-		"topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"
-	}
+  "name": "tcvscodeide",
+  "displayName": "TCVSCodeIDE",
+  "description": "This extension is meant to closely integrate the Topcoder platform with the text editors, to allow the user to perform actions from within the editor, without having to open a browser.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.34.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Topcoder Workflow",
+      "properties": {
+        "TCVSCodeIDE.credentials.username": {
+          "type": "string",
+          "default": "",
+          "description": "Your Topcoder username."
+        },
+        "TCVSCodeIDE.credentials.password": {
+          "type": "string",
+          "default": "",
+          "description": "Your Topcoder password."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.login",
+        "title": "Login",
+        "category": "Topcoder"
+      },
+      {
+        "command": "extension.logout",
+        "title": "Logout",
+        "category": "Topcoder"
+      },
+      {
+        "command": "extension.viewOpenChallenges",
+        "title": "View open challenges",
+        "category": "Topcoder"
+      },
+      {
+        "command": "extension.uploadSubmmission",
+        "title": "Upload submission",
+        "category": "Topcoder"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "tslint -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/lodash": "^4.14.132",
+    "@types/mocha": "^2.2.42",
+    "@types/nock": "^10.0.3",
+    "@types/node": "^10.12.21",
+    "chai": "^4.2.0",
+    "nock": "^10.0.6",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.28"
+  },
+  "dependencies": {
+    "@types/archiver": "^3.0.0",
+    "@types/form-data": "^2.2.1",
+    "archiver": "^3.0.0",
+    "axios": "^0.19.0",
+    "form-data": "^2.4.0",
+    "ignore": "^5.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.11",
+    "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"
+  }
 }
