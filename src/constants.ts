@@ -1,7 +1,7 @@
 // Constants definition file
 
-const useDevelopEndpoint = true; // set to true if you want to use topcoder's dev instance. "false" if you want to use production instance
-
+const useDevelopEndpoint = false; /* set to true if you want to use topcoder's dev instance,
+"false" if you want to use production instance */
 export const missingUsernameMessage = 'Missing username. Configure your username in the settings screen.';
 export const missingPasswordMessage = 'Missing password. Configure your password in the settings screen.';
 export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
@@ -9,12 +9,18 @@ export const loggingInMessage = 'Logging in user.';
 export const loggedInMessage = 'You are logged in.';
 export const loggedOutMessage = 'Logged out.';
 export const loadingOpenChallengesMessage = 'Loading open challenges.';
+export const openChallengesLoadedMessage = 'Open challenges have been loaded';
 export const emptyWorkspaceToSubmit = 'Empty workspace to submit. You should open a workspace first.';
 export const missTopcoderrcFile = 'No .topcoderrc file detected in the current workspace.';
 export const inCorrectFormatTopcoderrc = 'Incorrect format of .topcoderrc, it should be JSON format.';
 export const missChallengeId = 'Missing challengeId in .topcoderrc.';
 export const submittingChallenges = 'Submitting challenge.';
 export const challengeSubmittedMessage = 'Workspace successful submitted.';
+export const userNotRegisteredForChallenge = 'You have not registered for this challenge.';
+export const challengeNotFound = 'Could not find the requested challenge';
+export const submissionPhaseNotOpen = 'The submission phase is not open for this challenge';
+export const loadingChallengeDetails = 'Loading challenge details';
+export const challengeDetailsLoadedMessage = 'Challenge details have been loaded';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
@@ -24,6 +30,7 @@ export const tokenStateKey = 'TC_JWT_TOKEN';
 
 export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
+export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 
 export const CLIENT_V2CONNECTION = 'LDAP';
 export const AUTHN_URL = useDevelopEndpoint ?
@@ -44,4 +51,11 @@ export const activeChallengesUrl = useDevelopEndpoint ?
 export const uploadSubmmissionUrl = useDevelopEndpoint ?
   'https://api.topcoder-dev.com/v5/submissions' :
   'https://api.topcoder.com/v5/submissions';
+export const challengeDetailsUrl = useDevelopEndpoint ?
+  'https://api.topcoder-dev.com/v4/challenges' :
+  'https://api.topcoder.com/v4/challenges';
 export const submitType = 'Contest Submission';
+
+export const webviewMessageActions = {
+  DISPLAY_CHALLENGE_DETAILS: 'DISPLAY_CHALLENGE_DETAILS'
+};

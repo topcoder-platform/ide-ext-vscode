@@ -33,7 +33,7 @@ The extension provides several commands in the Command Palette:
 
 - *Topcoder: Login* to login in Topcoder using your username and password.
 - *Topcoder: Logout* to clear the stored login token.
-- *Topcoder: View open challenges* to list active challenges in a tabular view.
+- *Topcoder: View open challenges* to list active challenges in a tabular view. Upon clicking on a challenge title, challenge details will be displayed in a new tab.
 - *Topcoder: Upload submission* to upload the current workspace to topcoder challenge.
 
 All commands require you to provide your Topcoder username and password, so make sure to set them _before_ you execute them

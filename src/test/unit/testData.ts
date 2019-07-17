@@ -6127,3 +6127,1121 @@ export const submitSuccessResponse = {
   "submissionPhaseId": 767716,
   "fileType": "zip"
 };
+
+export const validChallengeDetails = {
+  "subTrack": "FIRST_2_FINISH",
+  "challengeTitle": "F2F Challenge - 1001",
+  "challengeId": 30052924,
+  "projectId": 7572,
+  "forumId": 31139,
+  "detailedRequirements": "Test",
+  "reviewScorecardId": 30001600,
+  "numberOfCheckpointsPrizes": 0,
+  "postingDate": "2018-09-03T15:32:18.767Z",
+  "registrationEndDate": "2020-09-13T15:31:00.000Z",
+  "submissionEndDate": "2020-10-01T15:34:00.000Z",
+  "reviewType": "INTERNAL",
+  "forumLink": "https://apps.topcoder.com/forums/?module=Category&categoryID=31139",
+  "appealsEndDate": "2018-09-04T15:40:00.000Z",
+  "currentStatus": "Active",
+  "challengeCommunity": "develop",
+  "directUrl": "https://www.topcoder.com/direct/contest/detail.action?projectId=30052924",
+  "prizes": [
+    15
+  ],
+  "terms": [
+    {
+      "termsOfUseId": 20704,
+      "role": "Primary Screener",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 21193,
+      "role": "Submitter",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Terms for TopCoder Competitions v2.1",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Aggregator",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Specification Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Final Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20794,
+      "role": "Manager",
+      "agreeabilityType": "Non-electronically-agreeable",
+      "title": "Approved OR Managers - TopCoder Technical Team",
+      "url": "http://www.topcoder.com"
+    },
+    {
+      "termsOfUseId": 20893,
+      "role": "Copilot",
+      "agreeabilityType": "Non-electronically-agreeable",
+      "title": "TopCoder Master Services Agreement",
+      "url": "http://www.topcoder.com/wiki/download/attachments/35129137/Member+Master+Agreement+v0020409.pdf"
+    }
+  ],
+  "finalSubmissionGuidelines": "test",
+  "technologies": [
+    "Other"
+  ],
+  "platforms": [
+    "Other"
+  ],
+  "currentPhaseName": "Submission",
+  "currentPhaseRemainingTime": 38539955,
+  "currentPhaseEndDate": "2020-10-01T15:34:00.000Z",
+  "registrants": [
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-01-29T18:47:08.000Z",
+      "submissionDate": "2019-01-29T18:48:53.000Z",
+      "handle": "KriegBaer"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-05T20:25:52.000Z",
+      "submissionDate": "2019-01-31T06:18:10.000Z",
+      "handle": "lazybaer"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-19T21:04:16.000Z",
+      "handle": "yichen"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-27T07:20:24.000Z",
+      "submissionDate": "2019-07-13T10:44:29.000Z",
+      "handle": "pshah_manager"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-12T09:58:07.000Z",
+      "submissionDate": "2019-07-10T10:13:49.000Z",
+      "handle": "mess"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-16T07:43:26.000Z",
+      "handle": "bop_t1"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-25T16:06:32.000Z",
+      "submissionDate": "2018-10-25T17:11:26.000Z",
+      "handle": "jcori"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-31T00:20:03.000Z",
+      "submissionDate": "2018-10-31T00:21:00.000Z",
+      "handle": "TestAccount1"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-06T08:55:35.000Z",
+      "submissionDate": "2019-03-06T08:57:27.000Z",
+      "handle": "somethin-dev"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-15T17:40:59.000Z",
+      "handle": 12345678
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-19T19:48:01.000Z",
+      "handle": "ACRush"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-21T08:55:53.000Z",
+      "handle": "huanner"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-04-08T11:46:06.000Z",
+      "handle": "direct_user"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-04-29T05:10:04.000Z",
+      "submissionDate": "2019-07-08T15:20:21.000Z",
+      "handle": "easteregg"
+    }
+  ],
+  "phases": [
+    {
+      "duration": 64022381233,
+      "actualStartTime": "2018-09-03T15:32:18.767Z",
+      "scheduledStartTime": "2018-09-03T15:32:18.767Z",
+      "phaseId": 753867,
+      "scheduledEndTime": "2020-09-13T15:31:00.000Z",
+      "fixedStartTime": "2018-09-03T15:32:18.767Z",
+      "type": "Registration",
+      "status": "Open"
+    },
+    {
+      "duration": 86400000,
+      "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+      "phaseId": 753868,
+      "scheduledEndTime": "2018-09-04T15:40:00.000Z",
+      "type": "Iterative Review",
+      "status": "Scheduled"
+    },
+    {
+      "duration": 65577281126,
+      "actualStartTime": "2018-09-03T15:40:18.874Z",
+      "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+      "phaseId": 753869,
+      "scheduledEndTime": "2020-10-01T15:34:00.000Z",
+      "type": "Submission",
+      "status": "Open"
+    }
+  ],
+  "submissions": [
+    {
+      "submitter": "somethin-dev",
+      "submitterId": 40154560,
+      "submissions": [
+        {
+          "submissionId": 207083,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-03-06T08:57:27.000Z"
+        },
+        {
+          "submissionId": 207082,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-03-06T08:57:13.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "easteregg",
+      "submitterId": 40036043,
+      "submissions": [
+        {
+          "submissionId": 207787,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-08T15:20:21.000Z"
+        },
+        {
+          "submissionId": 207786,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-08T15:20:21.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "KriegBaer",
+      "submitterId": 40051753,
+      "submissions": [
+        {
+          "submissionId": 206672,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T18:48:53.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "lazybaer",
+      "submitterId": 23225544,
+      "submissions": [
+        {
+          "submissionId": 206711,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-31T06:18:10.000Z"
+        },
+        {
+          "submissionId": 206710,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-30T19:42:37.000Z"
+        },
+        {
+          "submissionId": 206670,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T15:55:11.000Z"
+        },
+        {
+          "submissionId": 206669,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T15:52:48.000Z"
+        },
+        {
+          "submissionId": 205856,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-11-02T19:56:32.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "TestAccount1",
+      "submitterId": 40157096,
+      "submissions": [
+        {
+          "submissionId": 205855,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-31T00:21:00.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "mess",
+      "submitterId": 305384,
+      "submissions": [
+        {
+          "submissionId": 207804,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:13:49.000Z"
+        },
+        {
+          "submissionId": 207803,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:12:04.000Z"
+        },
+        {
+          "submissionId": 207802,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:09:29.000Z"
+        },
+        {
+          "submissionId": 206540,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-17T08:01:22.000Z"
+        },
+        {
+          "submissionId": 205851,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T14:43:48.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "pshah_manager",
+      "submitterId": 40152856,
+      "submissions": [
+        {
+          "submissionId": 207950,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-13T10:44:29.000Z"
+        },
+        {
+          "submissionId": 207252,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-04-15T01:22:36.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "jcori",
+      "submitterId": 40029484,
+      "submissions": [
+        {
+          "submissionId": 205854,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T17:11:26.000Z"
+        },
+        {
+          "submissionId": 205853,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T17:00:42.000Z"
+        },
+        {
+          "submissionId": 205852,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T16:08:23.000Z"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+
+  ],
+  "numberOfRegistrants": 14,
+  "numberOfSubmissions": 21,
+  "numberOfSubmitters": 8
+}
+
+export const unregisteredChallengeDetails = {
+  "subTrack": "FIRST_2_FINISH",
+  "challengeTitle": "F2F Challenge - 1001",
+  "challengeId": 30052925,
+  "projectId": 7572,
+  "forumId": 31139,
+  "detailedRequirements": "Test",
+  "reviewScorecardId": 30001600,
+  "numberOfCheckpointsPrizes": 0,
+  "postingDate": "2018-09-03T15:32:18.767Z",
+  "registrationEndDate": "2020-09-13T15:31:00.000Z",
+  "submissionEndDate": "2020-10-01T15:34:00.000Z",
+  "reviewType": "INTERNAL",
+  "forumLink": "https://apps.topcoder.com/forums/?module=Category&categoryID=31139",
+  "appealsEndDate": "2018-09-04T15:40:00.000Z",
+  "currentStatus": "Active",
+  "challengeCommunity": "develop",
+  "directUrl": "https://www.topcoder.com/direct/contest/detail.action?projectId=30052924",
+  "prizes": [
+    15
+  ],
+  "terms": [
+    {
+      "termsOfUseId": 20704,
+      "role": "Primary Screener",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 21193,
+      "role": "Submitter",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Terms for TopCoder Competitions v2.1",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Aggregator",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Specification Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Final Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20794,
+      "role": "Manager",
+      "agreeabilityType": "Non-electronically-agreeable",
+      "title": "Approved OR Managers - TopCoder Technical Team",
+      "url": "http://www.topcoder.com"
+    },
+    {
+      "termsOfUseId": 20893,
+      "role": "Copilot",
+      "agreeabilityType": "Non-electronically-agreeable",
+      "title": "TopCoder Master Services Agreement",
+      "url": "http://www.topcoder.com/wiki/download/attachments/35129137/Member+Master+Agreement+v0020409.pdf"
+    }
+  ],
+  "finalSubmissionGuidelines": "test",
+  "technologies": [
+    "Other"
+  ],
+  "platforms": [
+    "Other"
+  ],
+  "currentPhaseName": "Submission",
+  "currentPhaseRemainingTime": 38539955,
+  "currentPhaseEndDate": "2020-10-01T15:34:00.000Z",
+  "registrants": [
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-01-29T18:47:08.000Z",
+      "submissionDate": "2019-01-29T18:48:53.000Z",
+      "handle": "KriegBaer"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-05T20:25:52.000Z",
+      "submissionDate": "2019-01-31T06:18:10.000Z",
+      "handle": "lazybaer"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-19T21:04:16.000Z",
+      "handle": "yichen"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-27T07:20:24.000Z",
+      "submissionDate": "2019-07-13T10:44:29.000Z",
+      "handle": "pshah_manager"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-16T07:43:26.000Z",
+      "handle": "bop_t1"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-25T16:06:32.000Z",
+      "submissionDate": "2018-10-25T17:11:26.000Z",
+      "handle": "jcori"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-31T00:20:03.000Z",
+      "submissionDate": "2018-10-31T00:21:00.000Z",
+      "handle": "TestAccount1"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-06T08:55:35.000Z",
+      "submissionDate": "2019-03-06T08:57:27.000Z",
+      "handle": "somethin-dev"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-15T17:40:59.000Z",
+      "handle": 12345678
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-19T19:48:01.000Z",
+      "handle": "ACRush"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-21T08:55:53.000Z",
+      "handle": "huanner"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-04-08T11:46:06.000Z",
+      "handle": "direct_user"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-04-29T05:10:04.000Z",
+      "submissionDate": "2019-07-08T15:20:21.000Z",
+      "handle": "easteregg"
+    }
+  ],
+  "phases": [
+    {
+      "duration": 64022381233,
+      "actualStartTime": "2018-09-03T15:32:18.767Z",
+      "scheduledStartTime": "2018-09-03T15:32:18.767Z",
+      "phaseId": 753867,
+      "scheduledEndTime": "2020-09-13T15:31:00.000Z",
+      "fixedStartTime": "2018-09-03T15:32:18.767Z",
+      "type": "Registration",
+      "status": "Open"
+    },
+    {
+      "duration": 86400000,
+      "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+      "phaseId": 753868,
+      "scheduledEndTime": "2018-09-04T15:40:00.000Z",
+      "type": "Iterative Review",
+      "status": "Scheduled"
+    },
+    {
+      "duration": 65577281126,
+      "actualStartTime": "2018-09-03T15:40:18.874Z",
+      "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+      "phaseId": 753869,
+      "scheduledEndTime": "2020-10-01T15:34:00.000Z",
+      "type": "Submission",
+      "status": "Open"
+    }
+  ],
+  "submissions": [
+    {
+      "submitter": "somethin-dev",
+      "submitterId": 40154560,
+      "submissions": [
+        {
+          "submissionId": 207083,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-03-06T08:57:27.000Z"
+        },
+        {
+          "submissionId": 207082,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-03-06T08:57:13.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "easteregg",
+      "submitterId": 40036043,
+      "submissions": [
+        {
+          "submissionId": 207787,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-08T15:20:21.000Z"
+        },
+        {
+          "submissionId": 207786,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-08T15:20:21.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "KriegBaer",
+      "submitterId": 40051753,
+      "submissions": [
+        {
+          "submissionId": 206672,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T18:48:53.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "lazybaer",
+      "submitterId": 23225544,
+      "submissions": [
+        {
+          "submissionId": 206711,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-31T06:18:10.000Z"
+        },
+        {
+          "submissionId": 206710,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-30T19:42:37.000Z"
+        },
+        {
+          "submissionId": 206670,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T15:55:11.000Z"
+        },
+        {
+          "submissionId": 206669,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T15:52:48.000Z"
+        },
+        {
+          "submissionId": 205856,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-11-02T19:56:32.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "TestAccount1",
+      "submitterId": 40157096,
+      "submissions": [
+        {
+          "submissionId": 205855,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-31T00:21:00.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "mess",
+      "submitterId": 305384,
+      "submissions": [
+        {
+          "submissionId": 207804,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:13:49.000Z"
+        },
+        {
+          "submissionId": 207803,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:12:04.000Z"
+        },
+        {
+          "submissionId": 207802,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:09:29.000Z"
+        },
+        {
+          "submissionId": 206540,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-17T08:01:22.000Z"
+        },
+        {
+          "submissionId": 205851,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T14:43:48.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "pshah_manager",
+      "submitterId": 40152856,
+      "submissions": [
+        {
+          "submissionId": 207950,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-13T10:44:29.000Z"
+        },
+        {
+          "submissionId": 207252,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-04-15T01:22:36.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "jcori",
+      "submitterId": 40029484,
+      "submissions": [
+        {
+          "submissionId": 205854,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T17:11:26.000Z"
+        },
+        {
+          "submissionId": 205853,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T17:00:42.000Z"
+        },
+        {
+          "submissionId": 205852,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T16:08:23.000Z"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+
+  ],
+  "numberOfRegistrants": 14,
+  "numberOfSubmissions": 21,
+  "numberOfSubmitters": 8
+}
+
+export const closedForSubmissionChallengeDetails = {
+  "subTrack": "FIRST_2_FINISH",
+  "challengeTitle": "F2F Challenge - 1001",
+  "challengeId": 30052926,
+  "projectId": 7572,
+  "forumId": 31139,
+  "detailedRequirements": "Test",
+  "reviewScorecardId": 30001600,
+  "numberOfCheckpointsPrizes": 0,
+  "postingDate": "2018-09-03T15:32:18.767Z",
+  "registrationEndDate": "2020-09-13T15:31:00.000Z",
+  "submissionEndDate": "2020-10-01T15:34:00.000Z",
+  "reviewType": "INTERNAL",
+  "forumLink": "https://apps.topcoder.com/forums/?module=Category&categoryID=31139",
+  "appealsEndDate": "2018-09-04T15:40:00.000Z",
+  "currentStatus": "Active",
+  "challengeCommunity": "develop",
+  "directUrl": "https://www.topcoder.com/direct/contest/detail.action?projectId=30052924",
+  "prizes": [
+    15
+  ],
+  "terms": [
+    {
+      "termsOfUseId": 20704,
+      "role": "Primary Screener",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 21193,
+      "role": "Submitter",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Terms for TopCoder Competitions v2.1",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Aggregator",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Specification Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20704,
+      "role": "Final Reviewer",
+      "agreeabilityType": "Electronically-agreeable",
+      "title": "Standard Reviewer Terms v1.0",
+      "url": ""
+    },
+    {
+      "termsOfUseId": 20794,
+      "role": "Manager",
+      "agreeabilityType": "Non-electronically-agreeable",
+      "title": "Approved OR Managers - TopCoder Technical Team",
+      "url": "http://www.topcoder.com"
+    },
+    {
+      "termsOfUseId": 20893,
+      "role": "Copilot",
+      "agreeabilityType": "Non-electronically-agreeable",
+      "title": "TopCoder Master Services Agreement",
+      "url": "http://www.topcoder.com/wiki/download/attachments/35129137/Member+Master+Agreement+v0020409.pdf"
+    }
+  ],
+  "finalSubmissionGuidelines": "test",
+  "technologies": [
+    "Other"
+  ],
+  "platforms": [
+    "Other"
+  ],
+  "currentPhaseName": "Submission",
+  "currentPhaseRemainingTime": 38539955,
+  "currentPhaseEndDate": "2020-10-01T15:34:00.000Z",
+  "registrants": [
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-01-29T18:47:08.000Z",
+      "submissionDate": "2019-01-29T18:48:53.000Z",
+      "handle": "KriegBaer"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-05T20:25:52.000Z",
+      "submissionDate": "2019-01-31T06:18:10.000Z",
+      "handle": "lazybaer"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-19T21:04:16.000Z",
+      "handle": "yichen"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-09-27T07:20:24.000Z",
+      "submissionDate": "2019-07-13T10:44:29.000Z",
+      "handle": "pshah_manager"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-12T09:58:07.000Z",
+      "submissionDate": "2019-07-10T10:13:49.000Z",
+      "handle": "mess"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-16T07:43:26.000Z",
+      "handle": "bop_t1"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-25T16:06:32.000Z",
+      "submissionDate": "2018-10-25T17:11:26.000Z",
+      "handle": "jcori"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2018-10-31T00:20:03.000Z",
+      "submissionDate": "2018-10-31T00:21:00.000Z",
+      "handle": "TestAccount1"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-06T08:55:35.000Z",
+      "submissionDate": "2019-03-06T08:57:27.000Z",
+      "handle": "somethin-dev"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-15T17:40:59.000Z",
+      "handle": 12345678
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-19T19:48:01.000Z",
+      "handle": "ACRush"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-03-21T08:55:53.000Z",
+      "handle": "huanner"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-04-08T11:46:06.000Z",
+      "handle": "direct_user"
+    },
+    {
+      "reliability": null,
+      "colorStyle": "color: #000000",
+      "registrationDate": "2019-04-29T05:10:04.000Z",
+      "submissionDate": "2019-07-08T15:20:21.000Z",
+      "handle": "easteregg"
+    }
+  ],
+  "phases": [
+    {
+      "duration": 64022381233,
+      "actualStartTime": "2018-09-03T15:32:18.767Z",
+      "scheduledStartTime": "2018-09-03T15:32:18.767Z",
+      "phaseId": 753867,
+      "scheduledEndTime": "2020-09-13T15:31:00.000Z",
+      "fixedStartTime": "2018-09-03T15:32:18.767Z",
+      "type": "Registration",
+      "status": "Open"
+    },
+    {
+      "duration": 86400000,
+      "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+      "phaseId": 753868,
+      "scheduledEndTime": "2018-09-04T15:40:00.000Z",
+      "type": "Iterative Review",
+      "status": "Scheduled"
+    },
+    {
+      "duration": 65577281126,
+      "actualStartTime": "2018-09-03T15:40:18.874Z",
+      "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+      "phaseId": 753869,
+      "scheduledEndTime": "2020-10-01T15:34:00.000Z",
+      "type": "Submission",
+      "status": "Closed"
+    }
+  ],
+  "submissions": [
+    {
+      "submitter": "somethin-dev",
+      "submitterId": 40154560,
+      "submissions": [
+        {
+          "submissionId": 207083,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-03-06T08:57:27.000Z"
+        },
+        {
+          "submissionId": 207082,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-03-06T08:57:13.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "easteregg",
+      "submitterId": 40036043,
+      "submissions": [
+        {
+          "submissionId": 207787,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-08T15:20:21.000Z"
+        },
+        {
+          "submissionId": 207786,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-08T15:20:21.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "KriegBaer",
+      "submitterId": 40051753,
+      "submissions": [
+        {
+          "submissionId": 206672,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T18:48:53.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "lazybaer",
+      "submitterId": 23225544,
+      "submissions": [
+        {
+          "submissionId": 206711,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-31T06:18:10.000Z"
+        },
+        {
+          "submissionId": 206710,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-30T19:42:37.000Z"
+        },
+        {
+          "submissionId": 206670,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T15:55:11.000Z"
+        },
+        {
+          "submissionId": 206669,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-29T15:52:48.000Z"
+        },
+        {
+          "submissionId": 205856,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-11-02T19:56:32.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "TestAccount1",
+      "submitterId": 40157096,
+      "submissions": [
+        {
+          "submissionId": 205855,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-31T00:21:00.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "mess",
+      "submitterId": 305384,
+      "submissions": [
+        {
+          "submissionId": 207804,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:13:49.000Z"
+        },
+        {
+          "submissionId": 207803,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:12:04.000Z"
+        },
+        {
+          "submissionId": 207802,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-10T10:09:29.000Z"
+        },
+        {
+          "submissionId": 206540,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-01-17T08:01:22.000Z"
+        },
+        {
+          "submissionId": 205851,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T14:43:48.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "pshah_manager",
+      "submitterId": 40152856,
+      "submissions": [
+        {
+          "submissionId": 207950,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-07-13T10:44:29.000Z"
+        },
+        {
+          "submissionId": 207252,
+          "submissionStatus": "Active",
+          "submissionTime": "2019-04-15T01:22:36.000Z"
+        }
+      ]
+    },
+    {
+      "submitter": "jcori",
+      "submitterId": 40029484,
+      "submissions": [
+        {
+          "submissionId": 205854,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T17:11:26.000Z"
+        },
+        {
+          "submissionId": 205853,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T17:00:42.000Z"
+        },
+        {
+          "submissionId": 205852,
+          "submissionStatus": "Active",
+          "submissionTime": "2018-10-25T16:08:23.000Z"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+
+  ],
+  "numberOfRegistrants": 14,
+  "numberOfSubmissions": 21,
+  "numberOfSubmitters": 8
+}

@@ -38,7 +38,7 @@ export default class ChallengeService {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Topcoder: Open challenges</title>
+        <title>${constants.challengesPageTitle}</title>
       </head>
       <body>
         <table border="1" style="margin-bottom: 40px">
@@ -51,7 +51,81 @@ export default class ChallengeService {
           </tr>
           ${this.generateHtmlTableFromChallenges(challenges)}
         </table>
+        <script>
+          // enable communication with the extension via messaging.
+          var vscode;
+
+          (function () {
+            vscode = acquireVsCodeApi();
+          }());
+
+          function openChallenge(challengeId) {
+            if (challengeId) {
+              vscode.postMessage({
+                action: '${constants.webviewMessageActions.DISPLAY_CHALLENGE_DETAILS}',
+                data: {
+                  challengeId
+                }
+              });
+            }
+          }
+        </script>
       </body>
+      </html>`;
+  }
+
+  /**
+   * Get the details of a valid challenge
+   * @param challengeId - The id of the challenge
+   * @param savedToken - A valid user auth token
+   * @return The challenge details
+   * @throws if challenge does not exist
+   */
+  public static async getChallengeDetails(challengeId: string, savedToken: string) {
+    try {
+      const url = `${constants.challengeDetailsUrl}/${challengeId}`;
+      const { data } = await axios.get(url, {
+        headers: { Authorization: `Bearer ${savedToken}` }
+      });
+      return data;
+    } catch (e) {
+      throw new Error(constants.challengeNotFound);
+    }
+  }
+
+  /**
+   * Construct HTML for display based on the challenge details available
+   * @param challengeDetails Challenge details object
+   * @return The HTML string of challenge details.
+   */
+  public static generateHtmlFromChallengeDetails(challengeDetails: any): string {
+    return `
+      <!doctype html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${constants.challengeDetailsPageTitle}</title>
+          <style>
+            td {
+              padding-left: 3px;
+            }
+            th {
+              background: #333
+            }
+          </style>
+        </head>
+        <body>
+          <h1>${challengeDetails.challengeTitle}</h1>
+          <h2>Prizes</h2>
+          <div>${this.generateHtmlFromChallengePrizes(challengeDetails.prizes)}</div>
+          <h2>Meta</h2>
+          <div>${this.generateMetaTableFromChallengeDetails(challengeDetails)}</div>
+          <h2>Specification</h2>
+          <div>${challengeDetails.detailedRequirements || challengeDetails.introduction}</div>
+          <h2>Submission Guidelines</h2>
+          <div>${challengeDetails.finalSubmissionGuidelines || 'N/A'}</div>
+        </body>
       </html>`;
   }
 
@@ -81,6 +155,24 @@ export default class ChallengeService {
     if (typeof challengeId !== 'string' || !(challengeId.trim())) {
       throw new Error(constants.missChallengeId);
     }
+    /* First validate if user can submit: */
+    // get challenge details if challenge exists
+    const challengeDetails = await this.getChallengeDetails(challengeId, savedToken);
+    // check if this user has registered for this challenge
+    const decodedToken: any = jwt.decode(savedToken);
+    const registrants: any[] = _.get(challengeDetails, 'result.content.registrants', []);
+    const hasUserRegistered = registrants.find((profile) => profile.handle === decodedToken.handle) !== undefined;
+    if (!hasUserRegistered) {
+      throw new Error(constants.userNotRegisteredForChallenge);
+    }
+    // check if this challenge is open for submission
+    const phases: any[] = _.get(challengeDetails, 'result.content.phases', []);
+    const isChallengeOpenForSubmission = phases.find((phase) => phase.type === 'Submission'
+      && phase.status === 'Open') !== undefined;
+    if (!isChallengeOpenForSubmission) {
+      throw new Error(constants.submissionPhaseNotOpen);
+    }
+    /* Proceed with submission */
     const ig = ignore();
     if (fs.existsSync(path.join(workspacePath, '.gitignore'))) {
       // load the .gitignore and add .git folder
@@ -117,7 +209,7 @@ export default class ChallengeService {
       .map((challenge: any) => {
         const filteredPhases = _.filter(challenge.currentPhases, (item) => item.phaseStatus === 'Open');
         return `<tr>
-                  <td>${challenge.name}</td>
+                  <td><a href='#' onclick='openChallenge(${challenge.id})'>${challenge.name}</a></td>
                   <td>${challenge.subTrack}</td>
                   <td>${challenge.numRegistrants}</td>
                   <td>${_.join(_.map(challenge.prizes, (x) => `\$${x}`), ', ')}</td>
@@ -204,5 +296,68 @@ export default class ChallengeService {
       }
     });
     return data;
+  }
+
+  /**
+   * Generate an HTML table from the list of prize amounts
+   * @param prizes An array of prize amounts
+   * @return HTML string containing table information.
+   */
+  private static generateHtmlFromChallengePrizes(prizes: number[]) {
+    const tableHtml = _.map(prizes, (prize, i) => {
+      return {
+        header: `<th>${this.getOrdinalNumber(i + 1)} Place</th>`,
+        row: `<td>$${prize}</td>`
+      };
+    });
+    return `
+      <table border='1px'>
+        <tr>
+          ${_.join(_.map(tableHtml, (data) => data.header), '')}
+        </tr>
+        <tr>
+          ${_.join(_.map(tableHtml, (data) => data.row), '')}
+        </tr>
+      </table>
+    `;
+
+  }
+
+  /**
+   * Generates an HTML table from the challenge details object
+   * to display the current challenge phase, number of registrants and submissions.
+   * @param challengeDetails The challenge details object from the server
+   * @return HTML string containing table information.
+   */
+  private static generateMetaTableFromChallengeDetails(challengeDetails: any): string {
+    return `
+      <table border='1px'>
+        <tr>
+          <th>Current Phase</th>
+          <th># of Registrants</th>
+          <th># of Submissions</th>
+        </tr>
+        <tr>
+          <td>${challengeDetails.currentStatus || 'N/A'}</td>
+          <td>${challengeDetails.numberOfRegistrants || '0'}</td>
+          <td>${challengeDetails.numberOfSubmissions || '0'}</td>
+        </tr>
+      </table>
+    `;
+  }
+
+  /**
+   * Converts numeric values for ex:1,2,3 into their ordinal representations ex: 1st, 2nd, 3rd
+   * @param place Number denoting the rank/index of an item
+   * @return Ordinal number representation
+   */
+  private static getOrdinalNumber(place: number): string {
+    const remainder = place % 10;
+    switch (remainder) {
+      case 1: return `${place}st`;
+      case 2: return `${place}nd`;
+      case 3: return `${place}rd`;
+      default: return `${place}th`;
+    }
   }
 }
