@@ -84,8 +84,9 @@ export default class ChallengeController {
     // get challenge details
     vscode.window.showInformationMessage(constants.loadingChallengeDetails);
     let challengeDetails;
+    let token;
     try {
-      const token = await AuthService.updateTokenGlobalState(this.context);
+      token = await AuthService.updateTokenGlobalState(this.context);
       const apiResponse = await ChallengeService.getChallengeDetails(challengeId, token);
       challengeDetails = _.get(apiResponse, 'result.content', {});
     } catch (err) {
@@ -95,7 +96,7 @@ export default class ChallengeController {
     }
     // ensure webview is available and then set content
     this.makeChallengeDetailsWebViewAvailable();
-    this.setChallengeDetailsWebViewContent(challengeDetails);
+    this.setChallengeDetailsWebViewContent(challengeDetails, token);
     vscode.window.showInformationMessage(constants.challengeDetailsLoadedMessage);
   }
 
@@ -122,11 +123,14 @@ export default class ChallengeController {
    * Handle messages from the challenges page.
    * @param message The message from the webview of the format {action, data}
    */
-  private handleMessagesFromChallengeListingsWebView = async (message: any) => {
+  private handleMessagesFromWebView = async (message: any) => {
     switch (message.action) {
       case constants.webviewMessageActions.DISPLAY_CHALLENGE_DETAILS: {
         await this.viewChallengeDetails(message.data.challengeId);
       }                                                               break;
+      case constants.webviewMessageActions.REGISTER_FOR_CHALLENGE: {
+        await this.registerUserForChallenge(message.data.challengeId);
+      }                                                            break;
     }
   }
 
@@ -150,7 +154,7 @@ export default class ChallengeController {
 
       // listen for messages from webview
       this.challengeListingsWebviewPanel.webview.onDidReceiveMessage(
-        this.handleMessagesFromChallengeListingsWebView,
+        this.handleMessagesFromWebView,
         undefined,
         this.context.subscriptions
       );
@@ -165,13 +169,19 @@ export default class ChallengeController {
     if (this.challengeDetailsWebviewPanel) {
       this.challengeDetailsWebviewPanel.reveal(columnToShowIn);
     } else {
-      this.challengeDetailsWebviewPanel = this.getNewWebViewPanel(constants.challengeDetailsPageTitle);
+      this.challengeDetailsWebviewPanel = this.getNewWebViewPanel(constants.challengeDetailsPageTitle, true);
       // handle webview dispose
       this.challengeDetailsWebviewPanel.onDidDispose(
         () => {
           this.challengeDetailsWebviewPanel = undefined;
         },
         null,
+        this.context.subscriptions
+      );
+      // listen for messages from webview
+      this.challengeDetailsWebviewPanel.webview.onDidReceiveMessage(
+        this.handleMessagesFromWebView,
+        undefined,
         this.context.subscriptions
       );
     }
@@ -191,10 +201,37 @@ export default class ChallengeController {
    * Set the content of the webview using the available details of a challenge
    * @param challengeDetails The details of a challenge
    */
-  private setChallengeDetailsWebViewContent(challengeDetails: any) {
+  private setChallengeDetailsWebViewContent(challengeDetails: any, token: string) {
     if (this.challengeDetailsWebviewPanel && challengeDetails) {
       this.challengeDetailsWebviewPanel
-        .webview.html = ChallengeService.generateHtmlFromChallengeDetails(challengeDetails);
+        .webview.html = ChallengeService.generateHtmlFromChallengeDetails(challengeDetails, token);
+    }
+  }
+
+  /**
+   * Attempt to register the person to the challenge selected
+   * @param challengeId The challenge id to register to
+   */
+  private async registerUserForChallenge(challengeId: string) {
+    vscode.window.showInformationMessage(constants.registeringMessage);
+    try {
+      const userToken = await AuthService.updateTokenGlobalState(this.context);
+      const { data } = await ChallengeService.registerUserForChallenge(challengeId, userToken);
+      const status = _.get(data, 'result.status', 500);
+      if (status === 200) {
+        vscode.window.showInformationMessage(constants.registeredSuccessfullyMessage);
+        if (this.challengeDetailsWebviewPanel !== undefined) {
+          this.challengeDetailsWebviewPanel.webview.postMessage(
+            {
+              command: constants.webviewMessageActions.REGISTERED_FOR_CHALLENGE
+            }
+          );
+        }
+      } else {
+        vscode.window.showErrorMessage(_.get(data, 'result.content', constants.registrationFailedMessage));
+      }
+    } catch (err) {
+      vscode.window.showErrorMessage(err.toString());
     }
   }
 }

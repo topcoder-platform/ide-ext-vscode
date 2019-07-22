@@ -98,7 +98,7 @@ export default class ChallengeService {
    * @param challengeDetails Challenge details object
    * @return The HTML string of challenge details.
    */
-  public static generateHtmlFromChallengeDetails(challengeDetails: any): string {
+  public static generateHtmlFromChallengeDetails(challengeDetails: any, userToken: string): string {
     return `
       <!doctype html>
       <html>
@@ -113,10 +113,48 @@ export default class ChallengeService {
             th {
               background: #333
             }
+            button {
+              background: #0681ff;
+              width: 220px;
+              color: white;
+              border-color: transparent;
+              cursor: pointer;
+              height: 28px;
+              border-radius: 4px;
+            }
           </style>
         </head>
         <body>
+          <script>
+            // enable communication with the extension via messaging.
+            var vscode;
+
+            (function () {
+              vscode = acquireVsCodeApi();
+            }());
+
+            function registerForChallenge(challengeId){
+              if(challengeId){
+                vscode.postMessage({
+                  action: '${constants.webviewMessageActions.REGISTER_FOR_CHALLENGE}',
+                  data: {
+                    challengeId
+                  }
+                });
+              }
+            }
+            // Handle message from extension to this webview.
+            window.addEventListener('message', event => {
+                const message = event.data;
+                switch (message.command) {
+                    case '${constants.webviewMessageActions.REGISTERED_FOR_CHALLENGE}':{
+                      document.getElementById('registerButton').remove();
+                    } break;
+                }
+            });
+          </script>
           <h1>${challengeDetails.challengeTitle}</h1>
+          ${this.generateRegisterButtonHTML(challengeDetails, userToken)}
           <h2>Prizes</h2>
           <div>${this.generateHtmlFromChallengePrizes(challengeDetails.prizes)}</div>
           <h2>Meta</h2>
@@ -127,6 +165,20 @@ export default class ChallengeService {
           <div>${challengeDetails.finalSubmissionGuidelines || 'N/A'}</div>
         </body>
       </html>`;
+  }
+
+  /**
+   * Register this user for the given challenge
+   * @param challengeId The ID of the challenge to register to
+   * @param userToken The valid user JWT token
+   */
+  public static async registerUserForChallenge(challengeId: string, userToken: string) {
+    return await axios.post(constants.challengeRegistrationUrl.replace('{challengeId}', challengeId), undefined, {
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   /**
@@ -359,5 +411,23 @@ export default class ChallengeService {
       case 3: return `${place}rd`;
       default: return `${place}th`;
     }
+  }
+
+  /**
+   * Returns the html to display for the register button, if user has not already registered.
+   * @param challengeDetails The challenge details
+   * @param userToken The user token
+   */
+  private static generateRegisterButtonHTML(challengeDetails: any, userToken: string) {
+    const buttonHtml = `
+      <button id="registerButton" onclick='registerForChallenge(${challengeDetails.challengeId})'>
+        Register
+      </button>
+      `;
+    // add register button to DOM only if this user has not already registered
+    const registrants: any[] = _.get(challengeDetails, 'registrants', []);
+    const decodedToken: any = jwt.decode(userToken);
+    const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined;
+    return registerEnabled ? buttonHtml : '';
   }
 }

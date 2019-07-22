@@ -21,6 +21,9 @@ export const challengeNotFound = 'Could not find the requested challenge';
 export const submissionPhaseNotOpen = 'The submission phase is not open for this challenge';
 export const loadingChallengeDetails = 'Loading challenge details';
 export const challengeDetailsLoadedMessage = 'Challenge details have been loaded';
+export const registeringMessage = 'Registering for challenge';
+export const registeredSuccessfullyMessage = 'Registered Successfully';
+export const registrationFailedMessage = 'Failed to register for the challenge';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
@@ -54,8 +57,13 @@ export const uploadSubmmissionUrl = useDevelopEndpoint ?
 export const challengeDetailsUrl = useDevelopEndpoint ?
   'https://api.topcoder-dev.com/v4/challenges' :
   'https://api.topcoder.com/v4/challenges';
+export const challengeRegistrationUrl = useDevelopEndpoint ?
+  'https://api.topcoder-dev.com/v4/challenges/{challengeId}/register' :
+  'https://api.topcoder.com/v4/challenges/{challengeId}/register';
 export const submitType = 'Contest Submission';
 
 export const webviewMessageActions = {
-  DISPLAY_CHALLENGE_DETAILS: 'DISPLAY_CHALLENGE_DETAILS'
+  DISPLAY_CHALLENGE_DETAILS: 'DISPLAY_CHALLENGE_DETAILS',
+  REGISTER_FOR_CHALLENGE: 'REGISTER_FOR_CHALLENGE',
+  REGISTERED_FOR_CHALLENGE: 'REGISTERED_FOR_CHALLENGE'
 };
