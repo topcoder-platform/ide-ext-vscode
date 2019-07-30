@@ -35,7 +35,7 @@ export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 
-export const CLIENT_V2CONNECTION = 'LDAP';
+export const CLIENT_V2CONNECTION = useDevelopEndpoint ? 'TC-User-Database' : 'LDAP';
 export const AUTHN_URL = useDevelopEndpoint ?
   'https://topcoder-dev.auth0.com/oauth/ro' :
   'https://topcoder.auth0.com/oauth/ro';
