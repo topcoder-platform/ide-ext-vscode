@@ -82,7 +82,7 @@
     "form-data": "^2.4.0",
     "ignore": "^5.1.2",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"
   }
 }
