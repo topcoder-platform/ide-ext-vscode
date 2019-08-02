@@ -111,7 +111,9 @@ export default class ChallengeService {
               padding-left: 3px;
             }
             th {
-              background: #333
+              /* Invert background and foreground for table header*/
+              background-color: var(--vscode-editor-foreground) !important;
+              color: var(--vscode-editor-background) !important;
             }
             button {
               background: #0681ff;
@@ -121,6 +123,11 @@ export default class ChallengeService {
               cursor: pointer;
               height: 28px;
               border-radius: 4px;
+            }
+            #specifications span, #submission-guidelines span {
+              /* Override inline styles */
+              background-color: var(--vscode-editor-background) !important;
+              color: var(--vscode-editor-foreground) !important;
             }
           </style>
         </head>
@@ -160,9 +167,9 @@ export default class ChallengeService {
           <h2>Meta</h2>
           <div>${this.generateMetaTableFromChallengeDetails(challengeDetails)}</div>
           <h2>Specification</h2>
-          <div>${challengeDetails.detailedRequirements || challengeDetails.introduction}</div>
+          <div id='specifications'>${challengeDetails.detailedRequirements || challengeDetails.introduction}</div>
           <h2>Submission Guidelines</h2>
-          <div>${challengeDetails.finalSubmissionGuidelines || 'N/A'}</div>
+          <div id='submission-guidelines'>${challengeDetails.finalSubmissionGuidelines || 'N/A'}</div>
         </body>
       </html>`;
   }
