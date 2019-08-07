@@ -6115,17 +6115,42 @@ export const challenges = {
 };
 
 export const submitSuccessResponse = {
-  "id": "bd02bfc4-9bf6-44eb-80ab-b3705fcde1ab",
-  "type": "Contest Submission",
-  "url": "https://s3.amazonaws.com/topcoder-dev-submissions-dmz/30055150-8547899-SUBMISSION_ZIP-1561621732879.zip",
-  "memberId": 8547899,
-  "challengeId": 30055150,
-  "created": "2019-06-27T07:49:15.471Z",
-  "updated": "2019-06-27T07:49:15.471Z",
-  "createdBy": "TonyJ",
-  "updatedBy": "TonyJ",
-  "submissionPhaseId": 767716,
-  "fileType": "zip"
+  "req":
+  {
+    "method": "POST",
+    "url": "https://api.topcoder-dev.com/v5/submissions",
+    "headers":
+    {
+      "user-agent": "node-superagent/3.8.3",
+      "authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJjb3BpbG90IiwiYWRtaW5pc3RyYXRvciJdLCJpc3MiOiJodHRwczovL2FwaS50b3Bjb2Rlci1kZXYuY29tIiwiaGFuZGxlIjoibWVzcyIsImV4cCI6MTU2NTAyNzk3MiwidXNlcklkIjoiMzA1Mzg0IiwiaWF0IjoxNTY1MDI3MzcyLCJlbWFpbCI6Im1lc3NAYXBwaXJpby5jb20iLCJqdGkiOiI3YzM3NjM0ZS1mNjE5LTRhMTEtYTE2ZS03NTBkY2NjNzAxZDcifQ.8O86O-oLyxt1-ZCRu3eny8KEVFe61wg-Jt5D-6U_r7w"
+    }
+  },
+  "header": {
+    "date": "Mon, 05 Aug 2019 17:52:55 GMT",
+    "content-type": "application/json; charset=utf-8",
+    "content-length": "373",
+    "connection": "close",
+    "access-control-allow-origin": "*",
+    "etag": "W/\"175-ps2/11lwQrX39AE9dDjPCdrZgtg\"",
+    "x-powered-by": "Express",
+    "x-ratelimit-limit": "0",
+    "x-ratelimit-remaining": "0",
+    "x-ratelimit-reset": "0"
+  },
+  "status": 200,
+  "text": {
+    "id": "315febb3-245d-48bc-8551-4418d3fc2c9c",
+    "type": "Contest Submission",
+    "url": "https://topcoder-dev-submissions-dmz.s3.amazonaws.com/315febb3-245d-48bc-8551-4418d3fc2c9c.zip",
+    "memberId": 305384,
+    "challengeId": 30052924,
+    "created": "2019-08-05T17:52:55.354Z",
+    "updated": "2019-08-05T17:52:55.354Z",
+    "createdBy": "mess",
+    "updatedBy": "mess",
+    "submissionPhaseId": 753869,
+    "fileType": "zip"
+  }
 };
 
 export const validChallengeDetails = {

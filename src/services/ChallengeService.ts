@@ -5,9 +5,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
 import * as jwt from 'jsonwebtoken';
-import * as FormData from 'form-data';
 import * as archiver from 'archiver';
-
+import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
+const submissionApiClient = submissionApi({
+  SUBMISSION_API_URL: constants.uploadSubmmissionUrl
+});
 /**
  * Interacts with challenges APIs
  */
@@ -340,21 +342,16 @@ export default class ChallengeService {
    */
   private static async submitFileToChallenge(filePath: string, challengeId: string, savedToken: string): Promise<any> {
     const decodedToken: any = jwt.decode(savedToken);
-    const fd = new FormData();
-    fd.append('submission', fs.createReadStream(filePath));
-    fd.append('type', constants.submitType);
-    fd.append('memberId', decodedToken.userId);
-    fd.append('challengeId', challengeId);
-
-    const { data } = await axios.post(constants.uploadSubmmissionUrl, fd, {
-      headers: {
-        ...fd.getHeaders(),
-        'Authorization': `Bearer ${savedToken}`,
-        'accept': 'application/json',
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    return data;
+    const submissionData = {
+      submission: {
+        name: path.basename(filePath),
+        data: fs.createReadStream(filePath)
+      },
+      type: constants.submitType,
+      challengeId,
+      memberId: decodedToken.userId
+    };
+    return await submissionApiClient.createSubmission(submissionData, savedToken);
   }
 
   /**

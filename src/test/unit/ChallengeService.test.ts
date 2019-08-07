@@ -19,7 +19,7 @@ const invalidChallengeId = 1234;
 suite('ChallengeService Unit tests', () => {
   suiteSetup(() => {
     const challengesUrl = url.parse(constants.activeChallengesUrl);
-    const uploadSubmmissionUrl = url.parse(constants.uploadSubmmissionUrl);
+    const uploadSubmmissionUrl = url.parse(constants.uploadSubmmissionUrl + '/submissions');
     const invalidChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${invalidChallengeId}`);
     const validChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${validChallengeId}`);
     const closedChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${closedForSubmissionChallengeId}`);
@@ -60,7 +60,7 @@ suite('ChallengeService Unit tests', () => {
 
     fs.writeFileSync(`${folder}/.topcoderrc`, JSON.stringify({ challengeId: validChallengeId }), 'utf8');
     const result = await ChallengeService.uploadSubmmission(v3Token.result.content.token, folder);
-    expect(result).to.be.deep.equal(submitSuccessResponse);
+    expect(result.body).to.be.deep.equal(submitSuccessResponse);
 
     try {
       fs.unlinkSync(`${folder}/.topcoderrc`);
@@ -118,5 +118,16 @@ suite('ChallengeService Unit tests', () => {
   test('getChallengeDetails() should throw exception if challenge doesnt exist', async () => {
     assert.rejects(async () =>
       await ChallengeService.getChallengeDetails(`${invalidChallengeId}`, v3Token.result.content.token));
+  });
+
+  test('register button should be invisible if user has registered', () => {
+    const html = ChallengeService.generateHtmlFromChallengeDetails(validChallengeDetails, v3Token.result.content.token);
+    expect(html).to.not.contain('id="registerButton"');
+  });
+
+  test('register button should be visible if user can register', () => {
+    const html = ChallengeService
+      .generateHtmlFromChallengeDetails(unregisteredChallengeDetails, v3Token.result.content.token);
+    expect(html).to.contain('id="registerButton"');
   });
 });

@@ -1,6 +1,6 @@
 // Constants definition file
 
-const useDevelopEndpoint = false; /* set to true if you want to use topcoder's dev instance,
+const useDevelopEndpoint = true; /* set to true if you want to use topcoder's dev instance,
 "false" if you want to use production instance */
 export const missingUsernameMessage = 'Missing username. Configure your username in the settings screen.';
 export const missingPasswordMessage = 'Missing password. Configure your password in the settings screen.';
@@ -15,7 +15,7 @@ export const missTopcoderrcFile = 'No .topcoderrc file detected in the current w
 export const inCorrectFormatTopcoderrc = 'Incorrect format of .topcoderrc, it should be JSON format.';
 export const missChallengeId = 'Missing challengeId in .topcoderrc.';
 export const submittingChallenges = 'Submitting challenge.';
-export const challengeSubmittedMessage = 'Workspace successful submitted.';
+export const challengeSubmittedMessage = 'Workspace successfully submitted.';
 export const userNotRegisteredForChallenge = 'You have not registered for this challenge.';
 export const challengeNotFound = 'Could not find the requested challenge';
 export const submissionPhaseNotOpen = 'The submission phase is not open for this challenge';
@@ -52,8 +52,8 @@ export const activeChallengesUrl = useDevelopEndpoint ?
   'https://api.topcoder-dev.com/v4/challenges/?filter=status%3DACTIVE' :
   'https://api.topcoder.com/v4/challenges/?filter=status%3DACTIVE';
 export const uploadSubmmissionUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v5/submissions' :
-  'https://api.topcoder.com/v5/submissions';
+  'https://api.topcoder-dev.com/v5' :
+  'https://api.topcoder.com/v5';
 export const challengeDetailsUrl = useDevelopEndpoint ?
   'https://api.topcoder-dev.com/v4/challenges' :
   'https://api.topcoder.com/v4/challenges';
