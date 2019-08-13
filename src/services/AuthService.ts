@@ -26,11 +26,10 @@ export default class AuthService {
     const password = config.get(constants.passwordConfig, '');
 
     return new Promise((resolve, reject) => {
-      tcAuth.login(username, password, (err: object, token: string) => {
+      tcAuth.login(username, password, (err: any, token: string) => {
         if (err) {
-          return reject(err);
+          return reject(new Error(constants.authenticationFailedMessage));
         }
-
         return resolve(token);
       });
     });
@@ -95,13 +94,17 @@ export default class AuthService {
    * @return The refreshed token.
    */
   public static async refreshToken(savedToken: string): Promise<string> {
-    const { data } = await axios.get(constants.refreshTokenUrl,
-      {
-        headers: { Authorization: `Bearer ${savedToken}` }
-      });
-    const token = _.get(data, 'result.content.token', '');
+    try {
+      const { data } = await axios.get(constants.refreshTokenUrl,
+        {
+          headers: { Authorization: `Bearer ${savedToken}` }
+        });
+      const token = _.get(data, 'result.content.token', '');
 
-    return token;
+      return token;
+    } catch (err) {
+      throw new Error(constants.tokenRefreshFailedMessage);
+    }
   }
 
   /**

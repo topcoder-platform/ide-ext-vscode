@@ -26,7 +26,7 @@ export default class ChallengeController {
     let newToken;
     let response;
     let challenges;
-    try {
+    try { // handle errors while retrieving information from the server
       newToken = await AuthService.updateTokenGlobalState(this.context);
       response = await ChallengeService.getActiveChallenges(newToken);
       challenges = _.get(response, 'result.content', []);
@@ -34,10 +34,15 @@ export default class ChallengeController {
       vscode.window.showErrorMessage(err.message);
       return;
     }
-    // ensure webview is available, then set content into it
-    this.makeChallengeListingsWebViewAvailable();
-    this.setChallengeListingsContent(challenges);
-    vscode.window.showInformationMessage(constants.openChallengesLoadedMessage);
+
+    try {// handle any other errors while generating the html or preparing the webview
+      // ensure webview is available, then set content into it
+      this.makeChallengeListingsWebViewAvailable();
+      this.setChallengeListingsContent(challenges);
+      vscode.window.showInformationMessage(constants.openChallengesLoadedMessage);
+    } catch (err) {
+      vscode.window.showErrorMessage(constants.loadOpenChallengesFailedMessage);
+    }
   }
 
   /**
@@ -85,7 +90,7 @@ export default class ChallengeController {
     vscode.window.showInformationMessage(constants.loadingChallengeDetails);
     let challengeDetails;
     let token;
-    try {
+    try { // handle errors while retreiving information from the server
       token = await AuthService.updateTokenGlobalState(this.context);
       const apiResponse = await ChallengeService.getChallengeDetails(challengeId, token);
       challengeDetails = _.get(apiResponse, 'result.content', {});
@@ -94,10 +99,15 @@ export default class ChallengeController {
       vscode.window.showErrorMessage(err.toString());
       return;
     }
-    // ensure webview is available and then set content
-    this.makeChallengeDetailsWebViewAvailable();
-    this.setChallengeDetailsWebViewContent(challengeDetails, token);
-    vscode.window.showInformationMessage(constants.challengeDetailsLoadedMessage);
+
+    try { // handle any other errors while generating the html
+      // ensure webview is available and then set content
+      this.makeChallengeDetailsWebViewAvailable();
+      this.setChallengeDetailsWebViewContent(challengeDetails, token);
+      vscode.window.showInformationMessage(constants.challengeDetailsLoadedMessage);
+    } catch (err) {
+      vscode.window.showErrorMessage(constants.challengeDetailsLoadFailedMessage);
+    }
   }
 
   /**

@@ -21,12 +21,15 @@ export default class ChallengeService {
    * @return The challenges.
    */
   public static async getActiveChallenges(savedToken: string) {
-    const { data } = await axios.get(constants.activeChallengesUrl,
-      {
-        headers: { Authorization: `Bearer ${savedToken}` }
-      });
-
-    return data;
+    try {
+      const { data } = await axios.get(constants.activeChallengesUrl,
+        {
+          headers: { Authorization: `Bearer ${savedToken}` }
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.loadOpenChallengesFailedMessage);
+    }
   }
 
   /**
@@ -182,12 +185,16 @@ export default class ChallengeService {
    * @param userToken The valid user JWT token
    */
   public static async registerUserForChallenge(challengeId: string, userToken: string) {
-    return await axios.post(constants.challengeRegistrationUrl.replace('{challengeId}', challengeId), undefined, {
-      headers: {
-        'Authorization': `Bearer ${userToken}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    try {
+      return await axios.post(constants.challengeRegistrationUrl.replace('{challengeId}', challengeId), undefined, {
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (err) {
+      throw new Error(constants.registrationFailedMessage);
+    }
   }
 
   /**
@@ -251,6 +258,8 @@ export default class ChallengeService {
     let response;
     try {
       response = await this.submitFileToChallenge(zipFilePath, challengeId, savedToken);
+    } catch (e) {
+      throw new Error(constants.challengeSubmissionFailedMessage);
     } finally {
       // delete the zip local temp file
       if (fs.existsSync(zipFilePath)) {
