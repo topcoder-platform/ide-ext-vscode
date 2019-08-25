@@ -134,6 +134,12 @@ export default class ChallengeService {
               background-color: var(--vscode-editor-background) !important;
               color: var(--vscode-editor-foreground) !important;
             }
+            #initWorkspaceButton {
+              display: none;
+            }
+            #initWorkspaceButton.visible {
+              display: block;
+            }
           </style>
         </head>
         <body>
@@ -145,6 +151,9 @@ export default class ChallengeService {
               vscode = acquireVsCodeApi();
             }());
 
+            /**
+             * Register user for the selected challenge
+             */
             function registerForChallenge(challengeId){
               if(challengeId){
                 vscode.postMessage({
@@ -155,18 +164,48 @@ export default class ChallengeService {
                 });
               }
             }
+
+            /**
+             * Initialize the current workspace
+             */
+            function initializeWorkspace(challengeId){
+              if(challengeId){
+                vscode.postMessage({
+                  action: '${constants.webviewMessageActions.INITIALIZE_WORKSPACE}',
+                  data: {
+                    challengeId
+                  }
+                });
+              }
+            }
+
+            /**
+             * Show the init workspace button that is hidden by default
+             */
+            function showInitWorkspaceButton() {
+              document.getElementById('initWorkspaceButton').classList.add('visible');
+            }
+
             // Handle message from extension to this webview.
             window.addEventListener('message', event => {
                 const message = event.data;
                 switch (message.command) {
                     case '${constants.webviewMessageActions.REGISTERED_FOR_CHALLENGE}':{
                       document.getElementById('registerButton').remove();
+                      showInitWorkspaceButton();
                     } break;
+                }
+            });
+            // wait for window to load completely
+            window.addEventListener('load', () => {
+                if(!document.getElementById('registerButton')) {
+                  showInitWorkspaceButton();
                 }
             });
           </script>
           <h1>${challengeDetails.challengeTitle}</h1>
           ${this.generateRegisterButtonHTML(challengeDetails, userToken)}
+          ${this.generateInitWorkspaceButtonHtml(challengeDetails)}
           <h2>Prizes</h2>
           <div>${this.generateHtmlFromChallengePrizes(challengeDetails.prizes)}</div>
           <h2>Meta</h2>
@@ -267,6 +306,44 @@ export default class ChallengeService {
       }
     }
     return response;
+  }
+
+  /**
+   * Retrieve the list of active challenges for the given user.
+   * @param token The user JWT
+   */
+  public static async getActiveChallengesOfUser(token: string) {
+    try {
+      const profile: any = jwt.decode(token);
+      const url = constants.memberChallengesUrl.replace('{memberId}', profile.handle);
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return _.get(data, 'result.content');
+    } catch (err) {
+      throw new Error(constants.userChallengesLoadFailedMessage);
+    }
+  }
+
+  /**
+   * Initialize the current workspace at the root folder with a .topcoderrc file
+   * @param workspacePath The current workspacePath
+   * @param challengeId The challenge id to write to the .topcoderrc file
+   */
+  public static async initializeWorkspace(workspacePath: string, challengeId: string) {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(path.join(workspacePath, '.topcoderrc'), JSON.stringify({
+        challengeId: `${challengeId}`
+      }), (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
   /**
@@ -442,5 +519,16 @@ export default class ChallengeService {
     const decodedToken: any = jwt.decode(userToken);
     const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined;
     return registerEnabled ? buttonHtml : '';
+  }
+
+  /**
+   * Returns the html to display the button that will initialize the current workspace for submission
+   * @param challengeDetails The challenge details
+   */
+  private static generateInitWorkspaceButtonHtml(challengeDetails: any) {
+    return `
+    <button id="initWorkspaceButton" onclick='initializeWorkspace(${challengeDetails.challengeId})'>
+      Initialize Workspace
+    </button>`;
   }
 }

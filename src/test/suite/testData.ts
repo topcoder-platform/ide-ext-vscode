@@ -7270,3 +7270,3528 @@ export const closedForSubmissionChallengeDetails = {
   "numberOfSubmissions": 21,
   "numberOfSubmitters": 8
 }
+
+export const memberChallengesList = {
+  "id": "4da4e65e:16cb911536f:-7b02",
+  "result": {
+    "success": true,
+    "status": 200,
+    "metadata": {
+      "totalCount": 32,
+      "allChallengesCount": 32,
+      "myChallengesCount": 32,
+      "openChallengesCount": 7,
+      "ongoingChallengesCount": 25
+    },
+    "content": [
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissions": [
+            {
+              "id": 208520,
+              "submittedAt": "2019-08-18T07:15:41.000Z",
+              "status": "Active",
+              "challengeId": 30052924,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208521,
+              "submittedAt": "2019-08-18T07:30:39.000Z",
+              "status": "Active",
+              "challengeId": 30052924,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208524,
+              "submittedAt": "2019-08-22T16:44:13.000Z",
+              "status": "Active",
+              "challengeId": 30052924,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208525,
+              "submittedAt": "2019-08-22T16:44:50.000Z",
+              "status": "Active",
+              "challengeId": 30052924,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2019-05-07T21:27Z",
+        "createdAt": "2018-09-03T15:28Z",
+        "createdBy": "23274118",
+        "updatedBy": "22838965",
+        "technologies": [
+          "Other"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "F2F Challenge - 1001",
+        "reviewType": "INTERNAL",
+        "id": 30052924,
+        "forumId": 31139,
+        "numSubmissions": 88,
+        "numRegistrants": 19,
+        "numSubmitters": 10,
+        "registrationStartDate": "2018-09-03T15:32:18.767Z",
+        "registrationEndDate": "2020-09-13T15:31:00.000Z",
+        "submissionEndDate": "2020-10-01T15:34:00.000Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 15,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 753868,
+          "phaseType": "Iterative Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+          "scheduledEndTime": "2018-09-04T15:40:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 7572,
+        "currentPhases": [
+          {
+            "id": 753867,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-03T15:32:18.767Z",
+            "scheduledEndTime": "2020-09-13T15:31:00.000Z",
+            "actualStartTime": "2018-09-03T15:32:18.767Z",
+            "fixedStartTime": "2018-09-03T15:32:18.767Z",
+            "duration": 64022381233
+          },
+          {
+            "id": 753869,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+            "scheduledEndTime": "2020-10-01T15:34:00.000Z",
+            "actualStartTime": "2018-09-03T15:40:18.874Z",
+            "duration": 65577281126
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 753867,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-03T15:32:18.767Z",
+            "scheduledEndTime": "2020-09-13T15:31:00.000Z",
+            "actualStartTime": "2018-09-03T15:32:18.767Z",
+            "fixedStartTime": "2018-09-03T15:32:18.767Z",
+            "duration": 64022381233
+          },
+          {
+            "id": 753868,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+            "scheduledEndTime": "2018-09-04T15:40:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 753869,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-03T15:40:18.874Z",
+            "scheduledEndTime": "2020-10-01T15:34:00.000Z",
+            "actualStartTime": "2018-09-03T15:40:18.874Z",
+            "duration": 65577281126
+          }
+        ],
+        "prizes": [
+          15
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-03-19T19:45Z",
+        "createdAt": "2019-03-19T19:32Z",
+        "createdBy": "8547899",
+        "updatedBy": "8547899",
+        "status": "ACTIVE",
+        "track": "DESIGN",
+        "subTrack": "DESIGN_FIRST_2_FINISH",
+        "name": "test forum design",
+        "reviewType": "INTERNAL",
+        "id": 30054692,
+        "forumId": 602597,
+        "numSubmissions": 0,
+        "numRegistrants": 8,
+        "numSubmitters": 0,
+        "registrationStartDate": "2019-03-19T19:45:55.563Z",
+        "registrationEndDate": "2020-03-30T19:45:00.000Z",
+        "submissionEndDate": "2020-04-01T21:39:00.000Z",
+        "totalPrize": 200,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 764566,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-03-19T21:44:44.588Z",
+          "scheduledEndTime": "2020-04-29T21:44:00.000Z",
+          "duration": 35164800000
+        },
+        "projectId": 9616,
+        "currentPhases": [
+          {
+            "id": 764565,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T19:45:55.563Z",
+            "scheduledEndTime": "2020-03-30T19:45:00.000Z",
+            "actualStartTime": "2019-03-19T19:45:55.563Z",
+            "fixedStartTime": "2019-03-19T13:00:00.000Z",
+            "duration": 32572800000
+          },
+          {
+            "id": 764567,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T21:44:44.588Z",
+            "scheduledEndTime": "2020-04-01T21:39:00.000Z",
+            "actualStartTime": "2019-03-19T21:44:44.588Z",
+            "duration": 32745300000
+          }
+        ],
+        "submissionViewable": true,
+        "allPhases": [
+          {
+            "id": 764565,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T19:45:55.563Z",
+            "scheduledEndTime": "2020-03-30T19:45:00.000Z",
+            "actualStartTime": "2019-03-19T19:45:55.563Z",
+            "fixedStartTime": "2019-03-19T13:00:00.000Z",
+            "duration": 32572800000
+          },
+          {
+            "id": 764566,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-03-19T21:44:44.588Z",
+            "scheduledEndTime": "2020-04-29T21:44:00.000Z",
+            "duration": 35164800000
+          },
+          {
+            "id": 764567,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T21:44:44.588Z",
+            "scheduledEndTime": "2020-04-01T21:39:00.000Z",
+            "actualStartTime": "2019-03-19T21:44:44.588Z",
+            "duration": 32745300000
+          }
+        ],
+        "prizes": [
+          200
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-03-19T19:24Z",
+        "createdAt": "2019-03-19T19:23Z",
+        "createdBy": "8547899",
+        "updatedBy": "8547899",
+        "technologies": [
+          "Other"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "test forum watch 1",
+        "reviewType": "INTERNAL",
+        "id": 30054690,
+        "forumId": 32828,
+        "numSubmissions": 6,
+        "numRegistrants": 9,
+        "numSubmitters": 2,
+        "registrationStartDate": "2019-03-19T21:27:08.117Z",
+        "registrationEndDate": "2020-03-31T21:27:00.000Z",
+        "submissionEndDate": "2020-03-31T21:31:00.000Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 45,
+        "isPrivate": false,
+        "projectId": 6900,
+        "currentPhases": [
+          {
+            "id": 764553,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T21:27:08.117Z",
+            "scheduledEndTime": "2020-03-31T21:27:00.000Z",
+            "actualStartTime": "2019-03-19T21:27:08.117Z",
+            "fixedStartTime": "2019-03-19T13:00:00.000Z",
+            "duration": 32659200000
+          },
+          {
+            "id": 764554,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-06-06T10:34:40.118Z",
+            "scheduledEndTime": "2019-06-07T10:34:00.000Z",
+            "actualStartTime": "2019-06-06T10:34:40.118Z",
+            "duration": 86400000
+          },
+          {
+            "id": 764555,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T21:36:43.921Z",
+            "scheduledEndTime": "2020-03-31T21:31:00.000Z",
+            "actualStartTime": "2019-03-19T21:36:43.921Z",
+            "duration": 32658900000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 764553,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T21:27:08.117Z",
+            "scheduledEndTime": "2020-03-31T21:27:00.000Z",
+            "actualStartTime": "2019-03-19T21:27:08.117Z",
+            "fixedStartTime": "2019-03-19T13:00:00.000Z",
+            "duration": 32659200000
+          },
+          {
+            "id": 764554,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-06-06T10:34:40.118Z",
+            "scheduledEndTime": "2019-06-07T10:34:00.000Z",
+            "actualStartTime": "2019-06-06T10:34:40.118Z",
+            "duration": 86400000
+          },
+          {
+            "id": 764555,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-19T21:36:43.921Z",
+            "scheduledEndTime": "2020-03-31T21:31:00.000Z",
+            "actualStartTime": "2019-03-19T21:36:43.921Z",
+            "duration": 32658900000
+          }
+        ],
+        "prizes": [
+          45
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-06-05T09:24Z",
+        "createdAt": "2015-07-27T17:10Z",
+        "createdBy": "11823846",
+        "updatedBy": "8547899",
+        "technologies": [
+          ".NET"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Code Dev-Env Test",
+        "reviewType": "COMMUNITY",
+        "id": 30049360,
+        "forumId": 28457,
+        "numSubmissions": 7,
+        "numRegistrants": 22,
+        "numSubmitters": 7,
+        "registrationStartDate": "2015-07-27T13:00:00.000Z",
+        "registrationEndDate": "2019-12-02T14:00:00.000Z",
+        "submissionEndDate": "2019-12-02T14:00:00.000Z",
+        "platforms": [
+          "Android"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 733197,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-12-02T14:00:00.000Z",
+          "scheduledEndTime": "2019-12-04T14:00:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7572,
+        "currentPhases": [
+          {
+            "id": 733195,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2015-07-27T13:00:00.000Z",
+            "scheduledEndTime": "2019-12-02T14:00:00.000Z",
+            "actualStartTime": "2015-07-27T13:00:00.000Z",
+            "fixedStartTime": "2015-07-27T13:00:00.000Z",
+            "duration": 137293200000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 733195,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2015-07-27T13:00:00.000Z",
+            "scheduledEndTime": "2019-12-02T14:00:00.000Z",
+            "actualStartTime": "2015-07-27T13:00:00.000Z",
+            "fixedStartTime": "2015-07-27T13:00:00.000Z",
+            "duration": 137293200000
+          },
+          {
+            "id": 733196,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-07-27T13:05:00.000Z",
+            "scheduledEndTime": "2019-12-02T14:00:00.000Z",
+            "duration": 137292900000
+          },
+          {
+            "id": 733197,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-12-02T14:00:00.000Z",
+            "scheduledEndTime": "2019-12-04T14:00:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 733198,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-12-04T14:00:00.000Z",
+            "scheduledEndTime": "2019-12-05T14:00:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 733199,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-12-05T14:00:00.000Z",
+            "scheduledEndTime": "2019-12-06T02:00:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-08-21T06:12Z",
+        "createdAt": "2019-07-23T14:28Z",
+        "createdBy": "151743",
+        "updatedBy": "8547899",
+        "technologies": [
+          "Node.js"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Accessibility Test NDA Challenge",
+        "reviewType": "INTERNAL",
+        "id": 30055274,
+        "forumId": 30008,
+        "numSubmissions": 3,
+        "numRegistrants": 6,
+        "numSubmitters": 3,
+        "registrationStartDate": "2019-07-23T16:54:11.979Z",
+        "registrationEndDate": "2019-08-30T16:54:00.000Z",
+        "submissionEndDate": "2019-08-31T16:55:00.000Z",
+        "platforms": [
+          "Android"
+        ],
+        "totalPrize": 150,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 768499,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-08-31T16:55:00.000Z",
+          "scheduledEndTime": "2019-09-02T16:55:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 10833,
+        "currentPhases": [
+          {
+            "id": 768497,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-23T16:54:11.979Z",
+            "scheduledEndTime": "2019-08-30T16:54:00.000Z",
+            "actualStartTime": "2019-07-23T16:54:11.979Z",
+            "fixedStartTime": "2019-07-23T13:00:00.000Z",
+            "duration": 3283200000
+          },
+          {
+            "id": 768498,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-23T17:00:50.141Z",
+            "scheduledEndTime": "2019-08-31T16:55:00.000Z",
+            "actualStartTime": "2019-07-23T17:00:50.141Z",
+            "duration": 3369300000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 768497,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-23T16:54:11.979Z",
+            "scheduledEndTime": "2019-08-30T16:54:00.000Z",
+            "actualStartTime": "2019-07-23T16:54:11.979Z",
+            "fixedStartTime": "2019-07-23T13:00:00.000Z",
+            "duration": 3283200000
+          },
+          {
+            "id": 768498,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-23T17:00:50.141Z",
+            "scheduledEndTime": "2019-08-31T16:55:00.000Z",
+            "actualStartTime": "2019-07-23T17:00:50.141Z",
+            "duration": 3369300000
+          },
+          {
+            "id": 768499,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-08-31T16:55:00.000Z",
+            "scheduledEndTime": "2019-09-02T16:55:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 768500,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-09-02T16:55:00.000Z",
+            "scheduledEndTime": "2019-09-03T16:55:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 768501,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-09-03T16:55:00.000Z",
+            "scheduledEndTime": "2019-09-04T04:55:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          100,
+          50
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter",
+            "Reviewer",
+            "Copilot",
+            "Approver"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissions": [
+            {
+              "id": 207952,
+              "submittedAt": "2019-07-13T14:21:46.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208032,
+              "submittedAt": "2019-07-15T18:02:38.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208033,
+              "submittedAt": "2019-07-15T18:34:15.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208034,
+              "submittedAt": "2019-07-15T19:14:25.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208424,
+              "submittedAt": "2019-07-25T06:09:35.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208485,
+              "submittedAt": "2019-08-06T10:49:58.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208486,
+              "submittedAt": "2019-08-07T11:22:03.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208487,
+              "submittedAt": "2019-08-07T11:29:04.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208488,
+              "submittedAt": "2019-08-07T12:37:26.000Z",
+              "status": "Active",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 208458,
+              "submittedAt": "2019-07-26T13:19:16.000Z",
+              "status": "Deleted",
+              "challengeId": 30055217,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2019-07-10T14:38Z",
+        "createdAt": "2019-07-10T14:24Z",
+        "createdBy": "23124329",
+        "updatedBy": "23225544",
+        "technologies": [
+          "Other"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Atom Package Dummy Contest",
+        "reviewType": "INTERNAL",
+        "id": 30055217,
+        "forumId": 70826,
+        "numSubmissions": 5,
+        "numRegistrants": 7,
+        "numSubmitters": 5,
+        "registrationStartDate": "2019-07-10T16:35:42.916Z",
+        "registrationEndDate": "2019-08-31T16:35:00.000Z",
+        "submissionEndDate": "2019-08-31T16:42:00.000Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 2,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 768089,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-08-31T16:42:00.000Z",
+          "scheduledEndTime": "2019-09-02T16:42:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 768087,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-10T16:35:42.916Z",
+            "scheduledEndTime": "2019-08-31T16:35:00.000Z",
+            "actualStartTime": "2019-07-10T16:35:42.916Z",
+            "fixedStartTime": "2019-07-10T13:00:00.000Z",
+            "duration": 4492800000
+          },
+          {
+            "id": 768088,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-10T16:47:05.569Z",
+            "scheduledEndTime": "2019-08-31T16:42:00.000Z",
+            "actualStartTime": "2019-07-10T16:47:05.569Z",
+            "duration": 4492500000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 768087,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-10T16:35:42.916Z",
+            "scheduledEndTime": "2019-08-31T16:35:00.000Z",
+            "actualStartTime": "2019-07-10T16:35:42.916Z",
+            "fixedStartTime": "2019-07-10T13:00:00.000Z",
+            "duration": 4492800000
+          },
+          {
+            "id": 768088,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-10T16:47:05.569Z",
+            "scheduledEndTime": "2019-08-31T16:42:00.000Z",
+            "actualStartTime": "2019-07-10T16:47:05.569Z",
+            "duration": 4492500000
+          },
+          {
+            "id": 768089,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-08-31T16:42:00.000Z",
+            "scheduledEndTime": "2019-09-02T16:42:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 768090,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-09-02T16:42:00.000Z",
+            "scheduledEndTime": "2019-09-03T16:42:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 768091,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-09-03T16:42:00.000Z",
+            "scheduledEndTime": "2019-09-04T04:42:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          1,
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-08-18T06:17Z",
+        "createdAt": "2019-07-18T06:12Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "DEVELOP_MARATHON_MATCH",
+        "name": "MM-Practice-Challenge-Dev",
+        "reviewType": "COMMUNITY",
+        "id": 30055245,
+        "forumId": 0,
+        "numSubmissions": 39,
+        "numRegistrants": 6,
+        "numSubmitters": 1,
+        "registrationStartDate": "2019-07-18T06:15:41.672Z",
+        "registrationEndDate": "2019-08-08T07:04:21.242Z",
+        "submissionEndDate": "2019-08-18T06:17:09.622Z",
+        "totalPrize": 3000,
+        "isPrivate": false,
+        "projectId": 7377,
+        "currentPhases": [
+          {
+            "id": 768287,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-08-18T06:17:31.853Z",
+            "scheduledEndTime": "2019-08-20T06:17:00.000Z",
+            "actualStartTime": "2019-08-18T06:17:31.853Z",
+            "duration": 172800000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 768285,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-18T06:15:41.672Z",
+            "scheduledEndTime": "2019-08-08T07:04:21.242Z",
+            "actualStartTime": "2019-07-18T06:15:41.672Z",
+            "actualEndTime": "2019-08-08T07:04:21.242Z",
+            "fixedStartTime": "2019-07-18T05:45:00.000Z",
+            "duration": 1781958328
+          },
+          {
+            "id": 768286,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-18T06:20:19.259Z",
+            "scheduledEndTime": "2019-08-18T06:17:09.622Z",
+            "actualStartTime": "2019-07-18T06:20:19.259Z",
+            "actualEndTime": "2019-08-18T06:17:09.622Z",
+            "duration": 2678100000
+          },
+          {
+            "id": 768287,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-08-18T06:17:31.853Z",
+            "scheduledEndTime": "2019-08-20T06:17:00.000Z",
+            "actualStartTime": "2019-08-18T06:17:31.853Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          2000,
+          1000
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-08-05T09:07Z",
+        "createdAt": "2019-07-23T14:45Z",
+        "createdBy": "151743",
+        "updatedBy": "22841596",
+        "technologies": [
+          ".NET System.Addins"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "Test Without NDA",
+        "reviewType": "INTERNAL",
+        "id": 30055275,
+        "forumId": 30008,
+        "numSubmissions": 0,
+        "numRegistrants": 3,
+        "numSubmitters": 0,
+        "registrationStartDate": "2019-07-23T17:35:23.611Z",
+        "registrationEndDate": "2019-08-02T17:36:08.883Z",
+        "submissionEndDate": "2019-08-05T09:07:33.239Z",
+        "platforms": [
+          "Android"
+        ],
+        "totalPrize": 800,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 768506,
+          "phaseType": "Iterative Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-07-26T09:12:12.543Z",
+          "scheduledEndTime": "2019-07-27T09:12:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 10833,
+        "currentPhases": [
+
+        ],
+        "allPhases": [
+          {
+            "id": 768505,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-23T17:35:23.611Z",
+            "scheduledEndTime": "2019-08-02T17:36:08.883Z",
+            "actualStartTime": "2019-07-23T17:35:23.611Z",
+            "actualEndTime": "2019-08-02T17:36:08.883Z",
+            "fixedStartTime": "2019-07-23T13:00:00.000Z",
+            "duration": 864000000
+          },
+          {
+            "id": 768506,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-26T09:12:12.543Z",
+            "scheduledEndTime": "2019-07-27T09:12:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 768507,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-26T09:12:12.543Z",
+            "scheduledEndTime": "2019-08-05T09:07:33.239Z",
+            "actualStartTime": "2019-07-26T09:12:12.543Z",
+            "actualEndTime": "2019-08-05T09:07:33.239Z",
+            "duration": 863700000
+          }
+        ],
+        "prizes": [
+          800
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Approver",
+            "Submitter",
+            "Iterative Reviewer",
+            "Copilot"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-07-27T18:38Z",
+        "createdAt": "2019-07-17T16:04Z",
+        "createdBy": "23124329",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Other"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "F2F Contest to test Playoff",
+        "reviewType": "INTERNAL",
+        "id": 30055240,
+        "numSubmissions": 1,
+        "numRegistrants": 4,
+        "numSubmitters": 1,
+        "registrationStartDate": "2019-07-17T18:34:13.722Z",
+        "registrationEndDate": "2019-07-27T18:35:15.980Z",
+        "submissionEndDate": "2019-07-27T18:38:52.458Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 1,
+        "isPrivate": false,
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 768256,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-19T18:09:23.093Z",
+            "scheduledEndTime": "2019-07-20T18:09:00.000Z",
+            "actualStartTime": "2019-07-19T18:09:23.093Z",
+            "duration": 86400000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 768255,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-17T18:34:13.722Z",
+            "scheduledEndTime": "2019-07-27T18:35:15.980Z",
+            "actualStartTime": "2019-07-17T18:34:13.722Z",
+            "actualEndTime": "2019-07-27T18:35:15.980Z",
+            "fixedStartTime": "2019-07-17T16:00:00.000Z",
+            "duration": 864000000
+          },
+          {
+            "id": 768256,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-19T18:09:23.093Z",
+            "scheduledEndTime": "2019-07-20T18:09:00.000Z",
+            "actualStartTime": "2019-07-19T18:09:23.093Z",
+            "duration": 86400000
+          },
+          {
+            "id": 768257,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-17T18:42:35.976Z",
+            "scheduledEndTime": "2019-07-27T18:38:52.458Z",
+            "actualStartTime": "2019-07-17T18:42:35.976Z",
+            "actualEndTime": "2019-07-27T18:38:52.458Z",
+            "duration": 863700000
+          }
+        ],
+        "prizes": [
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-07-25T13:01Z",
+        "createdAt": "2019-07-19T04:33Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Apache Derby"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Test challenge",
+        "reviewType": "COMMUNITY",
+        "id": 30055247,
+        "numSubmissions": 1,
+        "numRegistrants": 1,
+        "numSubmitters": 1,
+        "registrationStartDate": "2019-07-20T13:01:36.397Z",
+        "registrationEndDate": "2019-07-22T13:01:15.523Z",
+        "submissionEndDate": "2019-07-25T13:01:14.555Z",
+        "platforms": [
+          "Beanstalk"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 768302,
+          "phaseType": "Appeals",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-07-27T13:01:00.000Z",
+          "scheduledEndTime": "2019-07-28T13:01:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 768301,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-25T13:01:21.686Z",
+            "scheduledEndTime": "2019-07-27T13:01:00.000Z",
+            "actualStartTime": "2019-07-25T13:01:21.686Z",
+            "duration": 172800000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 768299,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-20T13:01:36.397Z",
+            "scheduledEndTime": "2019-07-22T13:01:15.523Z",
+            "actualStartTime": "2019-07-20T13:01:36.397Z",
+            "actualEndTime": "2019-07-22T13:01:15.523Z",
+            "fixedStartTime": "2019-07-20T13:00:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 768300,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-20T13:06:25.058Z",
+            "scheduledEndTime": "2019-07-25T13:01:14.555Z",
+            "actualStartTime": "2019-07-20T13:06:25.058Z",
+            "actualEndTime": "2019-07-25T13:01:14.555Z",
+            "duration": 431700000
+          },
+          {
+            "id": 768301,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-25T13:01:21.686Z",
+            "scheduledEndTime": "2019-07-27T13:01:00.000Z",
+            "actualStartTime": "2019-07-25T13:01:21.686Z",
+            "duration": 172800000
+          },
+          {
+            "id": 768302,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-27T13:01:00.000Z",
+            "scheduledEndTime": "2019-07-28T13:01:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 768303,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-28T13:01:00.000Z",
+            "scheduledEndTime": "2019-07-29T01:01:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Approver",
+            "Reviewer",
+            "Copilot",
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-07-01T02:46Z",
+        "createdAt": "2019-07-01T01:58Z",
+        "createdBy": "23124329",
+        "updatedBy": "23124329",
+        "technologies": [
+          "ActionScript"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "VSCode Extension Automation 2",
+        "reviewType": "INTERNAL",
+        "id": 30055164,
+        "forumId": 11111,
+        "numSubmissions": 3,
+        "numRegistrants": 5,
+        "numSubmitters": 3,
+        "registrationStartDate": "2019-07-01T04:03:40.959Z",
+        "registrationEndDate": "2019-07-07T10:03:00.000Z",
+        "submissionEndDate": "2019-07-09T14:12:00.000Z",
+        "platforms": [
+          "AWS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 767827,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-07-09T14:12:00.000Z",
+          "scheduledEndTime": "2019-07-11T14:12:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 767825,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-01T04:03:40.959Z",
+            "scheduledEndTime": "2019-07-07T10:03:00.000Z",
+            "actualStartTime": "2019-07-01T04:03:40.959Z",
+            "fixedStartTime": "2019-07-01T02:25:00.000Z",
+            "duration": 540000000
+          },
+          {
+            "id": 767826,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-01T04:17:19.700Z",
+            "scheduledEndTime": "2019-07-09T14:12:00.000Z",
+            "actualStartTime": "2019-07-01T04:17:19.700Z",
+            "duration": 726900000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 767825,
+            "phaseType": "Registration",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-01T04:03:40.959Z",
+            "scheduledEndTime": "2019-07-07T10:03:00.000Z",
+            "actualStartTime": "2019-07-01T04:03:40.959Z",
+            "fixedStartTime": "2019-07-01T02:25:00.000Z",
+            "duration": 540000000
+          },
+          {
+            "id": 767826,
+            "phaseType": "Submission",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-01T04:17:19.700Z",
+            "scheduledEndTime": "2019-07-09T14:12:00.000Z",
+            "actualStartTime": "2019-07-01T04:17:19.700Z",
+            "duration": 726900000
+          },
+          {
+            "id": 767827,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-09T14:12:00.000Z",
+            "scheduledEndTime": "2019-07-11T14:12:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 767828,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-11T14:12:00.000Z",
+            "scheduledEndTime": "2019-07-12T14:12:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 767829,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-12T14:12:00.000Z",
+            "scheduledEndTime": "2019-07-13T02:12:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "ab",
+        "codeRepo": "ab",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Copilot",
+            "Approver",
+            "Reviewer",
+            "Post-Mortem Reviewer",
+            "Submitter",
+            "Post-Mortem Reviewer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-07-06T05:15Z",
+        "createdAt": "2019-07-01T02:56Z",
+        "createdBy": "23124329",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Other"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "VSCode Extension Dummy Contest 2",
+        "reviewType": "INTERNAL",
+        "id": 30055165,
+        "forumId": 70826,
+        "numSubmissions": 0,
+        "numRegistrants": 1,
+        "numSubmitters": 0,
+        "registrationStartDate": "2019-07-01T05:12:54.237Z",
+        "registrationEndDate": "2019-07-06T05:15:43.575Z",
+        "submissionEndDate": "2019-07-06T05:15:55.347Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 2,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 767837,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-07-06T05:15:55.347Z",
+          "scheduledEndTime": "2019-07-08T05:15:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+
+        ],
+        "allPhases": [
+          {
+            "id": 767835,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-01T05:12:54.237Z",
+            "scheduledEndTime": "2019-07-06T05:15:43.575Z",
+            "actualStartTime": "2019-07-01T05:12:54.237Z",
+            "actualEndTime": "2019-07-06T05:15:43.575Z",
+            "fixedStartTime": "2019-07-01T03:01:00.000Z",
+            "duration": 432000000
+          },
+          {
+            "id": 767836,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-01T05:17:15.536Z",
+            "scheduledEndTime": "2019-07-06T05:15:55.347Z",
+            "actualStartTime": "2019-07-01T05:17:15.536Z",
+            "actualEndTime": "2019-07-06T05:15:55.347Z",
+            "duration": 431700000
+          },
+          {
+            "id": 767837,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-06T05:15:55.347Z",
+            "scheduledEndTime": "2019-07-08T05:15:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 767838,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-08T05:15:00.000Z",
+            "scheduledEndTime": "2019-07-09T05:15:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 767839,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-07-09T05:15:00.000Z",
+            "scheduledEndTime": "2019-07-09T17:15:00.000Z",
+            "duration": 43200000
+          },
+          {
+            "id": 767787,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-06T05:16:00.448Z",
+            "scheduledEndTime": "2019-07-10T14:20:25.451Z",
+            "actualStartTime": "2019-07-06T05:16:00.448Z",
+            "actualEndTime": "2019-07-10T14:20:25.451Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          1,
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Reviewer",
+            "Copilot",
+            "Post-Mortem Reviewer",
+            "Post-Mortem Reviewer",
+            "Submitter",
+            "Approver"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2019-06-30T15:59Z",
+        "createdAt": "2019-06-25T13:51Z",
+        "createdBy": "23124329",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Other"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "VSCode Extension Dummy Contest",
+        "reviewType": "INTERNAL",
+        "id": 30055150,
+        "numSubmissions": 2,
+        "numRegistrants": 3,
+        "numSubmitters": 2,
+        "registrationStartDate": "2019-06-25T15:58:31.916Z",
+        "registrationEndDate": "2019-06-30T15:59:29.204Z",
+        "submissionEndDate": "2019-06-30T15:59:35.700Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 2,
+        "isPrivate": false,
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 768101,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-11T14:30:07.756Z",
+            "scheduledEndTime": "2019-07-12T14:30:00.000Z",
+            "actualStartTime": "2019-07-11T14:30:07.756Z",
+            "duration": 86400000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 767715,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-06-25T15:58:31.916Z",
+            "scheduledEndTime": "2019-06-30T15:59:29.204Z",
+            "actualStartTime": "2019-06-25T15:58:31.916Z",
+            "actualEndTime": "2019-06-30T15:59:29.204Z",
+            "fixedStartTime": "2019-06-25T13:00:00.000Z",
+            "duration": 432000000
+          },
+          {
+            "id": 767716,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-06-25T16:04:53.394Z",
+            "scheduledEndTime": "2019-06-30T15:59:35.700Z",
+            "actualStartTime": "2019-06-25T16:04:53.394Z",
+            "actualEndTime": "2019-06-30T15:59:35.700Z",
+            "duration": 431700000
+          },
+          {
+            "id": 767717,
+            "phaseType": "Review",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-06-30T15:59:38.824Z",
+            "scheduledEndTime": "2019-07-10T14:24:27.347Z",
+            "actualStartTime": "2019-06-30T15:59:38.824Z",
+            "actualEndTime": "2019-07-10T14:24:27.347Z",
+            "duration": 172800000
+          },
+          {
+            "id": 767718,
+            "phaseType": "Appeals",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-10T14:24:31.022Z",
+            "scheduledEndTime": "2019-07-11T14:28:33.521Z",
+            "actualStartTime": "2019-07-10T14:24:31.022Z",
+            "actualEndTime": "2019-07-11T14:28:33.521Z",
+            "duration": 86400000
+          },
+          {
+            "id": 767719,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-07-11T14:28:36.506Z",
+            "scheduledEndTime": "2019-07-11T14:29:28.197Z",
+            "actualStartTime": "2019-07-11T14:28:36.506Z",
+            "actualEndTime": "2019-07-11T14:29:28.197Z",
+            "duration": 43200000
+          },
+          {
+            "id": 768101,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-07-11T14:30:07.756Z",
+            "scheduledEndTime": "2019-07-12T14:30:00.000Z",
+            "actualStartTime": "2019-07-11T14:30:07.756Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          1,
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissions": [
+            {
+              "id": 207520,
+              "submittedAt": "2019-06-11T07:08:18.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207531,
+              "submittedAt": "2019-06-11T07:44:28.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207550,
+              "submittedAt": "2019-06-12T03:21:00.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207655,
+              "submittedAt": "2019-06-12T09:27:19.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207656,
+              "submittedAt": "2019-06-12T09:27:32.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207657,
+              "submittedAt": "2019-06-12T09:28:00.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207684,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207685,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207686,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207690,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207691,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207692,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207693,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207694,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207695,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207697,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            },
+            {
+              "id": 207700,
+              "submittedAt": "2019-06-11T10:15:08.000Z",
+              "status": "Active",
+              "score": 100,
+              "challengeId": 30055071,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2019-06-22T09:32Z",
+        "createdAt": "2019-05-21T14:42Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "DEVELOP_MARATHON_MATCH",
+        "name": "Test-MM-For-Rated-Match",
+        "reviewType": "COMMUNITY",
+        "id": 30055071,
+        "forumId": 33075,
+        "numSubmissions": 53,
+        "numRegistrants": 8,
+        "numSubmitters": 7,
+        "registrationStartDate": "2019-05-23T09:31:37.763Z",
+        "registrationEndDate": "2019-06-22T00:31:35.923Z",
+        "submissionEndDate": "2019-06-22T09:32:58.028Z",
+        "totalPrize": 3000,
+        "isPrivate": false,
+        "projectId": 6900,
+        "currentPhases": [
+          {
+            "id": 767281,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-06-22T09:33:20.137Z",
+            "scheduledEndTime": "2019-06-24T09:33:00.000Z",
+            "actualStartTime": "2019-06-22T09:33:20.137Z",
+            "duration": 172800000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 767279,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-05-23T09:31:37.763Z",
+            "scheduledEndTime": "2019-06-22T00:31:35.923Z",
+            "actualStartTime": "2019-05-23T09:31:37.763Z",
+            "actualEndTime": "2019-06-22T00:31:35.923Z",
+            "fixedStartTime": "2019-05-22T13:00:00.000Z",
+            "duration": 2559600000
+          },
+          {
+            "id": 767280,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-05-23T09:37:12.226Z",
+            "scheduledEndTime": "2019-06-22T09:32:58.028Z",
+            "actualStartTime": "2019-05-23T09:37:12.226Z",
+            "actualEndTime": "2019-06-22T09:32:58.028Z",
+            "duration": 2591700000
+          },
+          {
+            "id": 767281,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-06-22T09:33:20.137Z",
+            "scheduledEndTime": "2019-06-24T09:33:00.000Z",
+            "actualStartTime": "2019-06-22T09:33:20.137Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          2000,
+          1000
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissions": [
+            {
+              "id": 207087,
+              "submittedAt": "2019-03-06T11:07:01.000Z",
+              "status": "Active",
+              "challengeId": 30054675,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2019-06-05T09:29Z",
+        "createdAt": "2019-02-12T11:29Z",
+        "createdBy": "22748790",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Python",
+          "Data Science"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "TC3 Code02 - test tutorial #2",
+        "reviewType": "INTERNAL",
+        "id": 30054675,
+        "forumId": 32819,
+        "numSubmissions": 5,
+        "numRegistrants": 7,
+        "numSubmitters": 5,
+        "registrationStartDate": "2019-02-12T14:01:03.973Z",
+        "registrationEndDate": "2019-03-29T13:01:29.063Z",
+        "submissionEndDate": "2019-03-29T13:04:38.849Z",
+        "platforms": [
+          "Other"
+        ],
+        "totalPrize": 160,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 764436,
+          "phaseType": "Appeals",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2019-03-31T13:04:00.000Z",
+          "scheduledEndTime": "2019-04-01T13:04:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 17898,
+        "currentPhases": [
+          {
+            "id": 764435,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-29T13:04:46.507Z",
+            "scheduledEndTime": "2019-03-31T13:04:00.000Z",
+            "actualStartTime": "2019-03-29T13:04:46.507Z",
+            "duration": 172800000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 764433,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-02-12T14:01:03.973Z",
+            "scheduledEndTime": "2019-03-29T13:01:29.063Z",
+            "actualStartTime": "2019-02-12T14:01:03.973Z",
+            "actualEndTime": "2019-03-29T13:01:29.063Z",
+            "fixedStartTime": "2019-02-12T14:00:00.000Z",
+            "duration": 3884400000
+          },
+          {
+            "id": 764434,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2019-02-12T14:09:25.247Z",
+            "scheduledEndTime": "2019-03-29T13:04:38.849Z",
+            "actualStartTime": "2019-02-12T14:09:25.247Z",
+            "actualEndTime": "2019-03-29T13:04:38.849Z",
+            "duration": 3884100000
+          },
+          {
+            "id": 764435,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2019-03-29T13:04:46.507Z",
+            "scheduledEndTime": "2019-03-31T13:04:00.000Z",
+            "actualStartTime": "2019-03-29T13:04:46.507Z",
+            "duration": 172800000
+          },
+          {
+            "id": 764436,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-03-31T13:04:00.000Z",
+            "scheduledEndTime": "2019-04-01T13:04:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 764437,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2019-04-01T13:04:00.000Z",
+            "scheduledEndTime": "2019-04-02T01:04:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          50,
+          50,
+          50,
+          5,
+          5
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Copilot",
+            "Approver"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-10-14T21:28Z",
+        "createdAt": "2018-10-04T20:46Z",
+        "createdBy": "305384",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Node.js"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "test",
+        "reviewType": "INTERNAL",
+        "id": 30053193,
+        "forumId": 31394,
+        "numSubmissions": 0,
+        "numRegistrants": 0,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-10-04T20:45:50.375Z",
+        "registrationEndDate": "2018-10-14T20:49:00.000Z",
+        "submissionEndDate": "2018-10-14T21:28:48.586Z",
+        "totalPrize": 50,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 755490,
+          "phaseType": "Iterative Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-10-04T21:28:38.747Z",
+          "scheduledEndTime": "2018-10-05T21:28:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 10833,
+        "currentPhases": [
+
+        ],
+        "allPhases": [
+          {
+            "id": 755489,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-10-04T20:45:50.375Z",
+            "scheduledEndTime": "2018-10-14T20:49:00.000Z",
+            "fixedStartTime": "2018-10-04T20:45:50.375Z",
+            "duration": 864249625
+          },
+          {
+            "id": 755490,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-10-04T21:28:38.747Z",
+            "scheduledEndTime": "2018-10-05T21:28:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 755491,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-10-04T21:28:38.747Z",
+            "scheduledEndTime": "2018-10-14T21:28:48.586Z",
+            "actualStartTime": "2018-10-04T21:28:38.747Z",
+            "actualEndTime": "2018-10-14T21:28:48.586Z",
+            "duration": 864000000
+          }
+        ],
+        "prizes": [
+          50
+        ],
+        "isTask": true,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Approver",
+            "Copilot"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-10-14T21:22Z",
+        "createdAt": "2018-10-04T20:42Z",
+        "createdBy": "305384",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Node.js"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "test",
+        "reviewType": "INTERNAL",
+        "id": 30053192,
+        "forumId": 31393,
+        "numSubmissions": 0,
+        "numRegistrants": 0,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-10-04T20:41:50.491Z",
+        "registrationEndDate": "2018-10-14T20:45:00.000Z",
+        "submissionEndDate": "2018-10-14T21:22:47.283Z",
+        "totalPrize": 50,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 755484,
+          "phaseType": "Iterative Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-10-04T21:20:31.568Z",
+          "scheduledEndTime": "2018-10-05T21:20:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 10833,
+        "currentPhases": [
+
+        ],
+        "allPhases": [
+          {
+            "id": 755483,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-10-04T20:41:50.491Z",
+            "scheduledEndTime": "2018-10-14T20:45:00.000Z",
+            "fixedStartTime": "2018-10-04T20:41:50.491Z",
+            "duration": 864249509
+          },
+          {
+            "id": 755484,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-10-04T21:20:31.568Z",
+            "scheduledEndTime": "2018-10-05T21:20:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 755485,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-10-04T21:20:31.568Z",
+            "scheduledEndTime": "2018-10-14T21:22:47.283Z",
+            "actualStartTime": "2018-10-04T21:20:31.568Z",
+            "actualEndTime": "2018-10-14T21:22:47.283Z",
+            "duration": 864000000
+          }
+        ],
+        "prizes": [
+          50
+        ],
+        "isTask": true,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Approver",
+            "Copilot"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-10-14T21:22Z",
+        "createdAt": "2018-10-04T20:40Z",
+        "createdBy": "305384",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Node.js"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "FIRST_2_FINISH",
+        "name": "test",
+        "reviewType": "INTERNAL",
+        "id": 30053191,
+        "forumId": 31392,
+        "numSubmissions": 0,
+        "numRegistrants": 0,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-10-04T20:40:34.865Z",
+        "registrationEndDate": "2018-10-14T20:44:00.000Z",
+        "submissionEndDate": "2018-10-14T21:22:43.361Z",
+        "totalPrize": 50,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 755478,
+          "phaseType": "Iterative Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-10-04T21:20:18.132Z",
+          "scheduledEndTime": "2018-10-05T21:20:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 10833,
+        "currentPhases": [
+
+        ],
+        "allPhases": [
+          {
+            "id": 755477,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-10-04T20:40:34.865Z",
+            "scheduledEndTime": "2018-10-14T20:44:00.000Z",
+            "fixedStartTime": "2018-10-04T20:40:34.865Z",
+            "duration": 864265135
+          },
+          {
+            "id": 755478,
+            "phaseType": "Iterative Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-10-04T21:20:18.132Z",
+            "scheduledEndTime": "2018-10-05T21:20:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 755479,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-10-04T21:20:18.132Z",
+            "scheduledEndTime": "2018-10-14T21:22:43.361Z",
+            "actualStartTime": "2018-10-04T21:20:18.132Z",
+            "actualEndTime": "2018-10-14T21:22:43.361Z",
+            "duration": 864000000
+          }
+        ],
+        "prizes": [
+          50
+        ],
+        "isTask": true,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-09-30T14:47Z",
+        "createdAt": "2018-07-05T14:32Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Node.js"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "MM-Integration-July5th-bySushil-code",
+        "reviewType": "COMMUNITY",
+        "id": 30052115,
+        "forumId": 30416,
+        "numSubmissions": 3,
+        "numRegistrants": 3,
+        "numSubmitters": 3,
+        "registrationStartDate": "2018-07-05T14:46:23.263Z",
+        "registrationEndDate": "2018-08-31T14:47:09.488Z",
+        "submissionEndDate": "2018-09-30T14:47:17.981Z",
+        "platforms": [
+          "NodeJS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 749068,
+          "phaseType": "Appeals",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-10-02T14:47:00.000Z",
+          "scheduledEndTime": "2018-10-03T14:47:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 749067,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-30T14:47:26.194Z",
+            "scheduledEndTime": "2018-10-02T14:47:00.000Z",
+            "actualStartTime": "2018-09-30T14:47:26.194Z",
+            "duration": 172800000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 749065,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-07-05T14:46:23.263Z",
+            "scheduledEndTime": "2018-08-31T14:47:09.488Z",
+            "actualStartTime": "2018-07-05T14:46:23.263Z",
+            "actualEndTime": "2018-08-31T14:47:09.488Z",
+            "fixedStartTime": "2018-07-05T13:00:00.000Z",
+            "duration": 4924800000
+          },
+          {
+            "id": 749066,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-07-05T14:52:07.399Z",
+            "scheduledEndTime": "2018-09-30T14:47:17.981Z",
+            "actualStartTime": "2018-07-05T14:52:07.399Z",
+            "actualEndTime": "2018-09-30T14:47:17.981Z",
+            "duration": 7516500000
+          },
+          {
+            "id": 749067,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-30T14:47:26.194Z",
+            "scheduledEndTime": "2018-10-02T14:47:00.000Z",
+            "actualStartTime": "2018-09-30T14:47:26.194Z",
+            "duration": 172800000
+          },
+          {
+            "id": 749068,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-10-02T14:47:00.000Z",
+            "scheduledEndTime": "2018-10-03T14:47:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 749069,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-10-03T14:47:00.000Z",
+            "scheduledEndTime": "2018-10-04T02:47:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-09-16T13:01Z",
+        "createdAt": "2018-09-11T01:37Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Android"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Test",
+        "reviewType": "COMMUNITY",
+        "id": 30053002,
+        "forumId": 31205,
+        "numSubmissions": 1,
+        "numRegistrants": 2,
+        "numSubmitters": 1,
+        "registrationStartDate": "2018-09-11T13:00:29.580Z",
+        "registrationEndDate": "2018-09-13T13:01:48.913Z",
+        "submissionEndDate": "2018-09-16T13:01:15.688Z",
+        "platforms": [
+          "Cloud Foundry"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 754304,
+          "phaseType": "Appeals",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-09-18T13:01:00.000Z",
+          "scheduledEndTime": "2018-09-19T13:01:00.000Z",
+          "duration": 86400000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 754303,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-16T13:01:34.610Z",
+            "scheduledEndTime": "2018-09-18T13:01:00.000Z",
+            "actualStartTime": "2018-09-16T13:01:34.610Z",
+            "duration": 172800000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 754301,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-09-11T13:00:29.580Z",
+            "scheduledEndTime": "2018-09-13T13:01:48.913Z",
+            "actualStartTime": "2018-09-11T13:00:29.580Z",
+            "actualEndTime": "2018-09-13T13:01:48.913Z",
+            "fixedStartTime": "2018-09-11T13:00:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 754302,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-09-11T13:05:23.727Z",
+            "scheduledEndTime": "2018-09-16T13:01:15.688Z",
+            "actualStartTime": "2018-09-11T13:05:23.727Z",
+            "actualEndTime": "2018-09-16T13:01:15.688Z",
+            "duration": 431700000
+          },
+          {
+            "id": 754303,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-09-16T13:01:34.610Z",
+            "scheduledEndTime": "2018-09-18T13:01:00.000Z",
+            "actualStartTime": "2018-09-16T13:01:34.610Z",
+            "duration": 172800000
+          },
+          {
+            "id": 754304,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-09-18T13:01:00.000Z",
+            "scheduledEndTime": "2018-09-19T13:01:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 754305,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-09-19T13:01:00.000Z",
+            "scheduledEndTime": "2018-09-20T01:01:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-08-26T12:04Z",
+        "createdAt": "2018-05-14T07:43Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "DEVELOP_MARATHON_MATCH",
+        "name": "DIRECTMM-TEST14May-Sushil",
+        "reviewType": "COMMUNITY",
+        "id": 30051904,
+        "forumId": 30309,
+        "numSubmissions": 2,
+        "numRegistrants": 2,
+        "numSubmitters": 2,
+        "registrationStartDate": "2018-05-14T08:03:50.183Z",
+        "registrationEndDate": "2018-05-21T07:04:29.826Z",
+        "submissionEndDate": "2018-08-26T12:04:41.839Z",
+        "totalPrize": 3000,
+        "isPrivate": false,
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 748027,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-08-26T12:04:46.001Z",
+            "scheduledEndTime": "2018-08-28T12:04:00.000Z",
+            "actualStartTime": "2018-08-26T12:04:46.001Z",
+            "duration": 172800000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 748025,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-14T08:03:50.183Z",
+            "scheduledEndTime": "2018-05-21T07:04:29.826Z",
+            "actualStartTime": "2018-05-14T08:03:50.183Z",
+            "actualEndTime": "2018-05-21T07:04:29.826Z",
+            "fixedStartTime": "2018-05-14T08:03:50.183Z",
+            "duration": 601200000
+          },
+          {
+            "id": 748026,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-14T08:10:26.217Z",
+            "scheduledEndTime": "2018-08-26T12:04:41.839Z",
+            "actualStartTime": "2018-05-14T08:10:26.217Z",
+            "actualEndTime": "2018-08-26T12:04:41.839Z",
+            "duration": 8999673783
+          },
+          {
+            "id": 748027,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-08-26T12:04:46.001Z",
+            "scheduledEndTime": "2018-08-28T12:04:00.000Z",
+            "actualStartTime": "2018-08-26T12:04:46.001Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          2000,
+          1000
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-08-04T14:44Z",
+        "createdAt": "2018-07-05T14:27Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "DEVELOP_MARATHON_MATCH",
+        "name": "MM-Integration-July5th-bySushil",
+        "reviewType": "COMMUNITY",
+        "id": 30052113,
+        "forumId": 30415,
+        "numSubmissions": 2,
+        "numRegistrants": 3,
+        "numSubmitters": 2,
+        "registrationStartDate": "2018-07-05T14:43:48.091Z",
+        "registrationEndDate": "2018-08-04T05:43:25.353Z",
+        "submissionEndDate": "2018-08-04T14:44:06.510Z",
+        "totalPrize": 3000,
+        "isPrivate": false,
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 749045,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-08-04T14:44:13.219Z",
+            "scheduledEndTime": "2018-08-06T14:44:00.000Z",
+            "actualStartTime": "2018-08-04T14:44:13.219Z",
+            "duration": 172800000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 749043,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-07-05T14:43:48.091Z",
+            "scheduledEndTime": "2018-08-04T05:43:25.353Z",
+            "actualStartTime": "2018-07-05T14:43:48.091Z",
+            "actualEndTime": "2018-08-04T05:43:25.353Z",
+            "fixedStartTime": "2018-07-05T13:00:00.000Z",
+            "duration": 2559600000
+          },
+          {
+            "id": 749044,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-07-05T14:49:01.804Z",
+            "scheduledEndTime": "2018-08-04T14:44:06.510Z",
+            "actualStartTime": "2018-07-05T14:49:01.804Z",
+            "actualEndTime": "2018-08-04T14:44:06.510Z",
+            "duration": 2591700000
+          },
+          {
+            "id": 749045,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-08-04T14:44:13.219Z",
+            "scheduledEndTime": "2018-08-06T14:44:00.000Z",
+            "actualStartTime": "2018-08-04T14:44:13.219Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          2000,
+          1000
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-07-05T14:30Z",
+        "createdAt": "2018-07-05T14:30Z",
+        "createdBy": "8547899",
+        "updatedBy": "8547899",
+        "status": "ACTIVE",
+        "track": "DESIGN",
+        "subTrack": "WEB_DESIGNS",
+        "name": "MM-Integration-July5th-bySushil-Design",
+        "reviewType": "INTERNAL",
+        "id": 30052114,
+        "forumId": 597685,
+        "numSubmissions": 1,
+        "numRegistrants": 0,
+        "numSubmitters": 1,
+        "registrationStartDate": "2018-07-05T20:49:00.000Z",
+        "registrationEndDate": "2018-07-08T20:49:00.000Z",
+        "submissionEndDate": "2018-07-08T20:49:00.000Z",
+        "totalPrize": 1500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 749055,
+          "phaseType": "Registration",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-07-05T20:49:00.000Z",
+          "scheduledEndTime": "2018-07-08T20:49:00.000Z",
+          "fixedStartTime": "2018-07-05T20:00:00.000Z",
+          "duration": 259200000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 749054,
+            "phaseType": "Specification Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-07-05T14:49:18.195Z",
+            "scheduledEndTime": "2018-07-05T20:49:00.000Z",
+            "actualStartTime": "2018-07-05T14:49:18.195Z",
+            "duration": 21600000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 749053,
+            "phaseType": "Specification Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-07-05T14:46:14.838Z",
+            "scheduledEndTime": "2018-07-05T14:49:11.033Z",
+            "actualStartTime": "2018-07-05T14:46:14.838Z",
+            "actualEndTime": "2018-07-05T14:49:11.033Z",
+            "fixedStartTime": "2018-07-03T14:00:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 749054,
+            "phaseType": "Specification Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-07-05T14:49:18.195Z",
+            "scheduledEndTime": "2018-07-05T20:49:00.000Z",
+            "actualStartTime": "2018-07-05T14:49:18.195Z",
+            "duration": 21600000
+          },
+          {
+            "id": 749055,
+            "phaseType": "Registration",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-07-05T20:49:00.000Z",
+            "scheduledEndTime": "2018-07-08T20:49:00.000Z",
+            "fixedStartTime": "2018-07-05T20:00:00.000Z",
+            "duration": 259200000
+          },
+          {
+            "id": 749056,
+            "phaseType": "Submission",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-07-05T20:54:00.000Z",
+            "scheduledEndTime": "2018-07-08T20:49:00.000Z",
+            "duration": 258900000
+          },
+          {
+            "id": 749057,
+            "phaseType": "Screening",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-07-08T20:49:00.000Z",
+            "scheduledEndTime": "2018-07-09T00:49:00.000Z",
+            "duration": 14400000
+          },
+          {
+            "id": 749058,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-07-09T00:49:00.000Z",
+            "scheduledEndTime": "2018-07-15T00:49:00.000Z",
+            "duration": 518400000
+          },
+          {
+            "id": 749059,
+            "phaseType": "Approval",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-07-15T00:49:00.000Z",
+            "scheduledEndTime": "2018-07-20T00:49:00.000Z",
+            "duration": 432000000
+          }
+        ],
+        "prizes": [
+          1250,
+          250
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-05-04T14:30Z",
+        "createdAt": "2018-05-03T14:12Z",
+        "createdBy": "305384",
+        "updatedBy": "22841596",
+        "technologies": [
+          "API"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "AP Test 05",
+        "reviewType": "COMMUNITY",
+        "id": 30051812,
+        "forumId": 30233,
+        "numSubmissions": 0,
+        "numRegistrants": 1,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-05-03T14:29:32.983Z",
+        "registrationEndDate": "2018-05-04T14:30:45.496Z",
+        "submissionEndDate": "2018-05-04T14:30:50.936Z",
+        "platforms": [
+          "AWS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 747501,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-05-04T14:30:50.936Z",
+          "scheduledEndTime": "2018-05-06T14:30:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 747705,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-04T14:31:08.766Z",
+            "scheduledEndTime": "2018-05-05T14:31:00.000Z",
+            "actualStartTime": "2018-05-04T14:31:08.766Z",
+            "duration": 86400000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 747499,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-03T14:29:32.983Z",
+            "scheduledEndTime": "2018-05-04T14:30:45.496Z",
+            "actualStartTime": "2018-05-03T14:29:32.983Z",
+            "actualEndTime": "2018-05-04T14:30:45.496Z",
+            "fixedStartTime": "2018-05-03T13:00:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747500,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-03T14:34:33.488Z",
+            "scheduledEndTime": "2018-05-04T14:30:50.936Z",
+            "actualStartTime": "2018-05-03T14:34:33.488Z",
+            "actualEndTime": "2018-05-04T14:30:50.936Z",
+            "duration": 86100000
+          },
+          {
+            "id": 747501,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-04T14:30:50.936Z",
+            "scheduledEndTime": "2018-05-06T14:30:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 747502,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-06T14:30:00.000Z",
+            "scheduledEndTime": "2018-05-07T14:30:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747503,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-07T14:30:00.000Z",
+            "scheduledEndTime": "2018-05-08T02:30:00.000Z",
+            "duration": 43200000
+          },
+          {
+            "id": 747705,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-04T14:31:08.766Z",
+            "scheduledEndTime": "2018-05-05T14:31:00.000Z",
+            "actualStartTime": "2018-05-04T14:31:08.766Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-05-04T13:33Z",
+        "createdAt": "2018-05-03T13:16Z",
+        "createdBy": "305384",
+        "updatedBy": "22841596",
+        "technologies": [
+          "API"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "AP Test 04",
+        "reviewType": "COMMUNITY",
+        "id": 30051811,
+        "forumId": 30232,
+        "numSubmissions": 0,
+        "numRegistrants": 0,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-05-03T13:33:20.251Z",
+        "registrationEndDate": "2018-05-04T13:33:17.458Z",
+        "submissionEndDate": "2018-05-04T13:33:22.642Z",
+        "platforms": [
+          "AWS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 747491,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-05-04T13:33:22.642Z",
+          "scheduledEndTime": "2018-05-06T13:33:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 747583,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-04T13:34:34.334Z",
+            "scheduledEndTime": "2018-05-05T13:34:00.000Z",
+            "actualStartTime": "2018-05-04T13:34:34.334Z",
+            "duration": 86400000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 747489,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-03T13:33:20.251Z",
+            "scheduledEndTime": "2018-05-04T13:33:17.458Z",
+            "actualStartTime": "2018-05-03T13:33:20.251Z",
+            "actualEndTime": "2018-05-04T13:33:17.458Z",
+            "fixedStartTime": "2018-05-03T13:00:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747490,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-03T13:38:14.354Z",
+            "scheduledEndTime": "2018-05-04T13:33:22.642Z",
+            "actualStartTime": "2018-05-03T13:38:14.354Z",
+            "actualEndTime": "2018-05-04T13:33:22.642Z",
+            "duration": 86100000
+          },
+          {
+            "id": 747491,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-04T13:33:22.642Z",
+            "scheduledEndTime": "2018-05-06T13:33:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 747492,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-06T13:33:00.000Z",
+            "scheduledEndTime": "2018-05-07T13:33:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747493,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-07T13:33:00.000Z",
+            "scheduledEndTime": "2018-05-08T01:33:00.000Z",
+            "duration": 43200000
+          },
+          {
+            "id": 747583,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-04T13:34:34.334Z",
+            "scheduledEndTime": "2018-05-05T13:34:00.000Z",
+            "actualStartTime": "2018-05-04T13:34:34.334Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-05-02T22:10Z",
+        "createdAt": "2018-05-01T21:48Z",
+        "createdBy": "305384",
+        "updatedBy": "22841596",
+        "technologies": [
+          "API"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "AP Test 03",
+        "reviewType": "COMMUNITY",
+        "id": 30051790,
+        "forumId": 30228,
+        "numSubmissions": 0,
+        "numRegistrants": 0,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-05-01T22:09:04.896Z",
+        "registrationEndDate": "2018-05-02T22:09:22.900Z",
+        "submissionEndDate": "2018-05-02T22:10:38.095Z",
+        "platforms": [
+          "AWS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 747417,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-05-02T22:10:38.095Z",
+          "scheduledEndTime": "2018-05-04T22:10:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 747461,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-02T22:11:24.150Z",
+            "scheduledEndTime": "2018-05-03T22:11:00.000Z",
+            "actualStartTime": "2018-05-02T22:11:24.150Z",
+            "duration": 86400000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 747415,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-01T22:09:04.896Z",
+            "scheduledEndTime": "2018-05-02T22:09:22.900Z",
+            "actualStartTime": "2018-05-01T22:09:04.896Z",
+            "actualEndTime": "2018-05-02T22:09:22.900Z",
+            "fixedStartTime": "2018-05-01T21:00:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747416,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-01T22:15:17.631Z",
+            "scheduledEndTime": "2018-05-02T22:10:38.095Z",
+            "actualStartTime": "2018-05-01T22:15:17.631Z",
+            "actualEndTime": "2018-05-02T22:10:38.095Z",
+            "duration": 86100000
+          },
+          {
+            "id": 747417,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-02T22:10:38.095Z",
+            "scheduledEndTime": "2018-05-04T22:10:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 747418,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-04T22:10:00.000Z",
+            "scheduledEndTime": "2018-05-05T22:10:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747419,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-05T22:10:00.000Z",
+            "scheduledEndTime": "2018-05-06T10:10:00.000Z",
+            "duration": 43200000
+          },
+          {
+            "id": 747461,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-02T22:11:24.150Z",
+            "scheduledEndTime": "2018-05-03T22:11:00.000Z",
+            "actualStartTime": "2018-05-02T22:11:24.150Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-05-02T14:28Z",
+        "createdAt": "2018-05-01T20:47Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          "API"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "AP Test 02",
+        "reviewType": "COMMUNITY",
+        "id": 30051780,
+        "forumId": 30227,
+        "numSubmissions": 0,
+        "numRegistrants": 1,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-05-01T21:28:04.738Z",
+        "registrationEndDate": "2018-05-02T14:28:31.673Z",
+        "submissionEndDate": "2018-05-02T14:28:42.065Z",
+        "platforms": [
+          "AWS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 747407,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-05-02T14:28:42.065Z",
+          "scheduledEndTime": "2018-05-04T14:28:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 747451,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-02T14:29:47.569Z",
+            "scheduledEndTime": "2018-05-03T14:29:00.000Z",
+            "actualStartTime": "2018-05-02T14:29:47.569Z",
+            "duration": 86400000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 747405,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-01T21:28:04.738Z",
+            "scheduledEndTime": "2018-05-02T14:28:31.673Z",
+            "actualStartTime": "2018-05-01T21:28:04.738Z",
+            "actualEndTime": "2018-05-02T14:28:31.673Z",
+            "fixedStartTime": "2018-05-01T21:00:00.000Z",
+            "duration": 61200000
+          },
+          {
+            "id": 747406,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-05-01T21:33:18.453Z",
+            "scheduledEndTime": "2018-05-02T14:28:42.065Z",
+            "actualStartTime": "2018-05-01T21:33:18.453Z",
+            "actualEndTime": "2018-05-02T14:28:42.065Z",
+            "duration": 60900000
+          },
+          {
+            "id": 747407,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-02T14:28:42.065Z",
+            "scheduledEndTime": "2018-05-04T14:28:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 747408,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-04T14:28:00.000Z",
+            "scheduledEndTime": "2018-05-05T14:28:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747409,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-05T14:28:00.000Z",
+            "scheduledEndTime": "2018-05-06T02:28:00.000Z",
+            "duration": 43200000
+          },
+          {
+            "id": 747451,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-05-02T14:29:47.569Z",
+            "scheduledEndTime": "2018-05-03T14:29:00.000Z",
+            "actualStartTime": "2018-05-02T14:29:47.569Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-05-17T22:25Z",
+        "createdAt": "2018-04-27T19:37Z",
+        "createdBy": "8547899",
+        "updatedBy": "8547899",
+        "technologies": [
+          "API"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "AP test",
+        "reviewType": "COMMUNITY",
+        "id": 30051760,
+        "forumId": 30225,
+        "numSubmissions": 0,
+        "numRegistrants": 2,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-04-27T20:00:54.430Z",
+        "registrationEndDate": "2018-04-28T20:00:31.694Z",
+        "submissionEndDate": "2018-04-28T20:00:39.100Z",
+        "platforms": [
+          "AWS"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 747387,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-04-28T20:00:39.100Z",
+          "scheduledEndTime": "2018-04-30T20:00:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+          {
+            "id": 747373,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-04-28T20:02:20.026Z",
+            "scheduledEndTime": "2018-04-29T20:02:00.000Z",
+            "actualStartTime": "2018-04-28T20:02:20.026Z",
+            "duration": 86400000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 747385,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-04-27T20:00:54.430Z",
+            "scheduledEndTime": "2018-04-28T20:00:31.694Z",
+            "actualStartTime": "2018-04-27T20:00:54.430Z",
+            "actualEndTime": "2018-04-28T20:00:31.694Z",
+            "fixedStartTime": "2018-04-27T20:00:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747386,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-04-27T20:05:36.070Z",
+            "scheduledEndTime": "2018-04-28T20:00:39.100Z",
+            "actualStartTime": "2018-04-27T20:05:36.070Z",
+            "actualEndTime": "2018-04-28T20:00:39.100Z",
+            "duration": 86100000
+          },
+          {
+            "id": 747387,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-04-28T20:00:39.100Z",
+            "scheduledEndTime": "2018-04-30T20:00:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 747388,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-04-30T20:00:00.000Z",
+            "scheduledEndTime": "2018-05-01T20:00:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 747389,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-05-01T20:00:00.000Z",
+            "scheduledEndTime": "2018-05-02T08:00:00.000Z",
+            "duration": 43200000
+          },
+          {
+            "id": 747373,
+            "phaseType": "Post-Mortem",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-04-28T20:02:20.026Z",
+            "scheduledEndTime": "2018-04-29T20:02:00.000Z",
+            "actualStartTime": "2018-04-28T20:02:20.026Z",
+            "duration": 86400000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Observer"
+          ],
+          "hasUserSubmittedForReview": false
+        },
+        "updatedAt": "2018-04-10T08:52Z",
+        "createdAt": "2018-04-05T08:36Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          "Java"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Sushil's Dev Challenge - Regression Testing",
+        "reviewType": "INTERNAL",
+        "id": 30051645,
+        "forumId": 30164,
+        "numSubmissions": 0,
+        "numRegistrants": 1,
+        "numSubmitters": 0,
+        "registrationStartDate": "2018-04-05T08:52:21.371Z",
+        "registrationEndDate": "2018-04-07T08:53:23.833Z",
+        "submissionEndDate": "2018-04-10T08:52:50.187Z",
+        "platforms": [
+          "Android"
+        ],
+        "totalPrize": 500,
+        "isPrivate": false,
+        "upcomingPhase": {
+          "id": 746805,
+          "phaseType": "Review",
+          "phaseStatus": "Scheduled",
+          "scheduledStartTime": "2018-04-10T08:52:50.187Z",
+          "scheduledEndTime": "2018-04-12T08:52:00.000Z",
+          "duration": 172800000
+        },
+        "projectId": 7884,
+        "currentPhases": [
+
+        ],
+        "allPhases": [
+          {
+            "id": 746803,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-04-05T08:52:21.371Z",
+            "scheduledEndTime": "2018-04-07T08:53:23.833Z",
+            "actualStartTime": "2018-04-05T08:52:21.371Z",
+            "actualEndTime": "2018-04-07T08:53:23.833Z",
+            "fixedStartTime": "2018-04-05T04:00:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 746804,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2018-04-05T08:57:20.894Z",
+            "scheduledEndTime": "2018-04-10T08:52:50.187Z",
+            "actualStartTime": "2018-04-05T08:57:20.894Z",
+            "actualEndTime": "2018-04-10T08:52:50.187Z",
+            "duration": 431700000
+          },
+          {
+            "id": 746805,
+            "phaseType": "Review",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-04-10T08:52:50.187Z",
+            "scheduledEndTime": "2018-04-12T08:52:00.000Z",
+            "duration": 172800000
+          },
+          {
+            "id": 746806,
+            "phaseType": "Appeals",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-04-12T08:52:00.000Z",
+            "scheduledEndTime": "2018-04-13T08:52:00.000Z",
+            "duration": 86400000
+          },
+          {
+            "id": 746807,
+            "phaseType": "Appeals Response",
+            "phaseStatus": "Scheduled",
+            "scheduledStartTime": "2018-04-13T08:52:00.000Z",
+            "scheduledEndTime": "2018-04-13T20:52:00.000Z",
+            "duration": 43200000
+          }
+        ],
+        "prizes": [
+          350,
+          150
+        ],
+        "isTask": false,
+        "environment": "",
+        "codeRepo": "",
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter",
+            "Reviewer"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissions": [
+            {
+              "id": 507649,
+              "submittedAt": "2015-06-06T11:34:00.000Z",
+              "status": "Active",
+              "challengeId": 30049290,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2018-02-07T09:29Z",
+        "createdAt": "2015-06-06T11:08Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          "iOS"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Fix all JSLint issues",
+        "reviewType": "PEER",
+        "id": 30049290,
+        "forumId": 28444,
+        "numSubmissions": 1034,
+        "numRegistrants": 1057,
+        "numSubmitters": 1034,
+        "registrationStartDate": "2015-07-25T04:00:00.000Z",
+        "registrationEndDate": "2018-02-07T09:25:21.554Z",
+        "submissionEndDate": "2018-02-07T09:40:15.404Z",
+        "platforms": [
+          "iOS"
+        ],
+        "totalPrize": 2,
+        "isPrivate": false,
+        "projectId": 8647,
+        "currentPhases": [
+          {
+            "id": 733067,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-02-07T09:59:13.233Z",
+            "scheduledEndTime": "2018-02-09T09:59:00.000Z",
+            "actualStartTime": "2018-02-07T09:59:13.233Z",
+            "duration": 172800000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 733065,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-07-25T04:00:00.000Z",
+            "scheduledEndTime": "2018-02-07T09:25:21.554Z",
+            "actualStartTime": "2015-07-25T04:00:00.000Z",
+            "actualEndTime": "2018-02-07T09:25:21.554Z",
+            "fixedStartTime": "2015-06-05T13:00:00.000Z",
+            "duration": 1382400000
+          },
+          {
+            "id": 733066,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-07-25T04:00:00.000Z",
+            "scheduledEndTime": "2018-02-07T09:40:15.404Z",
+            "actualStartTime": "2015-07-25T04:00:00.000Z",
+            "actualEndTime": "2018-02-07T09:40:15.404Z",
+            "duration": 8729700000
+          },
+          {
+            "id": 733067,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-02-07T09:59:13.233Z",
+            "scheduledEndTime": "2018-02-09T09:59:00.000Z",
+            "actualStartTime": "2018-02-07T09:59:13.233Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          1,
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter",
+            "Reviewer"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissionReviewScore": 46.222222646077476,
+          "submissions": [
+            {
+              "id": 508667,
+              "submittedAt": "2015-06-08T20:00:48.000Z",
+              "status": "Active",
+              "challengeId": 30049303,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2019-06-05T09:24Z",
+        "createdAt": "2015-06-08T19:44Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          ".NET System.Addins"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Peer Review Load Test 0.7",
+        "reviewType": "COMMUNITY",
+        "id": 30049303,
+        "forumId": 28448,
+        "numSubmissions": 395,
+        "numRegistrants": 401,
+        "numSubmitters": 395,
+        "registrationStartDate": "2015-06-08T15:52:11.715Z",
+        "registrationEndDate": "2018-02-07T09:21:56.169Z",
+        "submissionEndDate": "2018-02-07T09:34:59.181Z",
+        "platforms": [
+          "Android"
+        ],
+        "totalPrize": 2,
+        "isPrivate": false,
+        "projectId": 8647,
+        "currentPhases": [
+          {
+            "id": 733107,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-02-07T09:53:12.087Z",
+            "scheduledEndTime": "2018-02-09T09:53:00.000Z",
+            "actualStartTime": "2018-02-07T09:53:12.087Z",
+            "duration": 172800000
+          }
+        ],
+        "allPhases": [
+          {
+            "id": 733105,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-06-08T15:52:11.715Z",
+            "scheduledEndTime": "2018-02-07T09:21:56.169Z",
+            "actualStartTime": "2015-06-08T15:52:11.715Z",
+            "actualEndTime": "2018-02-07T09:21:56.169Z",
+            "fixedStartTime": "2015-06-08T15:52:11.715Z",
+            "duration": 432000000
+          },
+          {
+            "id": 733106,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-06-08T15:57:52.236Z",
+            "scheduledEndTime": "2018-02-07T09:34:59.181Z",
+            "actualStartTime": "2015-06-08T15:57:52.236Z",
+            "actualEndTime": "2018-02-07T09:34:59.181Z",
+            "duration": 431700000
+          },
+          {
+            "id": 733107,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-02-07T09:53:12.087Z",
+            "scheduledEndTime": "2018-02-09T09:53:00.000Z",
+            "actualStartTime": "2018-02-07T09:53:12.087Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          1,
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      },
+      {
+        "userId": 23124329,
+        "handle": "callmekatootie",
+        "userDetails": {
+          "roles": [
+            "Submitter",
+            "Reviewer"
+          ],
+          "hasUserSubmittedForReview": true,
+          "submissionReviewScore": 51.71428604125977,
+          "submissions": [
+            {
+              "id": 508168,
+              "submittedAt": "2015-06-08T19:45:05.000Z",
+              "status": "Active",
+              "challengeId": 30049301,
+              "type": "Contest Submission"
+            }
+          ]
+        },
+        "updatedAt": "2019-06-05T09:24Z",
+        "createdAt": "2015-06-08T19:21Z",
+        "createdBy": "8547899",
+        "updatedBy": "22841596",
+        "technologies": [
+          ".NET"
+        ],
+        "status": "ACTIVE",
+        "track": "DEVELOP",
+        "subTrack": "CODE",
+        "name": "Peer Review Load Test 0.5",
+        "reviewType": "PEER",
+        "id": 30049301,
+        "forumId": 28446,
+        "numSubmissions": 398,
+        "numRegistrants": 400,
+        "numSubmitters": 398,
+        "registrationStartDate": "2015-06-08T15:31:57.456Z",
+        "registrationEndDate": "2018-02-07T09:22:54.192Z",
+        "submissionEndDate": "2018-02-07T09:34:21.230Z",
+        "platforms": [
+          "Android"
+        ],
+        "totalPrize": 2,
+        "isPrivate": false,
+        "projectId": 8647,
+        "currentPhases": [
+          {
+            "id": 733087,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-02-07T09:51:50.959Z",
+            "scheduledEndTime": "2018-02-09T09:51:00.000Z",
+            "actualStartTime": "2018-02-07T09:51:50.959Z",
+            "duration": 172800000
+          }
+        ],
+        "submissionViewable": false,
+        "allPhases": [
+          {
+            "id": 733085,
+            "phaseType": "Registration",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-06-08T15:31:57.456Z",
+            "scheduledEndTime": "2018-02-07T09:22:54.192Z",
+            "actualStartTime": "2015-06-08T15:31:57.456Z",
+            "actualEndTime": "2018-02-07T09:22:54.192Z",
+            "fixedStartTime": "2015-06-08T15:31:57.456Z",
+            "duration": 12572882544
+          },
+          {
+            "id": 733086,
+            "phaseType": "Submission",
+            "phaseStatus": "Closed",
+            "scheduledStartTime": "2015-06-08T15:36:06.939Z",
+            "scheduledEndTime": "2018-02-07T09:34:21.230Z",
+            "actualStartTime": "2015-06-08T15:36:06.939Z",
+            "actualEndTime": "2018-02-07T09:34:21.230Z",
+            "duration": 12572633061
+          },
+          {
+            "id": 733087,
+            "phaseType": "Review",
+            "phaseStatus": "Open",
+            "scheduledStartTime": "2018-02-07T09:51:50.959Z",
+            "scheduledEndTime": "2018-02-09T09:51:00.000Z",
+            "actualStartTime": "2018-02-07T09:51:50.959Z",
+            "duration": 172800000
+          }
+        ],
+        "prizes": [
+          1,
+          1
+        ],
+        "isTask": false,
+        "isRegistered": false
+      }
+    ]
+  },
+  "version": "v3"
+}

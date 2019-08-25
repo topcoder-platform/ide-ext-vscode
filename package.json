@@ -50,12 +50,62 @@
         "command": "extension.uploadSubmmission",
         "title": "Upload submission",
         "category": "Topcoder"
+      },
+      {
+        "command": "activeContests.reload",
+        "title": "Reload User Contests",
+        "category": "Topcoder",
+        "icon": {
+          "dark": "resources/images/dark/reload.svg",
+          "light": "resources/images/light/reload.svg"
+        }
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "activeContests.reload",
+          "when": "view == user-active-contests",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "activeContests.reload",
+          "when": "false"
+        }
+      ]
+    },
+    "views": {
+      "topcoder-container": [
+        {
+          "id": "user-active-contests",
+          "name": "YOUR ACTIVE CONTESTS"
+        },
+        {
+          "id": "user-active-submissions",
+          "name": "YOUR ACTIVE SUBMISSIONS"
+        },
+        {
+          "id": "home",
+          "name": "HOME"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "resources/icons/Logo Active.svg",
+          "title": "TOPCODER",
+          "id": "topcoder-container"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "copy:resources": "copyfiles resources/**/* out",
+    "compile": "tsc -p ./ && npm run copy:resources",
     "lint": "tslint -p ./",
     "watch": "tsc -watch -p ./",
     "test": "npm run compile && node ./out/test/runTest.js"
@@ -69,6 +119,7 @@
     "@types/node": "^10.12.21",
     "@types/vscode": "^1.36.0",
     "chai": "^4.2.0",
+    "copyfiles": "^2.1.1",
     "glob": "^7.1.4",
     "mocha": "^4.1.0",
     "nock": "^10.0.6",

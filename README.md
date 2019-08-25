@@ -11,6 +11,7 @@ This extension is meant to closely integrate the Topcoder platform with [VSCode]
 
 - To view the extension, open the source code in the VSCode editor.
 - Install dependencies the first time you open the source code using the command `npm install`
+- Compile the extension the first time you open the source code to ensure all resources are copied `npm run compile`
 - Press `F5` to open a new window with extension loaded.
 - After making changes in the code, relaunch the extension from the debug bar (green circular arrow) or reload the window opened previously with `F5` (`Ctrl+R` or `Cmd+R` on Mac).
 
@@ -37,6 +38,13 @@ The extension provides several commands in the Command Palette:
 - *Topcoder: Upload submission* to upload the current workspace to topcoder challenge.
 
 All commands require you to provide your Topcoder username and password, so make sure to set them _before_ you execute them
+
+## Activity Bar
+
+The extensions adds an activity bar item that has 3 sections. 
+- *Your Active Contests*  will list all the contests that you have registered to
+- *Your Active Submissions* is empty for now
+- *Home* has 3 parts, which will allow you to access the extension features guide, the setup guid or the list of all active challenges respectively.
 
 ## Run tests
 

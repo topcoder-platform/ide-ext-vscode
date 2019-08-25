@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import AuthController from './controllers/AuthController';
 import ChallengeController from './controllers/ChallengeController';
 import * as constants from './constants';
+import { ActiveSubmissionsProvider, ActiveContestsProvider, HomeViewProvider } from './view-providers';
 
 // This method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -9,6 +10,11 @@ export function activate(context: vscode.ExtensionContext) {
 
   const authController = new AuthController(context);
   const challengeController = new ChallengeController(context);
+
+  // Setup tree view providers
+  ActiveContestsProvider.Register(challengeController);
+  ActiveSubmissionsProvider.Register();
+  HomeViewProvider.Register(challengeController, context.extensionPath);
 
   // Register commands
   context.subscriptions.push(
@@ -37,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
         await loginThenAction(context, authController, challengeController.uploadSubmmission.bind(challengeController))
     )
   );
-
 }
 
 // This method is called when the extension is deactivated

@@ -1,7 +1,6 @@
 // Constants definition file
 
-const useDevelopEndpoint = true; /* set to true if you want to use topcoder's dev instance,
-"false" if you want to use production instance */
+const useDevelopEndpoint = true; // set to false if you want to use topcoder's production instance
 export const missingUsernameMessage = 'Missing username. Configure your username in the settings screen.';
 export const missingPasswordMessage = 'Missing password. Configure your password in the settings screen.';
 export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
@@ -29,6 +28,11 @@ export const challengeDetailsLoadFailedMessage = 'Failed to load details for the
 export const registeringMessage = 'Registering for challenge';
 export const registeredSuccessfullyMessage = 'Registered Successfully';
 export const registrationFailedMessage = 'Failed to register for the challenge';
+export const userChallengesLoadFailedMessage = 'We cannot display the list of challenges at this time.';
+export const helpFilesLoadFailed = 'Failed to load content.';
+export const initializingWorkspaceMessage = 'Initializing workspace for submission.';
+export const workspaceInitializationFailedMessage = 'Failed to initialize the current workspace.';
+export const workspaceInitializationSuccessMessage = 'This workspace has been initialized successfully.';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
@@ -65,10 +69,14 @@ export const challengeDetailsUrl = useDevelopEndpoint ?
 export const challengeRegistrationUrl = useDevelopEndpoint ?
   'https://api.topcoder-dev.com/v4/challenges/{challengeId}/register' :
   'https://api.topcoder.com/v4/challenges/{challengeId}/register';
+export const memberChallengesUrl = useDevelopEndpoint ?
+  'https://api.topcoder-dev.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0' :
+  'https://api.topcoder.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0';
 export const submitType = 'Contest Submission';
 
 export const webviewMessageActions = {
   DISPLAY_CHALLENGE_DETAILS: 'DISPLAY_CHALLENGE_DETAILS',
   REGISTER_FOR_CHALLENGE: 'REGISTER_FOR_CHALLENGE',
-  REGISTERED_FOR_CHALLENGE: 'REGISTERED_FOR_CHALLENGE'
+  REGISTERED_FOR_CHALLENGE: 'REGISTERED_FOR_CHALLENGE',
+  INITIALIZE_WORKSPACE: 'INITIALIZE_WORKSPACE'
 };

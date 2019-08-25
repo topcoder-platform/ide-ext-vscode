@@ -69,18 +69,18 @@ export default class ChallengeController {
   }
 
   /**
-   * Check if user has logged in.
+   * Loads the active challenges of the currently logged in user.
    */
-  private isUserLoggedIn(): boolean {
-    const token = this.context.globalState.get(constants.tokenStateKey);
-    return !!token;
+  public async loadChallengesOfLoggedInUser() {// errors are handled by the caller
+    const token = await AuthService.updateTokenGlobalState(this.context);
+    return await ChallengeService.getActiveChallengesOfUser(token);
   }
 
   /**
    * Load challenge details for the given challenge id.
    * @param challengeId The challenge Id
    */
-  private async viewChallengeDetails(challengeId: string) {
+  public async viewChallengeDetails(challengeId: string) {
     if (!this.isUserLoggedIn()) {
       vscode.window.showErrorMessage(constants.notLoggedInMessage);
       return;
@@ -111,6 +111,14 @@ export default class ChallengeController {
   }
 
   /**
+   * Check if user has logged in.
+   */
+  private isUserLoggedIn(): boolean {
+    const token = this.context.globalState.get(constants.tokenStateKey);
+    return !!token;
+  }
+
+  /**
    * Returns a new webview panel.
    * @param title The title of the webview panel
    * @param allowScripts Defaults to false. Set true to enable javascript inside the webview.
@@ -137,10 +145,13 @@ export default class ChallengeController {
     switch (message.action) {
       case constants.webviewMessageActions.DISPLAY_CHALLENGE_DETAILS: {
         await this.viewChallengeDetails(message.data.challengeId);
-      }                                                               break;
+    }                                                                 break;
       case constants.webviewMessageActions.REGISTER_FOR_CHALLENGE: {
         await this.registerUserForChallenge(message.data.challengeId);
       }                                                            break;
+      case constants.webviewMessageActions.INITIALIZE_WORKSPACE: {
+        await this.initializeWorkspaceForChallenge(message.data.challengeId);
+      }                                                          break;
     }
   }
 
@@ -242,6 +253,20 @@ export default class ChallengeController {
       }
     } catch (err) {
       vscode.window.showErrorMessage(err.toString());
+    }
+  }
+
+  /**
+   * Initialize the current workspace for the registered challenge
+   * @param challengeId The challenge id to initiazlie with
+   */
+  private async initializeWorkspaceForChallenge(challengeId: string) {
+    vscode.window.showInformationMessage(constants.initializingWorkspaceMessage);
+    try {
+      await ChallengeService.initializeWorkspace(vscode.workspace.rootPath || '', challengeId);
+      vscode.window.showInformationMessage(constants.workspaceInitializationSuccessMessage);
+    } catch (err) {
+      vscode.window.showErrorMessage(constants.workspaceInitializationFailedMessage);
     }
   }
 }

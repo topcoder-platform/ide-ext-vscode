@@ -5,7 +5,8 @@ import * as constants from '../../constants';
 import ChallengeService from '../../services/ChallengeService';
 import {
   v3Token, challenges, submitSuccessResponse, validChallengeDetails,
-  unregisteredChallengeDetails, closedForSubmissionChallengeDetails
+  unregisteredChallengeDetails, closedForSubmissionChallengeDetails,
+  memberChallengesList
 } from './testData';
 import * as fs from 'fs';
 import * as assert from 'assert';
@@ -24,7 +25,7 @@ suite('ChallengeService Unit tests', () => {
     const validChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${validChallengeId}`);
     const closedChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${closedForSubmissionChallengeId}`);
     const unregisteredChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${unregisteredChallengeId}`);
-
+    const memberChallengesUrl = url.parse(constants.memberChallengesUrl.replace('{memberId}', 'mess'));
     nock(/\.com/)
       .persist()
       .get(challengesUrl.path as string)
@@ -38,7 +39,9 @@ suite('ChallengeService Unit tests', () => {
       .get(unregisteredChallengeDetailsUrl.path as string)
       .reply(200, { result: { content: unregisteredChallengeDetails } })
       .get(closedChallengeDetailsUrl.path as string)
-      .reply(200, { result: { content: closedForSubmissionChallengeDetails } });
+      .reply(200, { result: { content: closedForSubmissionChallengeDetails } })
+      .get(memberChallengesUrl.path as string)
+      .reply(200, { result: { content: memberChallengesList } });
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
@@ -129,5 +132,44 @@ suite('ChallengeService Unit tests', () => {
     const html = ChallengeService
       .generateHtmlFromChallengeDetails(unregisteredChallengeDetails, v3Token.result.content.token);
     expect(html).to.contain('id="registerButton"');
+  });
+  test('initialize workspace button should be available', () => {
+    const html = ChallengeService
+      .generateHtmlFromChallengeDetails(validChallengeDetails, v3Token.result.content.token);
+    expect(html).to.contain('id="initWorkspaceButton"');
+  });
+  test('initialize workspace action should create .topcoderrc file in root directory of workspace',
+    async () => {
+      const folder = './tmp-test';
+      const challengeId = '12345678';
+      await ChallengeService.initializeWorkspace(folder, challengeId);
+      expect(fs.existsSync(`${folder}/.topcoderrc`)).to.equal(true);
+      try {
+        fs.unlinkSync(`${folder}/.topcoderrc`);
+        fs.unlinkSync(folder);
+      } catch (err) {
+        // do nothing
+      }
+    });
+  test('initialize workspace action should enter correct challenge id in .topcoderrc',
+    async () => {
+      const folder = './tmp-test';
+      const challengeId = '87654321';
+      await ChallengeService.initializeWorkspace(folder, challengeId);
+      const value: any = JSON.parse(fs.readFileSync(`${folder}/.topcoderrc`).toString());
+      expect(value.challengeId).to.eq(challengeId);
+      try {
+        fs.unlinkSync(`${folder}/.topcoderrc`);
+        fs.unlinkSync(folder);
+      } catch (err) {
+        // do nothing
+      }
+    });
+  test('get active challenges of user should return the challenges with valid token', async () => {
+    const data = await ChallengeService.getActiveChallengesOfUser(v3Token.result.content.token);
+    expect(data).to.be.deep.eq(memberChallengesList);
+  });
+  test('get active challenges of user should fail with invalid token', () => {
+    assert.rejects(async () => { await ChallengeService.getActiveChallengesOfUser(''); });
   });
 });
