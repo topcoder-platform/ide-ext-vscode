@@ -30,7 +30,7 @@ export default class AuthService {
         if (err) {
           return reject(new Error(constants.authenticationFailedMessage));
         }
-        console.log(token)
+        console.log(token);
         return resolve(token);
       });
     });

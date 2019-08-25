@@ -121,6 +121,7 @@
     "chai": "^4.2.0",
     "copyfiles": "^2.1.1",
     "glob": "^7.1.4",
+    "husky": "^3.0.4",
     "mocha": "^4.1.0",
     "nock": "^10.0.6",
     "tslint": "^5.12.1",
@@ -136,5 +137,10 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
