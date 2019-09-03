@@ -33,6 +33,16 @@ export const helpFilesLoadFailed = 'Failed to load content.';
 export const initializingWorkspaceMessage = 'Initializing workspace for submission.';
 export const workspaceInitializationFailedMessage = 'Failed to initialize the current workspace.';
 export const workspaceInitializationSuccessMessage = 'This workspace has been initialized successfully.';
+export const errorCloningStarterPack = 'An error occured cloning starter pack';
+export const cloningStarterPackSuccess = 'Cloning started pack ended with success';
+export const cloningStarterPackStarted = 'Cloning starter pack started';
+export const loadSubmissionFailed = 'Loading submission details failed';
+export const loadSubmissionStarted = 'Loading submission details started';
+export const loadSubmissionSuccess = 'Submission details loaded with success';
+export const artifactDownloadStart = 'Download artifact started';
+export const artifactDownloadFailed = 'Download artifact failed';
+export const artifactDownloadSuccess = 'Download artifact with success';
+export const noStarterPackDownloaded = 'No starter pack downloaded';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
@@ -43,6 +53,7 @@ export const tokenStateKey = 'TC_JWT_TOKEN';
 export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
+export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 
 export const CLIENT_V2CONNECTION = useDevelopEndpoint ? 'TC-User-Database' : 'LDAP';
 export const AUTHN_URL = useDevelopEndpoint ?
@@ -72,11 +83,24 @@ export const challengeRegistrationUrl = useDevelopEndpoint ?
 export const memberChallengesUrl = useDevelopEndpoint ?
   'https://api.topcoder-dev.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0' :
   'https://api.topcoder.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0';
+export const memberSubmissionUrl = useDevelopEndpoint ?
+  'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}' :
+  'https://api.topcoder.com/v5/submissions?challengeId={challengeId}&memberId={memberId}';
+export const submissionArtifactsUrl = useDevelopEndpoint ?
+  'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts' :
+  'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts';
+export const downloadSubmissionUrl = useDevelopEndpoint ?
+  'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download' :
+  'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download';
+
 export const submitType = 'Contest Submission';
 
 export const webviewMessageActions = {
   DISPLAY_CHALLENGE_DETAILS: 'DISPLAY_CHALLENGE_DETAILS',
   REGISTER_FOR_CHALLENGE: 'REGISTER_FOR_CHALLENGE',
   REGISTERED_FOR_CHALLENGE: 'REGISTERED_FOR_CHALLENGE',
-  INITIALIZE_WORKSPACE: 'INITIALIZE_WORKSPACE'
+  INITIALIZE_WORKSPACE: 'INITIALIZE_WORKSPACE',
+  DOWNLOAD_ARTIFACT: 'DOWNLOAD_ARTIFACT',
+
+  CLONE_STARTER_PACK: 'CLONE_STARTER_PACK'
 };

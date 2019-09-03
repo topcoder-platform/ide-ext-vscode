@@ -59,6 +59,15 @@
           "dark": "resources/images/dark/reload.svg",
           "light": "resources/images/light/reload.svg"
         }
+      },
+      {
+        "command": "activeSubmissions.reload",
+        "title": "Reload User Submissions",
+        "category": "Topcoder",
+        "icon": {
+          "dark": "resources/images/dark/reload.svg",
+          "light": "resources/images/light/reload.svg"
+        }
       }
     ],
     "menus": {
@@ -67,11 +76,20 @@
           "command": "activeContests.reload",
           "when": "view == user-active-contests",
           "group": "navigation"
+        },
+        {
+          "command": "activeSubmissions.reload",
+          "when": "view == user-active-submissions",
+          "group": "navigation"
         }
       ],
       "commandPalette": [
         {
           "command": "activeContests.reload",
+          "when": "false"
+        },
+        {
+          "command": "activeSubmissions.reload",
           "when": "false"
         }
       ]
@@ -131,9 +149,12 @@
   "dependencies": {
     "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
     "@types/archiver": "^3.0.0",
+    "@types/fs-extra": "^8.0.0",
     "archiver": "^3.0.0",
     "axios": "^0.19.0",
+    "fs-extra": "^8.1.0",
     "ignore": "^5.1.2",
+    "isomorphic-git": "^0.64.4",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"

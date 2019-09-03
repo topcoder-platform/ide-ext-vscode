@@ -6,6 +6,7 @@ import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
 import * as jwt from 'jsonwebtoken';
 import * as archiver from 'archiver';
+import packConfig from '../config/packs';
 import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
 const submissionApiClient = submissionApi({
   SUBMISSION_API_URL: constants.uploadSubmmissionUrl
@@ -14,6 +15,127 @@ const submissionApiClient = submissionApi({
  * Interacts with challenges APIs
  */
 export default class ChallengeService {
+
+  /**
+   * Gets the details of a submission
+   * @param challengeId challenge identifier
+   * @param token user token
+   */
+  public static async getSubmissionDetails(challengeId: string, token: string) {
+    const decodedToken: any = jwt.decode(token);
+    const url = constants.memberSubmissionUrl
+      .replace('{challengeId}', challengeId)
+      .replace('{memberId}', decodedToken.userId);
+
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.loadSubmissionFailed);
+    }
+  }
+
+  /**
+   * Get the artifacts in a submission
+   * @param submissionId submission identifier
+   * @param token user token
+   */
+  public static async getSubmissionArtifacts(submissionId: string, token: string) {
+    const url = constants.submissionArtifactsUrl.replace('{submissionId}', submissionId);
+
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.loadSubmissionFailed);
+    }
+  }
+
+  /**
+   * Generate html page content from reviews and artifacts
+   * @param reviews the reviews with artifacts
+   * @return the html page content
+   */
+  public static generateReviewArtifactsHtml(reviews: any) {
+    return `<!doctype html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${constants.submissionDetailsPageTitle}</title>
+        <style>
+            td {
+              padding: 10px;
+            }
+            th {
+              /* Invert background and foreground for table header*/
+              background-color: var(--vscode-editor-foreground) !important;
+              color: var(--vscode-editor-background) !important;
+              padding: 10px;
+            }
+        </style>
+      </head>
+      <body>
+      <h2>Reviews</h2>
+        <table border="1" style="margin-bottom: 40px">
+          <tr>
+            <th>Score</th>
+            <th>Created at</th>
+          </tr>
+          ${this.generateHtmlTableFromReviews(reviews)}
+        </table>
+        ${this.generateArtifactsUnorderedList(reviews)}
+        <script>
+        // enable communication with the extension via messaging.
+        var vscode;
+
+        (function () {
+          vscode = acquireVsCodeApi();
+        }());
+
+        function downloadArtifact(submissionId, artifactId) {
+          if (submissionId && artifactId) {
+            vscode.postMessage({
+              action: '${constants.webviewMessageActions.DOWNLOAD_ARTIFACT}',
+              data: {
+                submissionId,
+                artifactId
+              }
+            });
+          }
+        }
+      </script>
+      </body>
+      </html>`;
+  }
+
+  /**
+   * Gets the stream to download to disk an artifact
+   * @param submissionId Submission identifier
+   * @param artifactId Artifact identifier
+   * @param token User token
+   */
+  public static async downloadArtifact(submissionId: string, artifactId: string, token: string) {
+    const url = constants.downloadSubmissionUrl
+      .replace('{submissionId}', submissionId)
+      .replace('{artifactId}', artifactId);
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          responseType: 'stream'
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.artifactDownloadFailed);
+    }
+  }
 
   /**
    * Get the list of current active challenges.
@@ -134,10 +256,10 @@ export default class ChallengeService {
               background-color: var(--vscode-editor-background) !important;
               color: var(--vscode-editor-foreground) !important;
             }
-            #initWorkspaceButton {
+            .workspaceBtns {
               display: none;
             }
-            #initWorkspaceButton.visible {
+            .workspaceBtns.visible {
               display: block;
             }
           </style>
@@ -180,10 +302,27 @@ export default class ChallengeService {
             }
 
             /**
-             * Show the init workspace button that is hidden by default
+             *  Launches action to ask user if we wants to use a starter pack
              */
-            function showInitWorkspaceButton() {
-              document.getElementById('initWorkspaceButton').classList.add('visible');
+            function cloneStarterPack(filter, challengeId) {
+              vscode.postMessage({
+                action: '${constants.webviewMessageActions.CLONE_STARTER_PACK}',
+                data: {
+                  filter,
+                  challengeId,
+                }
+              });
+            }
+
+            /**
+             * Show the workspace buttons that are hidden by default
+             */
+            function showWorkspaceButtons() {
+              var buttons = document.getElementsByClassName('workspaceBtns');
+              Array.from(buttons).forEach(
+                function(navDom) {
+                  navDom.classList.add('visible')
+                });
             }
 
             // Handle message from extension to this webview.
@@ -192,20 +331,21 @@ export default class ChallengeService {
                 switch (message.command) {
                     case '${constants.webviewMessageActions.REGISTERED_FOR_CHALLENGE}':{
                       document.getElementById('registerButton').remove();
-                      showInitWorkspaceButton();
+                      showWorkspaceButtons();
                     } break;
                 }
             });
             // wait for window to load completely
             window.addEventListener('load', () => {
                 if(!document.getElementById('registerButton')) {
-                  showInitWorkspaceButton();
+                  showWorkspaceButtons();
                 }
             });
           </script>
           <h1>${challengeDetails.challengeTitle}</h1>
           ${this.generateRegisterButtonHTML(challengeDetails, userToken)}
           ${this.generateInitWorkspaceButtonHtml(challengeDetails)}
+          ${this.generateCloneStarterPackButtonHtml(challengeDetails)}
           <h2>Prizes</h2>
           <div>${this.generateHtmlFromChallengePrizes(challengeDetails.prizes)}</div>
           <h2>Meta</h2>
@@ -517,8 +657,17 @@ export default class ChallengeService {
     // add register button to DOM only if this user has not already registered
     const registrants: any[] = _.get(challengeDetails, 'registrants', []);
     const decodedToken: any = jwt.decode(userToken);
-    const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined;
+    const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined
+      && this.isApplyPhase(challengeDetails);
     return registerEnabled ? buttonHtml : '';
+  }
+
+  /**
+   * Checks if a challenge can have action to register
+   * @param challengeDetails The challenge details
+   */
+  private static isApplyPhase(challengeDetails: any) {
+    return challengeDetails.currentPhaseName === 'Submission' || challengeDetails.currentPhaseName === 'Registration';
   }
 
   /**
@@ -526,9 +675,65 @@ export default class ChallengeService {
    * @param challengeDetails The challenge details
    */
   private static generateInitWorkspaceButtonHtml(challengeDetails: any) {
-    return `
-    <button id="initWorkspaceButton" onclick='initializeWorkspace(${challengeDetails.challengeId})'>
+    return this.isApplyPhase(challengeDetails) ? `
+    <button class="workspaceBtns" onclick='initializeWorkspace(${challengeDetails.challengeId})'>
       Initialize Workspace
-    </button>`;
+    </button>` : '';
   }
+
+  /**
+   * Returns the html to display the button that will ask the user to initialize the current
+   * workspace with a specific starter pack
+   * @param challengeDetails The challenge details
+   */
+  private static generateCloneStarterPackButtonHtml(challengeDetails: any) {
+    const filter = packConfig.filter((x: any) =>
+      challengeDetails.technologies.some((y: string) => x.name.toLowerCase() === y.toLowerCase()));
+
+    return filter.length > 0 && this.isApplyPhase(challengeDetails) ? `
+    <button class="workspaceBtns" style="margin-top:10px"
+      onclick='cloneStarterPack(${JSON.stringify(filter)}, ${challengeDetails.challengeId})'>
+      Clone starter pack
+    </button>` : '';
+  }
+
+  /**
+   * Generate the html to show artifacts in an unordered list
+   * @param reviews reviews with artifacts
+   */
+  private static generateArtifactsUnorderedList(reviews: any) {
+    // get all the reviews which contains artifacts
+    const filtered = reviews.filter((review: any) => !_.isEmpty(review.artifacts))
+      .map((t: any) => ({ id: t.id, artifacts: t.artifacts }));
+
+    // just show artifacts section in case they exist
+    if (!_.isEmpty(filtered)) {
+      return `<h2>Artifacts</h2>
+      <ul>
+        ${_.flatten(filtered.map((f: any) =>
+        (f.artifacts.map((artifact: any) =>
+          (`<li style="margin-top:10px"><a href='#' onclick='downloadArtifact("${f.id}", "${artifact}")'>${artifact}</a></li>`)).join('')
+        )
+      ))}
+      </ul>`;
+    }
+    return '';
+  }
+
+  /**
+   * Generate reviews table
+   * @param reviews reviews with artifacts
+   */
+  private static generateHtmlTableFromReviews(reviews: any) {
+    return _.flatten(reviews.map((review: any) =>
+      (review.rev.map(({ score, created }: any) => {
+        return `<tr>
+                  <td>${score}</td>
+                  <td>${created}</td>
+                </tr>`;
+      })
+      ))).join('');
+
+  }
+
 }

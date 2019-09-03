@@ -6,7 +6,8 @@ import ChallengeService from '../../services/ChallengeService';
 import {
   v3Token, challenges, submitSuccessResponse, validChallengeDetails,
   unregisteredChallengeDetails, closedForSubmissionChallengeDetails,
-  memberChallengesList
+  memberChallengesList, submissionDetails, artifactsDetails, reviewsWithArtifacts,
+  reviewsWithoutArtifacts
 } from './testData';
 import * as fs from 'fs';
 import * as assert from 'assert';
@@ -16,6 +17,8 @@ const validChallengeId = 30052924;
 const unregisteredChallengeId = 30052925;
 const closedForSubmissionChallengeId = 30052926;
 const invalidChallengeId = 1234;
+const validSubmissionId = 12345;
+const validArtifactId = 123467;
 
 suite('ChallengeService Unit tests', () => {
   suiteSetup(() => {
@@ -26,6 +29,12 @@ suite('ChallengeService Unit tests', () => {
     const closedChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${closedForSubmissionChallengeId}`);
     const unregisteredChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${unregisteredChallengeId}`);
     const memberChallengesUrl = url.parse(constants.memberChallengesUrl.replace('{memberId}', 'mess'));
+    const submissionUrl = url.parse(constants.memberSubmissionUrl
+      .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '99998888'));
+    const artifactsUrl = url.parse(constants.submissionArtifactsUrl.replace('{submissionId}', `${validSubmissionId}`));
+    const downloadArtifactUrl = url.parse(constants.downloadSubmissionUrl.replace('{submissionId}', `${validSubmissionId}`)
+      .replace('{artifactId}', `${validArtifactId}`));
+
     nock(/\.com/)
       .persist()
       .get(challengesUrl.path as string)
@@ -41,7 +50,15 @@ suite('ChallengeService Unit tests', () => {
       .get(closedChallengeDetailsUrl.path as string)
       .reply(200, { result: { content: closedForSubmissionChallengeDetails } })
       .get(memberChallengesUrl.path as string)
-      .reply(200, { result: { content: memberChallengesList } });
+      .reply(200, { result: { content: memberChallengesList } })
+      .get(submissionUrl.path as string)
+      .reply(200, submissionDetails)
+      .get(artifactsUrl.path as string)
+      .reply(200, artifactsDetails)
+      .get(downloadArtifactUrl.path as string)
+      .reply(200, (uri: any, requestBody: any) => {
+        return fs.createReadStream('info.txt');
+      }, { 'content-disposition': 'info.txt' });
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
@@ -136,7 +153,7 @@ suite('ChallengeService Unit tests', () => {
   test('initialize workspace button should be available', () => {
     const html = ChallengeService
       .generateHtmlFromChallengeDetails(validChallengeDetails, v3Token.result.content.token);
-    expect(html).to.contain('id="initWorkspaceButton"');
+    expect(html).to.contain('onclick=\'initializeWorkspace');
   });
   test('initialize workspace action should create .topcoderrc file in root directory of workspace',
     async () => {
@@ -171,5 +188,37 @@ suite('ChallengeService Unit tests', () => {
   });
   test('get active challenges of user should fail with invalid token', () => {
     assert.rejects(async () => { await ChallengeService.getActiveChallengesOfUser(''); });
+  });
+
+  test('getSubmissionDetails() should return the submission details', async () => {
+    const result = await ChallengeService.getSubmissionDetails(`${validChallengeId}`, v3Token.result.content.token);
+    expect(result).to.be.deep.equal(submissionDetails);
+  });
+  test('getSubmissionDetails() get submission details should fail with invalid token', async () => {
+    assert.rejects(async () => { await ChallengeService.getSubmissionDetails('', ''); });
+  });
+
+  test('getSubmissionArtifacts() should return the submission artifacts', async () => {
+    const result = await ChallengeService.getSubmissionArtifacts(`${validSubmissionId}`, v3Token.result.content.token);
+    expect(result).to.be.deep.equal(artifactsDetails);
+  });
+  test('getSubmissionArtifacts() get submission artifacts should fail with invalid token', async () => {
+    assert.rejects(async () => { await ChallengeService.getSubmissionDetails('', ''); });
+  });
+  test('artifacts should be visible in submission details html', async () => {
+    const html = ChallengeService.generateReviewArtifactsHtml(reviewsWithArtifacts);
+    expect(html).to.contain('<h2>Artifacts</h2>');
+  });
+  test('artifacts should not be visible in submission details html', async () => {
+    const html = ChallengeService.generateReviewArtifactsHtml(reviewsWithoutArtifacts);
+    expect(html).to.not.contain('<h2>Artifacts</h2>');
+  });
+  test('downloadArtifact() should return a file', async () => {
+    const result = await ChallengeService.downloadArtifact(`${validSubmissionId}`,
+      `${validArtifactId}`, v3Token.result.content.token);
+    expect(result.headers['content-disposition']).to.contain('info.txt');
+  });
+  test('downloadArtifact() should fail with invalid token', async () => {
+    assert.rejects(async () => { await ChallengeService.downloadArtifact('', '', ''); });
   });
 });

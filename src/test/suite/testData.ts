@@ -10795,3 +10795,59 @@ export const memberChallengesList = {
   },
   "version": "v3"
 }
+
+export const submissionDetails = [
+  {
+    "updatedBy": "mess",
+    "created": "2019-08-07T12:37:26.397Z",
+    "legacySubmissionId": 208488,
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/2bdbd03a-a84d-467f-87ae-005294eb4f2f.zip",
+    "challengeId": 30052924,
+    "filename": "submission_1565181445057.zip",
+    "createdBy": "mess",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "0f969325-1c43-4366-b91c-0b5bb8ff3ec4",
+        "submissionId": "2bdbd03a-a84d-467f-87ae-005294eb4f2f",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-08-07T12:37:31.286Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "cb33cbf3-183c-4842-9913-e5bdc6ec0d1e",
+        "updated": "2019-08-07T12:37:31.286Z"
+      }
+    ],
+    "id": "2bdbd03a-a84d-467f-87ae-005294eb4f2f",
+    "submissionPhaseId": 768088,
+    "updated": "2019-08-07T12:37:26.397Z",
+    "fileType": "zip",
+    "memberId": 99998888
+  }
+];
+
+export const artifactsDetails = {
+  artifacts: ["50b917df-5b81-4081-8e20-7fc8a6aabe54", "c56a4180-65aa-42ec-a945-5fd21dec0501"]
+}
+
+export const reviewsWithArtifacts = [
+  {
+    "artifacts": [
+      "50b917df-5b81-4081-8e20-7fc8a6aabe54",
+      "c56a4180-65aa-42ec-a945-5fd21dec0501"
+    ],
+    "id": "fed03479-47ba-4c58-b29d-f8d5c7f3bdfc",
+    "rev": [{ "score": "100", "created": "Wed, 07 Aug 2019 11:22:10 GMT" }]
+
+  }
+]
+export const reviewsWithoutArtifacts = [
+  {
+    "artifacts": [],
+    "id": "fed03479-47ba-4c58-b29d-f8d5c7f3bdfc",
+    "rev": [{ "score": "100", "created": "Wed, 07 Aug 2019 11:22:10 GMT" }]
+  }
+]

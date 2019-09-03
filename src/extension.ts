@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Setup tree view providers
   ActiveContestsProvider.Register(challengeController);
-  ActiveSubmissionsProvider.Register();
+  ActiveSubmissionsProvider.Register(challengeController);
   HomeViewProvider.Register(challengeController, context.extensionPath);
 
   // Register commands

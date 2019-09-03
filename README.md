@@ -41,9 +41,9 @@ All commands require you to provide your Topcoder username and password, so make
 
 ## Activity Bar
 
-The extensions adds an activity bar item that has 3 sections. 
-- *Your Active Contests*  will list all the contests that you have registered to
-- *Your Active Submissions* is empty for now
+The extensions adds an activity bar item that has 3 sections.
+- *Your Active Contests*  will list all the contests that you have registered to.
+- *Your Active Submissions* will list all the submissions that you have done. You will be able to view the reviews and artifacts (if any).
 - *Home* has 3 parts, which will allow you to access the extension features guide, the setup guid or the list of all active challenges respectively.
 
 ## Run tests
@@ -59,3 +59,17 @@ You may also run the tests by running `npm test` in a terminal
 ## Typescript code lint
 
 - `npm run lint`
+
+## Available starter pack configuration
+In `src/config/packs.ts` is located the file to manage which technologies have starter packs available to clone.
+The structure is:
+```js
+{
+    name: string - the technology that matches the challenge details technologies property,
+    repos: array - contains repo title and url
+        {
+            title: string - The title of the starter pack,
+            url: string - The public url available to clone
+        }
+}
+```
