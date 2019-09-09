@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as vscode from 'vscode';
 import * as constants from '../constants';
 import { IListItem } from './interfaces';
+import Notification from '../helpers/Notification';
 import ChallengeController from '../controllers/ChallengeController';
 
 export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
@@ -118,7 +119,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
                 uri,
             );
         } catch (err) {
-            vscode.window.showErrorMessage(constants.helpFilesLoadFailed);
+            Notification.showErrorNotification(constants.helpFilesLoadFailed);
         }
     }
 }

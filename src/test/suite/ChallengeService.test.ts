@@ -6,8 +6,7 @@ import ChallengeService from '../../services/ChallengeService';
 import {
   v3Token, challenges, submitSuccessResponse, validChallengeDetails,
   unregisteredChallengeDetails, closedForSubmissionChallengeDetails,
-  memberChallengesList, submissionDetails, artifactsDetails, reviewsWithArtifacts,
-  reviewsWithoutArtifacts
+  memberChallengesList, submissionDetails, artifactsDetails
 } from './testData';
 import * as fs from 'fs';
 import * as assert from 'assert';
@@ -140,21 +139,6 @@ suite('ChallengeService Unit tests', () => {
       await ChallengeService.getChallengeDetails(`${invalidChallengeId}`, v3Token.result.content.token));
   });
 
-  test('register button should be invisible if user has registered', () => {
-    const html = ChallengeService.generateHtmlFromChallengeDetails(validChallengeDetails, v3Token.result.content.token);
-    expect(html).to.not.contain('id="registerButton"');
-  });
-
-  test('register button should be visible if user can register', () => {
-    const html = ChallengeService
-      .generateHtmlFromChallengeDetails(unregisteredChallengeDetails, v3Token.result.content.token);
-    expect(html).to.contain('id="registerButton"');
-  });
-  test('initialize workspace button should be available', () => {
-    const html = ChallengeService
-      .generateHtmlFromChallengeDetails(validChallengeDetails, v3Token.result.content.token);
-    expect(html).to.contain('onclick=\'initializeWorkspace');
-  });
   test('initialize workspace action should create .topcoderrc file in root directory of workspace',
     async () => {
       const folder = './tmp-test';
@@ -204,14 +188,6 @@ suite('ChallengeService Unit tests', () => {
   });
   test('getSubmissionArtifacts() get submission artifacts should fail with invalid token', async () => {
     assert.rejects(async () => { await ChallengeService.getSubmissionDetails('', ''); });
-  });
-  test('artifacts should be visible in submission details html', async () => {
-    const html = ChallengeService.generateReviewArtifactsHtml(reviewsWithArtifacts);
-    expect(html).to.contain('<h2>Artifacts</h2>');
-  });
-  test('artifacts should not be visible in submission details html', async () => {
-    const html = ChallengeService.generateReviewArtifactsHtml(reviewsWithoutArtifacts);
-    expect(html).to.not.contain('<h2>Artifacts</h2>');
   });
   test('downloadArtifact() should return a file', async () => {
     const result = await ChallengeService.downloadArtifact(`${validSubmissionId}`,

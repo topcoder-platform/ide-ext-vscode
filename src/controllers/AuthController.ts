@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import AuthService from '../services/AuthService';
 import * as constants from '../constants';
+import Notification from '../helpers/Notification';
 
 /**
  * Controller for handling authentication commands.
@@ -14,28 +15,28 @@ export default class AuthController {
     const password = config.get(constants.passwordConfig);
 
     if (!username) {
-      vscode.window.showErrorMessage(constants.missingUsernameMessage);
+      Notification.showErrorNotification(constants.missingUsernameMessage);
       return;
     }
 
     if (!password) {
-      vscode.window.showErrorMessage(constants.missingPasswordMessage);
+      Notification.showErrorNotification(constants.missingPasswordMessage);
       return;
     }
 
-    vscode.window.showInformationMessage(constants.loggingInMessage);
+    Notification.showInfoNotification(constants.loggingInMessage);
 
     try {
       await AuthService.updateTokenGlobalState(this.context);
 
-      vscode.window.showInformationMessage(constants.loggedInMessage);
+      Notification.showInfoNotification(constants.loggedInMessage);
     } catch (err) {
-      vscode.window.showErrorMessage(err.toString());
+      Notification.showErrorNotification(err.toString());
     }
   }
 
   public async logout() {
     this.context.globalState.update(constants.tokenStateKey, '');
-    vscode.window.showInformationMessage(constants.loggedOutMessage);
+    Notification.showInfoNotification(constants.loggedOutMessage);
   }
 }
