@@ -3,8 +3,10 @@ import * as _ from 'lodash';
 import * as constants from '../constants';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import HtmlHelper from '../helpers/Html';
 import ChallengeService from '../services/ChallengeService';
 import AuthService from '../services/AuthService';
+import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
 
 /**
@@ -23,11 +25,11 @@ export default class ChallengeController {
    */
   public async viewOpenChallenges() {
     if (!this.isUserLoggedIn()) {
-      vscode.window.showErrorMessage(constants.notLoggedInMessage);
+      Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
     }
     // get challenges list from server
-    vscode.window.showInformationMessage(constants.loadingOpenChallengesMessage);
+    Notification.showInfoNotification(constants.loadingOpenChallengesMessage);
     let newToken;
     let response;
     let challenges;
@@ -36,7 +38,7 @@ export default class ChallengeController {
       response = await ChallengeService.getActiveChallenges(newToken);
       challenges = _.get(response, 'result.content', []);
     } catch (err) {
-      vscode.window.showErrorMessage(err.message);
+      Notification.showErrorNotification(err.message);
       return;
     }
 
@@ -45,10 +47,10 @@ export default class ChallengeController {
       this.challengeListingsWebviewPanel = this.makeWebViewAvailable(constants.challengesPageTitle);
       // Set the content of the webview using the available challenges information
       this.setWebviewContent(this.challengeListingsWebviewPanel,
-        ChallengeService.generateHtmlFromChallenges(challenges));
-      vscode.window.showInformationMessage(constants.openChallengesLoadedMessage);
+        HtmlHelper.generateHtmlFromChallenges(challenges));
+      Notification.showInfoNotification(constants.openChallengesLoadedMessage);
     } catch (err) {
-      vscode.window.showErrorMessage(constants.loadOpenChallengesFailedMessage);
+      Notification.showErrorNotification(constants.loadOpenChallengesFailedMessage);
     }
   }
 
@@ -57,10 +59,10 @@ export default class ChallengeController {
    */
   public async uploadSubmmission() {
     if (!this.isUserLoggedIn()) {
-      vscode.window.showErrorMessage(constants.notLoggedInMessage);
+      Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
     }
-    vscode.window.showInformationMessage(constants.submittingChallenges);
+    Notification.showInfoNotification(constants.submittingChallenges);
 
     try {
       const newToken = await AuthService.updateTokenGlobalState(this.context);
@@ -69,10 +71,10 @@ export default class ChallengeController {
       console.log('Submit challenge response: ' + JSON.stringify(response));
     } catch (err) {
       console.log(`Error occur when submit challenge (${err.toString()})`);
-      vscode.window.showErrorMessage(err.toString());
+      Notification.showErrorNotification(err.toString());
       return;
     }
-    vscode.window.showInformationMessage(constants.challengeSubmittedMessage);
+    Notification.showInfoNotification(constants.challengeSubmittedMessage);
   }
 
   /**
@@ -100,7 +102,7 @@ export default class ChallengeController {
   public async loadUserSubmission(challengeId: string) {
     let reviews;
     try {
-      vscode.window.showInformationMessage(constants.loadSubmissionStarted);
+      Notification.showInfoNotification(constants.loadSubmissionStarted);
       const token = await AuthService.updateTokenGlobalState(this.context);
       const result = await ChallengeService.getSubmissionDetails(challengeId, token);
       // need to get all artifacts for each review in a submission.
@@ -115,7 +117,7 @@ export default class ChallengeController {
         };
       }));
     } catch (err) {
-      vscode.window.showErrorMessage(constants.loadSubmissionFailed);
+      Notification.showErrorNotification(constants.loadSubmissionFailed);
     }
 
     try { // handle any other errors while generating the html
@@ -124,11 +126,11 @@ export default class ChallengeController {
 
       // Set the content of the webview using the available submssion information
       this.setWebviewContent(this.challengeSubmissionWebviewPanel,
-        ChallengeService.generateReviewArtifactsHtml(reviews));
+        HtmlHelper.generateReviewArtifactsHtml(reviews));
 
-      vscode.window.showInformationMessage(constants.loadSubmissionSuccess);
+      Notification.showInfoNotification(constants.loadSubmissionSuccess);
     } catch (err) {
-      vscode.window.showErrorMessage(constants.loadSubmissionFailed);
+      Notification.showErrorNotification(constants.loadSubmissionFailed);
     }
   }
 
@@ -138,12 +140,12 @@ export default class ChallengeController {
    */
   public async viewChallengeDetails(challengeId: string) {
     if (!this.isUserLoggedIn()) {
-      vscode.window.showErrorMessage(constants.notLoggedInMessage);
+      Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
     }
 
     // get challenge details
-    vscode.window.showInformationMessage(constants.loadingChallengeDetails);
+    Notification.showInfoNotification(constants.loadingChallengeDetails);
     let challengeDetails;
     let token;
     try { // handle errors while retreiving information from the server
@@ -152,7 +154,7 @@ export default class ChallengeController {
       challengeDetails = _.get(apiResponse, 'result.content', {});
     } catch (err) {
       console.log(`Error occur when loading challenge details (${err.toString()})`);
-      vscode.window.showErrorMessage(err.toString());
+      Notification.showErrorNotification(err.toString());
       return;
     }
 
@@ -162,11 +164,11 @@ export default class ChallengeController {
 
       // Set the content of the webview using the available details of a challenge
       this.setWebviewContent(this.challengeDetailsWebviewPanel,
-        ChallengeService.generateHtmlFromChallengeDetails(challengeDetails, token));
+        HtmlHelper.generateHtmlFromChallengeDetails(challengeDetails, token));
 
-      vscode.window.showInformationMessage(constants.challengeDetailsLoadedMessage);
+      Notification.showInfoNotification(constants.challengeDetailsLoadedMessage);
     } catch (err) {
-      vscode.window.showErrorMessage(constants.challengeDetailsLoadFailedMessage);
+      Notification.showErrorNotification(constants.challengeDetailsLoadFailedMessage);
     }
   }
 
@@ -233,7 +235,7 @@ export default class ChallengeController {
    * @param artifactId artifact identifier
    */
   private async downloadArtifact(submissionId: string, artifactId: string) {
-    vscode.window.showInformationMessage(constants.artifactDownloadStart);
+    Notification.showInfoNotification(constants.artifactDownloadStart);
     try {
       const userToken = await AuthService.updateTokenGlobalState(this.context);
 
@@ -241,10 +243,10 @@ export default class ChallengeController {
 
       // file is saved at root path
       data.pipe(fs.createWriteStream(path.join(vscode.workspace.rootPath || '', this.getFilenameFromRequest(data))));
-      vscode.window.showInformationMessage(constants.artifactDownloadSuccess);
+      Notification.showInfoNotification(constants.artifactDownloadSuccess);
 
     } catch (err) {
-      vscode.window.showInformationMessage(constants.artifactDownloadFailed);
+      Notification.showInfoNotification(constants.artifactDownloadFailed);
     }
   }
   /**
@@ -275,7 +277,7 @@ export default class ChallengeController {
     );
     // if the user don't make a selection, warn him that nothing was downloaded.
     if (!choice) {
-      vscode.window.showWarningMessage(constants.noStarterPackDownloaded);
+      Notification.showWarningNotification(constants.noStarterPackDownloaded);
       return;
     }
     // get the url for the selected repo
@@ -292,13 +294,13 @@ export default class ChallengeController {
         );
         // in case user don't want to clear folder
         if (isEmptyChoice !== 'Yes') {
-          vscode.window.showWarningMessage(constants.noStarterPackDownloaded);
+          Notification.showWarningNotification(constants.noStarterPackDownloaded);
           return;
         }
       }
       // delete all files
       fs.emptyDirSync(workspacePath);
-      vscode.window.showInformationMessage(constants.cloningStarterPackStarted);
+      Notification.showInfoNotification(constants.cloningStarterPackStarted);
 
       git.plugins.set('fs', fs);
       // clone it to root
@@ -312,9 +314,9 @@ export default class ChallengeController {
 
       // initialize the workspace with the challenge id
       await this.initializeWorkspaceForChallenge(challengeId);
-      vscode.window.showInformationMessage(constants.cloningStarterPackSuccess);
+      Notification.showInfoNotification(constants.cloningStarterPackSuccess);
     } catch (err) {
-      vscode.window.showErrorMessage(constants.errorCloningStarterPack);
+      Notification.showErrorNotification(constants.errorCloningStarterPack);
     }
   }
 
@@ -362,13 +364,13 @@ export default class ChallengeController {
    * @param challengeId The challenge id to register to
    */
   private async registerUserForChallenge(challengeId: string) {
-    vscode.window.showInformationMessage(constants.registeringMessage);
+    Notification.showInfoNotification(constants.registeringMessage);
     try {
       const userToken = await AuthService.updateTokenGlobalState(this.context);
       const { data } = await ChallengeService.registerUserForChallenge(challengeId, userToken);
       const status = _.get(data, 'result.status', 500);
       if (status === 200) {
-        vscode.window.showInformationMessage(constants.registeredSuccessfullyMessage);
+        Notification.showInfoNotification(constants.registeredSuccessfullyMessage);
         if (this.challengeDetailsWebviewPanel !== undefined) {
           this.challengeDetailsWebviewPanel.webview.postMessage(
             {
@@ -377,10 +379,10 @@ export default class ChallengeController {
           );
         }
       } else {
-        vscode.window.showErrorMessage(_.get(data, 'result.content', constants.registrationFailedMessage));
+        Notification.showErrorNotification(_.get(data, 'result.content', constants.registrationFailedMessage));
       }
     } catch (err) {
-      vscode.window.showErrorMessage(err.toString());
+      Notification.showErrorNotification(err.toString());
     }
   }
 
@@ -389,12 +391,12 @@ export default class ChallengeController {
    * @param challengeId The challenge id to initiazlie with
    */
   private async initializeWorkspaceForChallenge(challengeId: string) {
-    vscode.window.showInformationMessage(constants.initializingWorkspaceMessage);
+    Notification.showInfoNotification(constants.initializingWorkspaceMessage);
     try {
       await ChallengeService.initializeWorkspace(vscode.workspace.rootPath || '', challengeId);
-      vscode.window.showInformationMessage(constants.workspaceInitializationSuccessMessage);
+      Notification.showInfoNotification(constants.workspaceInitializationSuccessMessage);
     } catch (err) {
-      vscode.window.showErrorMessage(constants.workspaceInitializationFailedMessage);
+      Notification.showErrorNotification(constants.workspaceInitializationFailedMessage);
     }
   }
 }
