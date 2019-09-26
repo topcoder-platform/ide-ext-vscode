@@ -49,7 +49,7 @@ export default class StatusBarService {
         const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
         const isProd = config.get(constants.environment);
 
-        this.environmentStatusBarITem.text = isProd ? 'API Env: PRODUCTION' : 'API Env: DEVELOPMENT';
+        this.environmentStatusBarITem.text = isProd ? 'Topcoder production environment' : 'Topcoder development environment';
         this.environmentStatusBarITem.show();
 
     }

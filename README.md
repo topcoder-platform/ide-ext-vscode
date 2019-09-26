@@ -53,7 +53,7 @@ The extensions adds some information to the status bar.
 
 - *Time in EDT timezone* will show local time in EDT Timezone.
 - *Countdown until submission phase ends* will show a counter until the end of the submission phase.
-- *API Env* will show to what API environment the user is connected (Production/Development).
+- *Topcoder production / development environment* will show which API environment the user is connected (Production/Development).
 
 ## Run tests
 

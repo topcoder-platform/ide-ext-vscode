@@ -1,5 +1,7 @@
-## VSCode Extension for Topcoder - Getting Started
+# VSCode Extension for Topcoder - Getting Started
+
 This guide will help you set up the extension.
+
 1. `Setup user credentials`
 Open VSCode settings via `File > Preferences > Settings` or using the keyboard shortcut `Ctrl+,` . Under either User settings or Workspace settings, navigate to `Extensions > Topcoder Workflow`. You will find two fields to set your topcoder username and password. These values are autosaved.
 Note for macOS users: The Preferences menu is under `Code` not `File`. For example, `Code > Preferences > Settings`.
@@ -15,7 +17,7 @@ This will terminate the user's session. This command must be explicitly invoked 
 
 4. `Production API Environment`
 This will allow to change between development and production API's. If checked all the requests goes to production, if not goes to development
-![env](https://i.imgur.com/HN8k40x.png)
+![env](https://i.imgur.com/G3OMPQ6.png)
 
 5. `Telemetry`
 This extension has a telemetry system. To deactivate uncheck this property.
