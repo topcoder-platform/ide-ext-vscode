@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import axios from 'axios';
+import { getEnv } from '../config';
 import * as constants from '../constants';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -7,9 +8,17 @@ import ignore, { Ignore } from 'ignore';
 import * as jwt from 'jsonwebtoken';
 import * as archiver from 'archiver';
 import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
-const submissionApiClient = submissionApi({
-  SUBMISSION_API_URL: constants.uploadSubmmissionUrl
-});
+
+/**
+ * Creates submission API client according to user preferences.
+ * @return {Object}
+ */
+function getSubmissionApi() {
+  return submissionApi({
+    SUBMISSION_API_URL: getEnv().URLS.UPLOAD_SUBMISSION,
+  });
+}
+
 /**
  * Interacts with challenges APIs
  */
@@ -22,7 +31,7 @@ export default class ChallengeService {
    */
   public static async getSubmissionDetails(challengeId: string, token: string) {
     const decodedToken: any = jwt.decode(token);
-    const url = constants.memberSubmissionUrl
+    const url = getEnv().URLS.MEMBER_SUBMISSION
       .replace('{challengeId}', challengeId)
       .replace('{memberId}', decodedToken.userId);
 
@@ -43,7 +52,8 @@ export default class ChallengeService {
    * @param token user token
    */
   public static async getSubmissionArtifacts(submissionId: string, token: string) {
-    const url = constants.submissionArtifactsUrl.replace('{submissionId}', submissionId);
+    const url = getEnv().URLS.SUBMISSION_ARTIFACTS
+      .replace('{submissionId}', submissionId);
 
     try {
       const { data } = await axios.get(url,
@@ -63,7 +73,7 @@ export default class ChallengeService {
    * @param token User token
    */
   public static async downloadArtifact(submissionId: string, artifactId: string, token: string) {
-    const url = constants.downloadSubmissionUrl
+    const url = getEnv().URLS.DOWNLOAD_SUBMISSION
       .replace('{submissionId}', submissionId)
       .replace('{artifactId}', artifactId);
     try {
@@ -85,7 +95,7 @@ export default class ChallengeService {
    */
   public static async getActiveChallenges(savedToken: string) {
     try {
-      const { data } = await axios.get(constants.activeChallengesUrl,
+      const { data } = await axios.get(getEnv().URLS.ACTIVATE_CHALLENGES,
         {
           headers: { Authorization: `Bearer ${savedToken}` }
         });
@@ -104,7 +114,7 @@ export default class ChallengeService {
    */
   public static async getChallengeDetails(challengeId: string, savedToken: string) {
     try {
-      const url = `${constants.challengeDetailsUrl}/${challengeId}`;
+      const url = `${getEnv().URLS.CHALLENGE_DETAILS}/${challengeId}`;
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${savedToken}` }
       });
@@ -121,7 +131,8 @@ export default class ChallengeService {
    */
   public static async registerUserForChallenge(challengeId: string, userToken: string) {
     try {
-      return await axios.post(constants.challengeRegistrationUrl.replace('{challengeId}', challengeId), undefined, {
+      return await axios.post(getEnv().URLS.CHALLENGE_REGISTRATION
+        .replace('{challengeId}', challengeId), undefined, {
         headers: {
           'Authorization': `Bearer ${userToken}`,
           'Content-Type': 'application/json'
@@ -211,7 +222,8 @@ export default class ChallengeService {
   public static async getActiveChallengesOfUser(token: string) {
     try {
       const profile: any = jwt.decode(token);
-      const url = constants.memberChallengesUrl.replace('{memberId}', profile.handle);
+      const url = getEnv().URLS.MEMBER_CHALLENGES
+        .replace('{memberId}', profile.handle);
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -313,6 +325,7 @@ export default class ChallengeService {
       challengeId,
       memberId: decodedToken.userId
     };
-    return await submissionApiClient.createSubmission(submissionData, savedToken);
+    return await getSubmissionApi()
+      .createSubmission(submissionData, savedToken);
   }
 }

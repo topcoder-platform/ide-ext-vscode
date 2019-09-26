@@ -2,16 +2,24 @@ import * as vscode from 'vscode';
 import * as _ from 'lodash';
 import { IListItem } from './interfaces';
 import ChallengeController from '../controllers/ChallengeController';
+import VSCode from '../helpers/VSCode';
 
 export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem> {
 
     /**
      * Register this provider with vscode and set it up
-     * @param challengeController A ChallengeController instance
+     * @param {ChallengeController} challengeController A ChallengeController instance
+     * @param {vscode.ExtensionContext} context
      */
-    public static Register(challengeController: ChallengeController) {
+    public static Register(
+      challengeController: ChallengeController,
+      context: vscode.ExtensionContext,
+    ) {
         if (!this.provider) {
-            this.provider = new ActiveContestsProvider(challengeController);
+            this.provider = new ActiveContestsProvider(
+              challengeController,
+              context,
+            );
         }
         vscode.window.createTreeView('user-active-contests', {
             treeDataProvider: this.provider
@@ -23,14 +31,26 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
     private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
         new vscode.EventEmitter<IListItem | undefined>();
 
-    private constructor(private challengeController: ChallengeController) {
+    private constructor(
+      private challengeController: ChallengeController,
+      context: vscode.ExtensionContext,
+    ) {
+        const vs = new VSCode(context);
         this.onDidChangeTreeData = this.onDidChangeTreeDataEmitter.event;
-        vscode.commands.registerCommand('activeContests.openSelectedChallenge', async (id) => {
+        vs.registerCommand(
+          'activeContests.openSelectedChallenge',
+          async (id) => {
             await this.challengeController.viewChallengeDetails(id); // errors are handled internally
-        });
-        vscode.commands.registerCommand('activeContests.reload', async () => {
+          },
+          undefined,
+          (telemetry, challengeId) => ({ ...telemetry, challengeId }),
+        );
+        vs.registerCommand(
+          'activeContests.reload',
+          async () => {
             this.onDidChangeTreeDataEmitter.fire();
-        });
+          }
+        );
     }
 
     /**

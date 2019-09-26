@@ -1,6 +1,5 @@
 // Constants definition file
 
-const useDevelopEndpoint = true; // set to false if you want to use topcoder's production instance
 export const missingUsernameMessage = 'Missing username. Configure your username in the settings screen.';
 export const missingPasswordMessage = 'Missing password. Configure your password in the settings screen.';
 export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
@@ -47,6 +46,8 @@ export const noStarterPackDownloaded = 'No starter pack downloaded';
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
 export const passwordConfig = 'credentials.password';
+export const useDevelopEndpoint = 'useDevelopEndpoint';
+export const shareTelemetryToTC = 'shareTelemetryToTC';
 
 export const tokenStateKey = 'TC_JWT_TOKEN';
 
@@ -55,43 +56,75 @@ export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 
-export const CLIENT_V2CONNECTION = useDevelopEndpoint ? 'TC-User-Database' : 'LDAP';
-export const AUTHN_URL = useDevelopEndpoint ?
-  'https://topcoder-dev.auth0.com/oauth/ro' :
-  'https://topcoder.auth0.com/oauth/ro';
-export const AUTHZ_URL = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v3/authorizations' :
-  'https://api.topcoder.com/v3/authorizations';
-export const CLIENT_ID = useDevelopEndpoint ?
-  'JFDo7HMkf0q2CkVFHojy3zHWafziprhT' :
-  '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P';
-export const refreshTokenUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v3/authorizations/1' :
-  'https://api.topcoder.com/v3/authorizations/1';
-export const activeChallengesUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v4/challenges/?filter=status%3DACTIVE' :
-  'https://api.topcoder.com/v4/challenges/?filter=status%3DACTIVE';
-export const uploadSubmmissionUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v5' :
-  'https://api.topcoder.com/v5';
-export const challengeDetailsUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v4/challenges' :
-  'https://api.topcoder.com/v4/challenges';
-export const challengeRegistrationUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v4/challenges/{challengeId}/register' :
-  'https://api.topcoder.com/v4/challenges/{challengeId}/register';
-export const memberChallengesUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0' :
-  'https://api.topcoder.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0';
-export const memberSubmissionUrl = useDevelopEndpoint ?
-  'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}' :
-  'https://api.topcoder.com/v5/submissions?challengeId={challengeId}&memberId={memberId}';
-export const submissionArtifactsUrl = useDevelopEndpoint ?
-  'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts' :
-  'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts';
-export const downloadSubmissionUrl = useDevelopEndpoint ?
-  'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download' :
-  'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download';
+/**
+ * Interface of a constant set, which fully defines a Topcoder environment
+ * to work against.
+ */
+export interface IENV {
+  CLIENT_ID: string;
+  CLIENT_V2CONNECTION: string;
+  NAME: string;
+  URLS: {
+    AUTHN: string,
+    AUTHZ: string,
+    REFRESH_TOKEN: string,
+    ACTIVATE_CHALLENGES: string,
+    UPLOAD_SUBMISSION: string,
+    CHALLENGE_DETAILS: string,
+    CHALLENGE_REGISTRATION: string,
+    MEMBER_CHALLENGES: string,
+    MEMBER_SUBMISSION: string,
+    SUBMISSION_ARTIFACTS: string,
+    DOWNLOAD_SUBMISSION: string,
+    TELEMETRY: string,
+  };
+}
+
+/**
+ * Constant set for TC Dev environment.
+ */
+export const DEV_ENV: IENV = {
+  CLIENT_ID: 'JFDo7HMkf0q2CkVFHojy3zHWafziprhT',
+  CLIENT_V2CONNECTION: 'TC-User-Database',
+  NAME: 'Dev',
+  URLS: {
+    AUTHN: 'https://topcoder-dev.auth0.com/oauth/ro',
+    AUTHZ: 'https://api.topcoder-dev.com/v3/authorizations',
+    REFRESH_TOKEN: 'https://api.topcoder-dev.com/v3/authorizations/1',
+    ACTIVATE_CHALLENGES: 'https://api.topcoder-dev.com/v4/challenges/?filter=status%3DACTIVE',
+    UPLOAD_SUBMISSION: 'https://api.topcoder-dev.com/v5',
+    CHALLENGE_DETAILS: 'https://api.topcoder-dev.com/v4/challenges',
+    CHALLENGE_REGISTRATION: 'https://api.topcoder-dev.com/v4/challenges/{challengeId}/register',
+    MEMBER_CHALLENGES: 'https://api.topcoder-dev.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0',
+    MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
+    SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
+    DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
+    TELEMETRY: 'https://webhook.site/cb4d7abf-f9a8-47f8-ab40-f8f43bd3367c'
+  }
+};
+
+/**
+ * Constant set for TC Prod environment.
+ */
+export const PROD_ENV: IENV = {
+  CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
+  CLIENT_V2CONNECTION: 'LDAP',
+  NAME: 'Prod',
+  URLS: {
+    AUTHN: 'https://topcoder.auth0.com/oauth/ro',
+    AUTHZ: 'https://api.topcoder.com/v3/authorizations',
+    REFRESH_TOKEN: 'https://api.topcoder.com/v3/authorizations/1',
+    ACTIVATE_CHALLENGES: 'https://api.topcoder.com/v4/challenges/?filter=status%3DACTIVE',
+    UPLOAD_SUBMISSION: 'https://api.topcoder.com/v5',
+    CHALLENGE_DETAILS: 'https://api.topcoder.com/v4/challenges',
+    CHALLENGE_REGISTRATION: 'https://api.topcoder.com/v4/challenges/{challengeId}/register',
+    MEMBER_CHALLENGES: 'https://api.topcoder.com/v4/members/{memberId}/challenges/?filter=status%3DACTIVE&limit=50&offset=0',
+    MEMBER_SUBMISSION: 'https://api.topcoder.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
+    SUBMISSION_ARTIFACTS: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts',
+    DOWNLOAD_SUBMISSION: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
+    TELEMETRY: '',
+  }
+};
 
 export const submitType = 'Contest Submission';
 

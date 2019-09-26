@@ -1,4 +1,7 @@
 import * as vscode from 'vscode';
+
+import TelemetryService from '../services/TelemetryService';
+
 /**
  * Existing notifications types.
  */
@@ -20,14 +23,25 @@ export default class Notification {
         vscode.window.showWarningMessage(message);
     }
 
-    public static showErrorNotification(message: string) {
+    public static showErrorNotification(
+      message: string,
+      userToken?: string,
+      ) {
+        console.error(message);
+        TelemetryService.share({
+          event: 'Error',
+          error: message,
+        }, userToken);
         vscode.window.showErrorMessage(message);
     }
 
-    public static showNotification(type: string, message: string) {
+    public static showNotification(
+      type: string,
+      message: string,
+      userToken?: string) {
         switch (type) {
             case notificationTypes.ERROR:
-                this.showErrorNotification(message);
+                this.showErrorNotification(message, userToken);
                 break;
             case notificationTypes.INFO:
                 this.showInfoNotification(message);

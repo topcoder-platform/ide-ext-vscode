@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import TCAuth = require('topcoder-api-utils/TCAuth');
 import * as constants from '../constants';
+import { getEnv } from '../config';
 
 /**
  * Interacts with authentication APIs.
@@ -15,11 +16,14 @@ export default class AuthService {
    */
   public static async fetchToken(): Promise<string> {
     const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
+
+    const env = getEnv();
+
     const tcAuth = new TCAuth({
-      AUTHN_URL: constants.AUTHN_URL,
-      AUTHZ_URL: constants.AUTHZ_URL,
-      CLIENT_ID: constants.CLIENT_ID,
-      CLIENT_V2CONNECTION: constants.CLIENT_V2CONNECTION
+      AUTHN_URL: env.URLS.AUTHN,
+      AUTHZ_URL: env.URLS.AUTHZ,
+      CLIENT_ID: env.CLIENT_ID,
+      CLIENT_V2CONNECTION: env.CLIENT_V2CONNECTION
     }, console);
 
     const username = config.get(constants.usernameConfig, '');
@@ -34,6 +38,15 @@ export default class AuthService {
         return resolve(token);
       });
     });
+  }
+
+  /**
+   * Gets saved user token, if any.
+   * @param {vscode.ExtensionContext} context Extension context.
+   * @return {String} The token.
+   */
+  public static getSavedToken(context: vscode.ExtensionContext): string {
+    return context.globalState.get(constants.tokenStateKey, '');
   }
 
   /**
@@ -82,7 +95,7 @@ export default class AuthService {
    * @return The token stored in the global state.
    */
   public static async updateTokenGlobalState(context: vscode.ExtensionContext): Promise<string> {
-    const savedToken = context.globalState.get(constants.tokenStateKey, '');
+    const savedToken = this.getSavedToken(context);
     const freshToken = await this.getToken(savedToken);
     context.globalState.update(constants.tokenStateKey, freshToken);
 
@@ -96,7 +109,8 @@ export default class AuthService {
    */
   public static async refreshToken(savedToken: string): Promise<string> {
     try {
-      const { data } = await axios.get(constants.refreshTokenUrl,
+      const env = getEnv();
+      const { data } = await axios.get(env.URLS.REFRESH_TOKEN,
         {
           headers: { Authorization: `Bearer ${savedToken}` }
         });

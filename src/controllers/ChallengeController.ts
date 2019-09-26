@@ -8,6 +8,7 @@ import ChallengeService from '../services/ChallengeService';
 import AuthService from '../services/AuthService';
 import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
+import TelemetryService from '../services/TelemetryService';
 
 /**
  * Controller for handling challenge commands.
@@ -139,6 +140,11 @@ export default class ChallengeController {
    * @param challengeId The challenge Id
    */
   public async viewChallengeDetails(challengeId: string) {
+    TelemetryService.share({
+      event: 'Opening Challenge Details',
+      challengeId,
+    }, AuthService.getSavedToken(this.context));
+
     if (!this.isUserLoggedIn()) {
       Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
@@ -176,8 +182,7 @@ export default class ChallengeController {
    * Check if user has logged in.
    */
   private isUserLoggedIn(): boolean {
-    const token = this.context.globalState.get(constants.tokenStateKey);
-    return !!token;
+    return !!AuthService.getSavedToken(this.context);
   }
 
   /**
@@ -282,6 +287,11 @@ export default class ChallengeController {
     }
     // get the url for the selected repo
     const selection = repos.find((t: any) => t.title === choice) as any;
+    TelemetryService.share({
+      event: 'Clonning Repo',
+      challengeId,
+      repoUrl: selection.url,
+    }, AuthService.getSavedToken(this.context));
     try {
       // ensure that folder is empty and let the user decide if wants to clear or not the folder
       if (fs.readdirSync(workspacePath).length > 0) {
@@ -364,6 +374,10 @@ export default class ChallengeController {
    * @param challengeId The challenge id to register to
    */
   private async registerUserForChallenge(challengeId: string) {
+    TelemetryService.share({
+      event: 'Challenge Registration Started',
+      challengeId,
+    }, AuthService.getSavedToken(this.context));
     Notification.showInfoNotification(constants.registeringMessage);
     try {
       const userToken = await AuthService.updateTokenGlobalState(this.context);
@@ -391,6 +405,10 @@ export default class ChallengeController {
    * @param challengeId The challenge id to initiazlie with
    */
   private async initializeWorkspaceForChallenge(challengeId: string) {
+    TelemetryService.share({
+      event: 'Workspace Initialization',
+      challengeId,
+    }, AuthService.getSavedToken(this.context));
     Notification.showInfoNotification(constants.initializingWorkspaceMessage);
     try {
       await ChallengeService.initializeWorkspace(vscode.workspace.rootPath || '', challengeId);
