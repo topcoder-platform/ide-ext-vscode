@@ -1,12 +1,14 @@
 import * as vscode from 'vscode';
 import AuthService from '../services/AuthService';
 import * as constants from '../constants';
+import Notification from '../helpers/Notification';
+import TelemetryService from '../services/TelemetryService';
 
 /**
  * Controller for handling authentication commands.
  */
 export default class AuthController {
-  constructor(private context: vscode.ExtensionContext) { }
+  constructor(private context: vscode.ExtensionContext) {}
 
   public async login() {
     const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
@@ -14,28 +16,30 @@ export default class AuthController {
     const password = config.get(constants.passwordConfig);
 
     if (!username) {
-      vscode.window.showErrorMessage(constants.missingUsernameMessage);
+      Notification.showErrorNotification(constants.missingUsernameMessage);
       return;
     }
 
     if (!password) {
-      vscode.window.showErrorMessage(constants.missingPasswordMessage);
+      Notification.showErrorNotification(constants.missingPasswordMessage);
       return;
     }
 
-    vscode.window.showInformationMessage(constants.loggingInMessage);
+    Notification.showInfoNotification(constants.loggingInMessage);
 
     try {
       await AuthService.updateTokenGlobalState(this.context);
-
-      vscode.window.showInformationMessage(constants.loggedInMessage);
+      Notification.showInfoNotification(constants.loggedInMessage);
+      TelemetryService.share({
+        event: 'User Logged In',
+      }, AuthService.getSavedToken(this.context));
     } catch (err) {
-      vscode.window.showErrorMessage(err.toString());
+      Notification.showErrorNotification(err.toString());
     }
   }
 
   public async logout() {
     this.context.globalState.update(constants.tokenStateKey, '');
-    vscode.window.showInformationMessage(constants.loggedOutMessage);
+    Notification.showInfoNotification(constants.loggedOutMessage);
   }
 }

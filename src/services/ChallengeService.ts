@@ -1,12 +1,23 @@
 import * as _ from 'lodash';
 import axios from 'axios';
+import { getEnv } from '../config';
 import * as constants from '../constants';
 import * as fs from 'fs';
 import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
 import * as jwt from 'jsonwebtoken';
-import * as FormData from 'form-data';
 import * as archiver from 'archiver';
+import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
+
+/**
+ * Creates submission API client according to user preferences.
+ * @return {Object}
+ */
+function getSubmissionApi() {
+  return submissionApi({
+    SUBMISSION_API_URL: getEnv().URLS.UPLOAD_SUBMISSION,
+  });
+}
 
 /**
  * Interacts with challenges APIs
@@ -14,64 +25,84 @@ import * as archiver from 'archiver';
 export default class ChallengeService {
 
   /**
+   * Gets the details of a submission
+   * @param challengeId challenge identifier
+   * @param token user token
+   */
+  public static async getSubmissionDetails(challengeId: string, token: string) {
+    const decodedToken: any = jwt.decode(token);
+    const url = getEnv().URLS.MEMBER_SUBMISSION
+      .replace('{challengeId}', challengeId)
+      .replace('{memberId}', decodedToken.userId);
+
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.loadSubmissionFailed);
+    }
+  }
+
+  /**
+   * Get the artifacts in a submission
+   * @param submissionId submission identifier
+   * @param token user token
+   */
+  public static async getSubmissionArtifacts(submissionId: string, token: string) {
+    const url = getEnv().URLS.SUBMISSION_ARTIFACTS
+      .replace('{submissionId}', submissionId);
+
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.loadSubmissionFailed);
+    }
+  }
+
+  /**
+   * Gets the stream to download to disk an artifact
+   * @param submissionId Submission identifier
+   * @param artifactId Artifact identifier
+   * @param token User token
+   */
+  public static async downloadArtifact(submissionId: string, artifactId: string, token: string) {
+    const url = getEnv().URLS.DOWNLOAD_SUBMISSION
+      .replace('{submissionId}', submissionId)
+      .replace('{artifactId}', artifactId);
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          responseType: 'stream'
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.artifactDownloadFailed);
+    }
+  }
+
+  /**
    * Get the list of current active challenges.
    * @param savedToken
    * @return The challenges.
    */
   public static async getActiveChallenges(savedToken: string) {
-    const { data } = await axios.get(constants.activeChallengesUrl,
-      {
-        headers: { Authorization: `Bearer ${savedToken}` }
-      });
-
-    return data;
-  }
-
-  /**
-   * Generate html page content from challenges
-   * @param challenges the challeges
-   * @return the html page content
-   */
-  public static generateHtmlFromChallenges(challenges: any[]): string {
-    return `<!doctype html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${constants.challengesPageTitle}</title>
-      </head>
-      <body>
-        <table border="1" style="margin-bottom: 40px">
-          <tr>
-            <th>Challenge Name</th>
-            <th>Challenge Type</th>
-            <th>Number of registrants</th>
-            <th>Prizes</th>
-            <th>Current Phase</th>
-          </tr>
-          ${this.generateHtmlTableFromChallenges(challenges)}
-        </table>
-        <script>
-          // enable communication with the extension via messaging.
-          var vscode;
-
-          (function () {
-            vscode = acquireVsCodeApi();
-          }());
-
-          function openChallenge(challengeId) {
-            if (challengeId) {
-              vscode.postMessage({
-                action: '${constants.webviewMessageActions.DISPLAY_CHALLENGE_DETAILS}',
-                data: {
-                  challengeId
-                }
-              });
-            }
-          }
-        </script>
-      </body>
-      </html>`;
+    try {
+      const { data } = await axios.get(getEnv().URLS.ACTIVATE_CHALLENGES,
+        {
+          headers: { Authorization: `Bearer ${savedToken}` }
+        });
+      return data;
+    } catch (err) {
+      throw new Error(constants.loadOpenChallengesFailedMessage);
+    }
   }
 
   /**
@@ -83,7 +114,7 @@ export default class ChallengeService {
    */
   public static async getChallengeDetails(challengeId: string, savedToken: string) {
     try {
-      const url = `${constants.challengeDetailsUrl}/${challengeId}`;
+      const url = `${getEnv().URLS.CHALLENGE_DETAILS}/${challengeId}`;
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${savedToken}` }
       });
@@ -94,91 +125,22 @@ export default class ChallengeService {
   }
 
   /**
-   * Construct HTML for display based on the challenge details available
-   * @param challengeDetails Challenge details object
-   * @return The HTML string of challenge details.
-   */
-  public static generateHtmlFromChallengeDetails(challengeDetails: any, userToken: string): string {
-    return `
-      <!doctype html>
-      <html>
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>${constants.challengeDetailsPageTitle}</title>
-          <style>
-            td {
-              padding-left: 3px;
-            }
-            th {
-              background: #333
-            }
-            button {
-              background: #0681ff;
-              width: 220px;
-              color: white;
-              border-color: transparent;
-              cursor: pointer;
-              height: 28px;
-              border-radius: 4px;
-            }
-          </style>
-        </head>
-        <body>
-          <script>
-            // enable communication with the extension via messaging.
-            var vscode;
-
-            (function () {
-              vscode = acquireVsCodeApi();
-            }());
-
-            function registerForChallenge(challengeId){
-              if(challengeId){
-                vscode.postMessage({
-                  action: '${constants.webviewMessageActions.REGISTER_FOR_CHALLENGE}',
-                  data: {
-                    challengeId
-                  }
-                });
-              }
-            }
-            // Handle message from extension to this webview.
-            window.addEventListener('message', event => {
-                const message = event.data;
-                switch (message.command) {
-                    case '${constants.webviewMessageActions.REGISTERED_FOR_CHALLENGE}':{
-                      document.getElementById('registerButton').remove();
-                    } break;
-                }
-            });
-          </script>
-          <h1>${challengeDetails.challengeTitle}</h1>
-          ${this.generateRegisterButtonHTML(challengeDetails, userToken)}
-          <h2>Prizes</h2>
-          <div>${this.generateHtmlFromChallengePrizes(challengeDetails.prizes)}</div>
-          <h2>Meta</h2>
-          <div>${this.generateMetaTableFromChallengeDetails(challengeDetails)}</div>
-          <h2>Specification</h2>
-          <div>${challengeDetails.detailedRequirements || challengeDetails.introduction}</div>
-          <h2>Submission Guidelines</h2>
-          <div>${challengeDetails.finalSubmissionGuidelines || 'N/A'}</div>
-        </body>
-      </html>`;
-  }
-
-  /**
    * Register this user for the given challenge
    * @param challengeId The ID of the challenge to register to
    * @param userToken The valid user JWT token
    */
   public static async registerUserForChallenge(challengeId: string, userToken: string) {
-    return await axios.post(constants.challengeRegistrationUrl.replace('{challengeId}', challengeId), undefined, {
-      headers: {
-        'Authorization': `Bearer ${userToken}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    try {
+      return await axios.post(getEnv().URLS.CHALLENGE_REGISTRATION
+        .replace('{challengeId}', challengeId), undefined, {
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (err) {
+      throw new Error(constants.registrationFailedMessage);
+    }
   }
 
   /**
@@ -242,6 +204,8 @@ export default class ChallengeService {
     let response;
     try {
       response = await this.submitFileToChallenge(zipFilePath, challengeId, savedToken);
+    } catch (e) {
+      throw new Error(constants.challengeSubmissionFailedMessage);
     } finally {
       // delete the zip local temp file
       if (fs.existsSync(zipFilePath)) {
@@ -252,23 +216,42 @@ export default class ChallengeService {
   }
 
   /**
-   * Generate html table content from challenges
-   * @param challenges the challeges
-   * @return the html table content
+   * Retrieve the list of active challenges for the given user.
+   * @param token The user JWT
    */
-  private static generateHtmlTableFromChallenges(challenges: any[]): string {
-    return challenges
-      .map((challenge: any) => {
-        const filteredPhases = _.filter(challenge.currentPhases, (item) => item.phaseStatus === 'Open');
-        return `<tr>
-                  <td><a href='#' onclick='openChallenge(${challenge.id})'>${challenge.name}</a></td>
-                  <td>${challenge.subTrack}</td>
-                  <td>${challenge.numRegistrants}</td>
-                  <td>${_.join(_.map(challenge.prizes, (x) => `\$${x}`), ', ')}</td>
-                  <td>${_.join(_.map(filteredPhases, 'phaseType'), ', ')}</td>
-                </tr>`;
-      })
-      .join('');
+  public static async getActiveChallengesOfUser(token: string) {
+    try {
+      const profile: any = jwt.decode(token);
+      const url = getEnv().URLS.MEMBER_CHALLENGES
+        .replace('{memberId}', profile.handle);
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return _.get(data, 'result.content');
+    } catch (err) {
+      throw new Error(constants.userChallengesLoadFailedMessage);
+    }
+  }
+
+  /**
+   * Initialize the current workspace at the root folder with a .topcoderrc file
+   * @param workspacePath The current workspacePath
+   * @param challengeId The challenge id to write to the .topcoderrc file
+   */
+  public static async initializeWorkspace(workspacePath: string, challengeId: string) {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(path.join(workspacePath, '.topcoderrc'), JSON.stringify({
+        challengeId: `${challengeId}`
+      }), (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
   /**
@@ -333,101 +316,16 @@ export default class ChallengeService {
    */
   private static async submitFileToChallenge(filePath: string, challengeId: string, savedToken: string): Promise<any> {
     const decodedToken: any = jwt.decode(savedToken);
-    const fd = new FormData();
-    fd.append('submission', fs.createReadStream(filePath));
-    fd.append('type', constants.submitType);
-    fd.append('memberId', decodedToken.userId);
-    fd.append('challengeId', challengeId);
-
-    const { data } = await axios.post(constants.uploadSubmmissionUrl, fd, {
-      headers: {
-        ...fd.getHeaders(),
-        'Authorization': `Bearer ${savedToken}`,
-        'accept': 'application/json',
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    return data;
-  }
-
-  /**
-   * Generate an HTML table from the list of prize amounts
-   * @param prizes An array of prize amounts
-   * @return HTML string containing table information.
-   */
-  private static generateHtmlFromChallengePrizes(prizes: number[]) {
-    const tableHtml = _.map(prizes, (prize, i) => {
-      return {
-        header: `<th>${this.getOrdinalNumber(i + 1)} Place</th>`,
-        row: `<td>$${prize}</td>`
-      };
-    });
-    return `
-      <table border='1px'>
-        <tr>
-          ${_.join(_.map(tableHtml, (data) => data.header), '')}
-        </tr>
-        <tr>
-          ${_.join(_.map(tableHtml, (data) => data.row), '')}
-        </tr>
-      </table>
-    `;
-
-  }
-
-  /**
-   * Generates an HTML table from the challenge details object
-   * to display the current challenge phase, number of registrants and submissions.
-   * @param challengeDetails The challenge details object from the server
-   * @return HTML string containing table information.
-   */
-  private static generateMetaTableFromChallengeDetails(challengeDetails: any): string {
-    return `
-      <table border='1px'>
-        <tr>
-          <th>Current Phase</th>
-          <th># of Registrants</th>
-          <th># of Submissions</th>
-        </tr>
-        <tr>
-          <td>${challengeDetails.currentStatus || 'N/A'}</td>
-          <td>${challengeDetails.numberOfRegistrants || '0'}</td>
-          <td>${challengeDetails.numberOfSubmissions || '0'}</td>
-        </tr>
-      </table>
-    `;
-  }
-
-  /**
-   * Converts numeric values for ex:1,2,3 into their ordinal representations ex: 1st, 2nd, 3rd
-   * @param place Number denoting the rank/index of an item
-   * @return Ordinal number representation
-   */
-  private static getOrdinalNumber(place: number): string {
-    const remainder = place % 10;
-    switch (remainder) {
-      case 1: return `${place}st`;
-      case 2: return `${place}nd`;
-      case 3: return `${place}rd`;
-      default: return `${place}th`;
-    }
-  }
-
-  /**
-   * Returns the html to display for the register button, if user has not already registered.
-   * @param challengeDetails The challenge details
-   * @param userToken The user token
-   */
-  private static generateRegisterButtonHTML(challengeDetails: any, userToken: string) {
-    const buttonHtml = `
-      <button id="registerButton" onclick='registerForChallenge(${challengeDetails.challengeId})'>
-        Register
-      </button>
-      `;
-    // add register button to DOM only if this user has not already registered
-    const registrants: any[] = _.get(challengeDetails, 'registrants', []);
-    const decodedToken: any = jwt.decode(userToken);
-    const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined;
-    return registerEnabled ? buttonHtml : '';
+    const submissionData = {
+      submission: {
+        name: path.basename(filePath),
+        data: fs.createReadStream(filePath)
+      },
+      type: constants.submitType,
+      challengeId,
+      memberId: decodedToken.userId
+    };
+    return await getSubmissionApi()
+      .createSubmission(submissionData, savedToken);
   }
 }

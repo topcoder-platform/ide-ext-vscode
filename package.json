@@ -4,7 +4,7 @@
   "description": "This extension is meant to closely integrate the Topcoder platform with the text editors, to allow the user to perform actions from within the editor, without having to open a browser.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.34.0"
+    "vscode": "^1.36.0"
   },
   "categories": [
     "Other"
@@ -27,6 +27,16 @@
           "type": "string",
           "default": "",
           "description": "Your Topcoder password."
+        },
+        "TCVSCodeIDE.shareTelemetryToTC": {
+          "type": "boolean",
+          "default": true,
+          "description": "Permits the extension to send telemetry data to Topcoder."
+        },
+        "TCVSCodeIDE.useDevelopEndpoint": {
+          "type": "boolean",
+          "default": true,
+          "description": "Activate to work against the development version of Topcoder backend. To complete the switch logout and reload the window."
         }
       }
     },
@@ -50,16 +60,83 @@
         "command": "extension.uploadSubmmission",
         "title": "Upload submission",
         "category": "Topcoder"
+      },
+      {
+        "command": "activeContests.reload",
+        "title": "Reload User Contests",
+        "category": "Topcoder",
+        "icon": {
+          "dark": "resources/images/dark/reload.svg",
+          "light": "resources/images/light/reload.svg"
+        }
+      },
+      {
+        "command": "activeSubmissions.reload",
+        "title": "Reload User Submissions",
+        "category": "Topcoder",
+        "icon": {
+          "dark": "resources/images/dark/reload.svg",
+          "light": "resources/images/light/reload.svg"
+        }
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "activeContests.reload",
+          "when": "view == user-active-contests",
+          "group": "navigation"
+        },
+        {
+          "command": "activeSubmissions.reload",
+          "when": "view == user-active-submissions",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "activeContests.reload",
+          "when": "false"
+        },
+        {
+          "command": "activeSubmissions.reload",
+          "when": "false"
+        }
+      ]
+    },
+    "views": {
+      "topcoder-container": [
+        {
+          "id": "user-active-contests",
+          "name": "YOUR ACTIVE CONTESTS"
+        },
+        {
+          "id": "user-active-submissions",
+          "name": "YOUR ACTIVE SUBMISSIONS"
+        },
+        {
+          "id": "home",
+          "name": "HOME"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "resources/icons/Logo Active.svg",
+          "title": "TOPCODER",
+          "id": "topcoder-container"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "copy:resources": "copyfiles resources/**/* out",
+    "compile": "tsc -p ./ && npm run copy:resources",
     "lint": "tslint -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node ./out/test/runTest.js"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
@@ -68,21 +145,35 @@
     "@types/mocha": "^2.2.42",
     "@types/nock": "^10.0.3",
     "@types/node": "^10.12.21",
+    "@types/vscode": "^1.36.0",
     "chai": "^4.2.0",
+    "copyfiles": "^2.1.1",
+    "glob": "^7.1.4",
+    "husky": "^3.0.4",
+    "mocha": "^4.1.0",
     "nock": "^10.0.6",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1",
-    "vscode": "^1.1.28"
+    "vscode-test": "^1.2.0"
   },
   "dependencies": {
+    "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
     "@types/archiver": "^3.0.0",
-    "@types/form-data": "^2.2.1",
+    "@types/fs-extra": "^8.0.0",
+    "@types/moment-timezone": "^0.5.12",
     "archiver": "^3.0.0",
     "axios": "^0.19.0",
-    "form-data": "^2.4.0",
+    "fs-extra": "^8.1.0",
     "ignore": "^5.1.2",
+    "isomorphic-git": "^0.64.4",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
+    "moment-timezone": "^0.5.26",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }

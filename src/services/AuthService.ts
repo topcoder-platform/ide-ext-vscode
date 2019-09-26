@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import TCAuth = require('topcoder-api-utils/TCAuth');
 import * as constants from '../constants';
+import { getEnv } from '../config';
 
 /**
  * Interacts with authentication APIs.
@@ -15,25 +16,37 @@ export default class AuthService {
    */
   public static async fetchToken(): Promise<string> {
     const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
+
+    const env = getEnv();
+
     const tcAuth = new TCAuth({
-      AUTHN_URL: constants.AUTHN_URL,
-      AUTHZ_URL: constants.AUTHZ_URL,
-      CLIENT_ID: constants.CLIENT_ID,
-      CLIENT_V2CONNECTION: constants.CLIENT_V2CONNECTION
+      AUTHN_URL: env.URLS.AUTHN,
+      AUTHZ_URL: env.URLS.AUTHZ,
+      CLIENT_ID: env.CLIENT_ID,
+      CLIENT_V2CONNECTION: env.CLIENT_V2CONNECTION
     }, console);
 
     const username = config.get(constants.usernameConfig, '');
     const password = config.get(constants.passwordConfig, '');
 
     return new Promise((resolve, reject) => {
-      tcAuth.login(username, password, (err: object, token: string) => {
+      tcAuth.login(username, password, (err: any, token: string) => {
         if (err) {
-          return reject(err);
+          return reject(new Error(constants.authenticationFailedMessage));
         }
-
+        console.log(token);
         return resolve(token);
       });
     });
+  }
+
+  /**
+   * Gets saved user token, if any.
+   * @param {vscode.ExtensionContext} context Extension context.
+   * @return {String} The token.
+   */
+  public static getSavedToken(context: vscode.ExtensionContext): string {
+    return context.globalState.get(constants.tokenStateKey, '');
   }
 
   /**
@@ -82,7 +95,7 @@ export default class AuthService {
    * @return The token stored in the global state.
    */
   public static async updateTokenGlobalState(context: vscode.ExtensionContext): Promise<string> {
-    const savedToken = context.globalState.get(constants.tokenStateKey, '');
+    const savedToken = this.getSavedToken(context);
     const freshToken = await this.getToken(savedToken);
     context.globalState.update(constants.tokenStateKey, freshToken);
 
@@ -95,13 +108,18 @@ export default class AuthService {
    * @return The refreshed token.
    */
   public static async refreshToken(savedToken: string): Promise<string> {
-    const { data } = await axios.get(constants.refreshTokenUrl,
-      {
-        headers: { Authorization: `Bearer ${savedToken}` }
-      });
-    const token = _.get(data, 'result.content.token', '');
+    try {
+      const env = getEnv();
+      const { data } = await axios.get(env.URLS.REFRESH_TOKEN,
+        {
+          headers: { Authorization: `Bearer ${savedToken}` }
+        });
+      const token = _.get(data, 'result.content.token', '');
 
-    return token;
+      return token;
+    } catch (err) {
+      throw new Error(constants.tokenRefreshFailedMessage);
+    }
   }
 
   /**
