@@ -5,14 +5,13 @@ import * as vscode from 'vscode';
 import * as constants from '../../constants';
 import AuthService from '../../services/AuthService';
 import { v2Token, v3Token, refreshedToken, expiredToken } from './testData';
+import Utils from '../../utils/utils';
 
 suite('AuthService Unit tests', () => {
   suiteSetup(() => {
-    const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
-
-    const refreshTokenUrl = url.parse(constants.refreshTokenUrl);
-    const AUTHN_URL = url.parse(constants.AUTHN_URL);
-    const AUTHZ_URL = url.parse(constants.AUTHZ_URL);
+    const refreshTokenUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.refreshTokenUrl}`);
+    const AUTHN_URL = url.parse(`${Utils.getAuthBaseUrl()}/${constants.AUTHN_URL}`);
+    const AUTHZ_URL = url.parse(`${Utils.getApiBaseUrl()}/${constants.AUTHZ_URL}`);
 
     nock(/\.com/)
       .persist()

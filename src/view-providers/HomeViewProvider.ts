@@ -5,6 +5,7 @@ import * as constants from '../constants';
 import { IListItem } from './interfaces';
 import Notification from '../helpers/Notification';
 import ChallengeController from '../controllers/ChallengeController';
+import Telemetry from '../services/TelemeteryService';
 
 export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
 
@@ -49,15 +50,18 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
 
         vscode.commands.registerCommand('homeView.showHomeTreeItem', async (id) => {
             switch (id) {
-                case this.featuresItem.id: {
+                case this.featuresItem.id:
+                    await Telemetry.homeSection('Extension Features');
                     await this.showMarkdownFile('out/resources/documents/Extension Features.md');
-                }                          break;
-                case this.setupItem.id: {
+                    break;
+                case this.setupItem.id:
+                    await Telemetry.homeSection('Getting Started');
                     await this.showMarkdownFile('out/resources/documents/Getting Started.md');
-                }                       break;
-                case this.activeChallengesItem.id: {
+                    break;
+                case this.activeChallengesItem.id:
+                    await Telemetry.homeSection('Active Challenges');
                     await this.challengeController.viewOpenChallenges(); // errors are handled internally
-                }                                  break;
+                    break;
             }
         });
     }

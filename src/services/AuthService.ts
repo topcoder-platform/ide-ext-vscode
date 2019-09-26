@@ -4,6 +4,8 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import TCAuth = require('topcoder-api-utils/TCAuth');
 import * as constants from '../constants';
+import Telemetry from '../services/TelemeteryService';
+import Utils from '../utils/utils';
 
 /**
  * Interacts with authentication APIs.
@@ -16,10 +18,10 @@ export default class AuthService {
   public static async fetchToken(): Promise<string> {
     const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
     const tcAuth = new TCAuth({
-      AUTHN_URL: constants.AUTHN_URL,
-      AUTHZ_URL: constants.AUTHZ_URL,
-      CLIENT_ID: constants.CLIENT_ID,
-      CLIENT_V2CONNECTION: constants.CLIENT_V2CONNECTION
+      AUTHN_URL: `${Utils.getAuthBaseUrl()}/${constants.AUTHN_URL}`,
+      AUTHZ_URL: `${Utils.getApiBaseUrl()}/${constants.AUTHZ_URL}`,
+      CLIENT_ID: Utils.getClientId(),
+      CLIENT_V2CONNECTION: Utils.getClientConnection(),
     }, console);
 
     const username = config.get(constants.usernameConfig, '');
@@ -28,6 +30,7 @@ export default class AuthService {
     return new Promise((resolve, reject) => {
       tcAuth.login(username, password, (err: any, token: string) => {
         if (err) {
+          Telemetry.error(err, false);
           return reject(new Error(constants.authenticationFailedMessage));
         }
         console.log(token);
@@ -96,7 +99,8 @@ export default class AuthService {
    */
   public static async refreshToken(savedToken: string): Promise<string> {
     try {
-      const { data } = await axios.get(constants.refreshTokenUrl,
+      const url = `${Utils.getApiBaseUrl()}/${constants.refreshTokenUrl}`;
+      const { data } = await axios.get(url,
         {
           headers: { Authorization: `Bearer ${savedToken}` }
         });
@@ -104,6 +108,7 @@ export default class AuthService {
 
       return token;
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.tokenRefreshFailedMessage);
     }
   }

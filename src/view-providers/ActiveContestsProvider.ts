@@ -26,7 +26,7 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
     private constructor(private challengeController: ChallengeController) {
         this.onDidChangeTreeData = this.onDidChangeTreeDataEmitter.event;
         vscode.commands.registerCommand('activeContests.openSelectedChallenge', async (id) => {
-            await this.challengeController.viewChallengeDetails(id); // errors are handled internally
+            await this.challengeController.viewChallengeDetails(id, true); // errors are handled internally
         });
         vscode.commands.registerCommand('activeContests.reload', async () => {
             this.onDidChangeTreeDataEmitter.fire();

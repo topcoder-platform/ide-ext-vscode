@@ -8,6 +8,7 @@ import ChallengeService from '../services/ChallengeService';
 import AuthService from '../services/AuthService';
 import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
+import Telemetry from '../services/TelemeteryService';
 
 /**
  * Controller for handling challenge commands.
@@ -23,7 +24,7 @@ export default class ChallengeController {
   /**
    * Load all open challenges and display in webview
    */
-  public async viewOpenChallenges() {
+  public async viewOpenChallenges(isCommand: boolean = false) {
     if (!this.isUserLoggedIn()) {
       Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
@@ -35,6 +36,7 @@ export default class ChallengeController {
     let challenges;
     try { // handle errors while retrieving information from the server
       newToken = await AuthService.updateTokenGlobalState(this.context);
+      if (isCommand) { Telemetry.command('viewOpenChallenges'); }
       response = await ChallengeService.getActiveChallenges(newToken);
       challenges = _.get(response, 'result.content', []);
     } catch (err) {
@@ -57,7 +59,7 @@ export default class ChallengeController {
   /**
    * Submit the current workspace to topcoder challenge
    */
-  public async uploadSubmmission() {
+  public async uploadSubmmission(isCommand: boolean = false) {
     if (!this.isUserLoggedIn()) {
       Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
@@ -68,6 +70,7 @@ export default class ChallengeController {
       const newToken = await AuthService.updateTokenGlobalState(this.context);
       const workspacePath = vscode.workspace.rootPath || '';
       const response = await ChallengeService.uploadSubmmission(newToken, workspacePath);
+      if (isCommand) { Telemetry.command('uploadSubmmission'); }
       console.log('Submit challenge response: ' + JSON.stringify(response));
     } catch (err) {
       console.log(`Error occur when submit challenge (${err.toString()})`);
@@ -104,6 +107,7 @@ export default class ChallengeController {
     try {
       Notification.showInfoNotification(constants.loadSubmissionStarted);
       const token = await AuthService.updateTokenGlobalState(this.context);
+      await Telemetry.activeSubmission(challengeId);
       const result = await ChallengeService.getSubmissionDetails(challengeId, token);
       // need to get all artifacts for each review in a submission.
       reviews = await Promise.all(result.map(async (sub: any) => {
@@ -138,7 +142,7 @@ export default class ChallengeController {
    * Load challenge details for the given challenge id.
    * @param challengeId The challenge Id
    */
-  public async viewChallengeDetails(challengeId: string) {
+  public async viewChallengeDetails(challengeId: string, isFromSidebar: boolean = false) {
     if (!this.isUserLoggedIn()) {
       Notification.showErrorNotification(constants.notLoggedInMessage);
       return;
@@ -151,6 +155,11 @@ export default class ChallengeController {
     try { // handle errors while retreiving information from the server
       token = await AuthService.updateTokenGlobalState(this.context);
       const apiResponse = await ChallengeService.getChallengeDetails(challengeId, token);
+      if (isFromSidebar) {
+        await Telemetry.activeChallenge(challengeId);
+      } else {
+        await Telemetry.challengeDetails(challengeId);
+      }
       challengeDetails = _.get(apiResponse, 'result.content', {});
     } catch (err) {
       console.log(`Error occur when loading challenge details (${err.toString()})`);
@@ -168,6 +177,7 @@ export default class ChallengeController {
 
       Notification.showInfoNotification(constants.challengeDetailsLoadedMessage);
     } catch (err) {
+      console.log('Error generating html', err);
       Notification.showErrorNotification(constants.challengeDetailsLoadFailedMessage);
     }
   }
@@ -298,6 +308,7 @@ export default class ChallengeController {
           return;
         }
       }
+      await Telemetry.cloneRepo(challengeId, selection.url);
       // delete all files
       fs.emptyDirSync(workspacePath);
       Notification.showInfoNotification(constants.cloningStarterPackStarted);
@@ -368,6 +379,7 @@ export default class ChallengeController {
     try {
       const userToken = await AuthService.updateTokenGlobalState(this.context);
       const { data } = await ChallengeService.registerUserForChallenge(challengeId, userToken);
+      await Telemetry.registerChallenge(challengeId);
       const status = _.get(data, 'result.status', 500);
       if (status === 200) {
         Notification.showInfoNotification(constants.registeredSuccessfullyMessage);
@@ -394,6 +406,7 @@ export default class ChallengeController {
     Notification.showInfoNotification(constants.initializingWorkspaceMessage);
     try {
       await ChallengeService.initializeWorkspace(vscode.workspace.rootPath || '', challengeId);
+      await Telemetry.initializeWorkspace(challengeId);
       Notification.showInfoNotification(constants.workspaceInitializationSuccessMessage);
     } catch (err) {
       Notification.showErrorNotification(constants.workspaceInitializationFailedMessage);

@@ -9,6 +9,7 @@ import {
   memberChallengesList, submissionDetails, artifactsDetails
 } from './testData';
 import * as fs from 'fs';
+import Utils from '../../utils/utils';
 import * as assert from 'assert';
 
 const defaultChallengeId = 30055150;
@@ -21,17 +22,18 @@ const validArtifactId = 123467;
 
 suite('ChallengeService Unit tests', () => {
   suiteSetup(() => {
-    const challengesUrl = url.parse(constants.activeChallengesUrl);
-    const uploadSubmmissionUrl = url.parse(constants.uploadSubmmissionUrl + '/submissions');
-    const invalidChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${invalidChallengeId}`);
-    const validChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${validChallengeId}`);
-    const closedChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${closedForSubmissionChallengeId}`);
-    const unregisteredChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${unregisteredChallengeId}`);
-    const memberChallengesUrl = url.parse(constants.memberChallengesUrl.replace('{memberId}', 'mess'));
-    const submissionUrl = url.parse(constants.memberSubmissionUrl
+    const challengesUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.activeChallengesUrl}`);
+    const uploadSubmmissionUrl =
+      url.parse(`${Utils.getApiBaseUrl()}/${constants.uploadSubmmissionUrl}` + '/submissions');
+    const invalidChallengeDetailsUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.challengeDetailsUrl}/${invalidChallengeId}`);
+    const validChallengeDetailsUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.challengeDetailsUrl}/${validChallengeId}`);
+    const closedChallengeDetailsUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.challengeDetailsUrl}/${closedForSubmissionChallengeId}`);
+    const unregisteredChallengeDetailsUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.challengeDetailsUrl}/${unregisteredChallengeId}`);
+    const memberChallengesUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.memberChallengesUrl}`.replace('{memberId}', 'mess'));
+    const submissionUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.memberSubmissionUrl}`
       .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '99998888'));
-    const artifactsUrl = url.parse(constants.submissionArtifactsUrl.replace('{submissionId}', `${validSubmissionId}`));
-    const downloadArtifactUrl = url.parse(constants.downloadSubmissionUrl.replace('{submissionId}', `${validSubmissionId}`)
+    const artifactsUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.submissionArtifactsUrl}`.replace('{submissionId}', `${validSubmissionId}`));
+    const downloadArtifactUrl = url.parse(`${Utils.getApiBaseUrl()}/${constants.downloadSubmissionUrl}`.replace('{submissionId}', `${validSubmissionId}`)
       .replace('{artifactId}', `${validArtifactId}`));
 
     nock(/\.com/)

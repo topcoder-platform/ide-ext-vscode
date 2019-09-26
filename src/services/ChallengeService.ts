@@ -6,9 +6,11 @@ import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
 import * as jwt from 'jsonwebtoken';
 import * as archiver from 'archiver';
+import Telemetry from '../services/TelemeteryService';
+import Utils from '../utils/utils';
 import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
 const submissionApiClient = submissionApi({
-  SUBMISSION_API_URL: constants.uploadSubmmissionUrl
+  SUBMISSION_API_URL: `${Utils.getApiBaseUrl()}/${constants.uploadSubmmissionUrl}`
 });
 /**
  * Interacts with challenges APIs
@@ -22,7 +24,8 @@ export default class ChallengeService {
    */
   public static async getSubmissionDetails(challengeId: string, token: string) {
     const decodedToken: any = jwt.decode(token);
-    const url = constants.memberSubmissionUrl
+
+    const url = `${Utils.getApiBaseUrl()}/${constants.memberSubmissionUrl}`
       .replace('{challengeId}', challengeId)
       .replace('{memberId}', decodedToken.userId);
 
@@ -33,6 +36,7 @@ export default class ChallengeService {
         });
       return data;
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.loadSubmissionFailed);
     }
   }
@@ -43,7 +47,9 @@ export default class ChallengeService {
    * @param token user token
    */
   public static async getSubmissionArtifacts(submissionId: string, token: string) {
-    const url = constants.submissionArtifactsUrl.replace('{submissionId}', submissionId);
+
+    const url = `${Utils.getApiBaseUrl()}/${constants.submissionArtifactsUrl}`
+    .replace('{submissionId}', submissionId);
 
     try {
       const { data } = await axios.get(url,
@@ -52,6 +58,7 @@ export default class ChallengeService {
         });
       return data;
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.loadSubmissionFailed);
     }
   }
@@ -63,7 +70,7 @@ export default class ChallengeService {
    * @param token User token
    */
   public static async downloadArtifact(submissionId: string, artifactId: string, token: string) {
-    const url = constants.downloadSubmissionUrl
+    const url = `${Utils.getApiBaseUrl()}/${constants.downloadSubmissionUrl}`
       .replace('{submissionId}', submissionId)
       .replace('{artifactId}', artifactId);
     try {
@@ -74,6 +81,7 @@ export default class ChallengeService {
         });
       return data;
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.artifactDownloadFailed);
     }
   }
@@ -85,12 +93,14 @@ export default class ChallengeService {
    */
   public static async getActiveChallenges(savedToken: string) {
     try {
-      const { data } = await axios.get(constants.activeChallengesUrl,
+      const url = `${Utils.getApiBaseUrl()}/${constants.activeChallengesUrl}`;
+      const { data } = await axios.get(url,
         {
           headers: { Authorization: `Bearer ${savedToken}` }
         });
       return data;
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.loadOpenChallengesFailedMessage);
     }
   }
@@ -104,12 +114,13 @@ export default class ChallengeService {
    */
   public static async getChallengeDetails(challengeId: string, savedToken: string) {
     try {
-      const url = `${constants.challengeDetailsUrl}/${challengeId}`;
+      const url = `${Utils.getApiBaseUrl()}/${constants.challengeDetailsUrl}/${challengeId}`;
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${savedToken}` }
       });
       return data;
-    } catch (e) {
+    } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.challengeNotFound);
     }
   }
@@ -121,13 +132,15 @@ export default class ChallengeService {
    */
   public static async registerUserForChallenge(challengeId: string, userToken: string) {
     try {
-      return await axios.post(constants.challengeRegistrationUrl.replace('{challengeId}', challengeId), undefined, {
+      const url = `${Utils.getApiBaseUrl()}/${constants.challengeRegistrationUrl}`;
+      return await axios.post(url.replace('{challengeId}', challengeId), undefined, {
         headers: {
           'Authorization': `Bearer ${userToken}`,
           'Content-Type': 'application/json'
         }
       });
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.registrationFailedMessage);
     }
   }
@@ -193,7 +206,8 @@ export default class ChallengeService {
     let response;
     try {
       response = await this.submitFileToChallenge(zipFilePath, challengeId, savedToken);
-    } catch (e) {
+    } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.challengeSubmissionFailedMessage);
     } finally {
       // delete the zip local temp file
@@ -211,7 +225,7 @@ export default class ChallengeService {
   public static async getActiveChallengesOfUser(token: string) {
     try {
       const profile: any = jwt.decode(token);
-      const url = constants.memberChallengesUrl.replace('{memberId}', profile.handle);
+      const url = `${Utils.getApiBaseUrl()}/${constants.memberChallengesUrl}`.replace('{memberId}', profile.handle);
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -219,6 +233,7 @@ export default class ChallengeService {
       });
       return _.get(data, 'result.content');
     } catch (err) {
+      await Telemetry.error(err);
       throw new Error(constants.userChallengesLoadFailedMessage);
     }
   }
