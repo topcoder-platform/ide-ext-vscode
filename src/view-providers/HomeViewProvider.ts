@@ -5,26 +5,41 @@ import * as constants from '../constants';
 import { IListItem } from './interfaces';
 import Notification from '../helpers/Notification';
 import ChallengeController from '../controllers/ChallengeController';
+import VSCode from '../helpers/VSCode';
+import TelemetryService from '../services/TelemetryService';
 
 export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
 
     /**
      * Register this provider with vscode
-     * @param challengeController An instance of ChallengeController
-     * @param extensionPath The path at which this extension is loaded
+     * @param {ChallengeController} challengeController An instance of ChallengeController
+     * @param {vscode.ExtensionContext} context
      */
-    public static Register(challengeController: ChallengeController, extensionPath: string) {
+    public static Register(
+      challengeController: ChallengeController,
+      context: vscode.ExtensionContext,
+    ) {
         if (!this.provider) {
-            this.provider = new HomeViewProvider(challengeController, extensionPath);
+            this.provider = new HomeViewProvider(
+              challengeController,
+              context,
+            );
         }
 
-        vscode.window.createTreeView('home', {
+        const view = vscode.window.createTreeView('home', {
             treeDataProvider: this.provider
+        });
+        view.onDidChangeVisibility((event) => {
+          if (event.visible) {
+            TelemetryService.share({
+              event: 'Opened the Topcoder View',
+            });
+          }
         });
 
         vscode.workspace.registerTextDocumentContentProvider(constants.scheme, {
             provideTextDocumentContent: (uri: vscode.Uri): string => {
-                return fs.readFileSync(path.join(extensionPath, uri.path)).toString();
+                return fs.readFileSync(path.join(context.extensionPath, uri.path)).toString();
             }
         });
     }
@@ -45,9 +60,17 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
         id: 'active-challenges'
     };
 
-    private constructor(private challengeController: ChallengeController, private extensionPath: string) {
+    private extensionPath: string;
 
-        vscode.commands.registerCommand('homeView.showHomeTreeItem', async (id) => {
+    private constructor(
+      private challengeController: ChallengeController,
+      context: vscode.ExtensionContext,
+    ) {
+        this.extensionPath = context.extensionPath;
+        const vs = new VSCode(context);
+        vs.registerCommand(
+          'homeView.showHomeTreeItem',
+          async (id) => {
             switch (id) {
                 case this.featuresItem.id: {
                     await this.showMarkdownFile('out/resources/documents/Extension Features.md');
@@ -59,7 +82,10 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
                     await this.challengeController.viewOpenChallenges(); // errors are handled internally
                 }                                  break;
             }
-        });
+          },
+          undefined,
+          (telemetry, item) => ({ ...telemetry, item }),
+        );
     }
 
     /**

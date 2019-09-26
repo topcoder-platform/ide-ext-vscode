@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import * as nock from 'nock';
 import * as url from 'url';
+
+import { getEnv } from '../../config';
 import * as constants from '../../constants';
 import ChallengeService from '../../services/ChallengeService';
 import {
@@ -21,17 +23,25 @@ const validArtifactId = 123467;
 
 suite('ChallengeService Unit tests', () => {
   suiteSetup(() => {
-    const challengesUrl = url.parse(constants.activeChallengesUrl);
-    const uploadSubmmissionUrl = url.parse(constants.uploadSubmmissionUrl + '/submissions');
-    const invalidChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${invalidChallengeId}`);
-    const validChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${validChallengeId}`);
-    const closedChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${closedForSubmissionChallengeId}`);
-    const unregisteredChallengeDetailsUrl = url.parse(constants.challengeDetailsUrl + `/${unregisteredChallengeId}`);
-    const memberChallengesUrl = url.parse(constants.memberChallengesUrl.replace('{memberId}', 'mess'));
-    const submissionUrl = url.parse(constants.memberSubmissionUrl
+    const env = getEnv();
+    const challengesUrl = url.parse(env.URLS.ACTIVATE_CHALLENGES);
+    const uploadSubmmissionUrl = url.parse(
+      env.URLS.UPLOAD_SUBMISSION + '/submissions');
+    const invalidChallengeDetailsUrl = url.parse(
+      env.URLS.CHALLENGE_DETAILS + `/${invalidChallengeId}`);
+    const validChallengeDetailsUrl = url.parse(
+      env.URLS.CHALLENGE_DETAILS + `/${validChallengeId}`);
+    const closedChallengeDetailsUrl = url.parse(
+      env.URLS.CHALLENGE_DETAILS + `/${closedForSubmissionChallengeId}`);
+    const unregisteredChallengeDetailsUrl = url.parse(
+      env.URLS.CHALLENGE_DETAILS + `/${unregisteredChallengeId}`);
+    const memberChallengesUrl = url.parse(
+      env.URLS.MEMBER_CHALLENGES.replace('{memberId}', 'mess'));
+    const submissionUrl = url.parse(
+      env.URLS.MEMBER_SUBMISSION
       .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '99998888'));
-    const artifactsUrl = url.parse(constants.submissionArtifactsUrl.replace('{submissionId}', `${validSubmissionId}`));
-    const downloadArtifactUrl = url.parse(constants.downloadSubmissionUrl.replace('{submissionId}', `${validSubmissionId}`)
+    const artifactsUrl = url.parse(env.URLS.SUBMISSION_ARTIFACTS.replace('{submissionId}', `${validSubmissionId}`));
+    const downloadArtifactUrl = url.parse(env.URLS.DOWNLOAD_SUBMISSION.replace('{submissionId}', `${validSubmissionId}`)
       .replace('{artifactId}', `${validArtifactId}`));
 
     nock(/\.com/)

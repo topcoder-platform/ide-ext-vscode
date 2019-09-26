@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { getEnv } from '../../config';
 import * as nock from 'nock';
 import * as url from 'url';
 import * as vscode from 'vscode';
@@ -8,11 +9,10 @@ import { v2Token, v3Token, refreshedToken, expiredToken } from './testData';
 
 suite('AuthService Unit tests', () => {
   suiteSetup(() => {
-    const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
-
-    const refreshTokenUrl = url.parse(constants.refreshTokenUrl);
-    const AUTHN_URL = url.parse(constants.AUTHN_URL);
-    const AUTHZ_URL = url.parse(constants.AUTHZ_URL);
+    const env = getEnv();
+    const refreshTokenUrl = url.parse(env.URLS.REFRESH_TOKEN);
+    const AUTHN_URL = url.parse(env.URLS.AUTHN);
+    const AUTHZ_URL = url.parse(env.URLS.AUTHZ);
 
     nock(/\.com/)
       .persist()

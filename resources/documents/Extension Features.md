@@ -27,3 +27,35 @@ Clicking on that button will show a list of starter packs that a user can select
 If the root folder is not empty, it will ask if the user wants to proceed.
 This will automatically initialize the workspace by creating the `.topcoderrc` file.
 ![clone-starter-pack](https://media.giphy.com/media/QuaGaa7sary08FyQgO/giphy.gif)
+
+5.  `Topcoder Time` aka EDT, Eastern Time, New York Time, UTC-04:00 (or -05:00,
+    depending on the the season), is shown in the status bar, in the bottom
+    right corner, and it is updated automatically:
+
+    ![topcoder-time](https://i.imgur.com/ZwBreJA.png)
+
+6.  `Time To Submission Deadline`: If the folder opened in IDE contains
+    `.topcoderrc` configuration file, which has `challengeId` entry pointing
+    to a valid challenge with future submission deadline, the time to deadline
+    is shown inside the status bar, in the bottom-left corner, in a human-
+    readable format, and it is updated automatically with 5 seconds step:
+
+    ![time-to-submission-deadline](https://i.imgur.com/Wvg8V3T.png)
+
+7.  `Sharing of usage data to Topcoder`. By default, this extension tracks and
+    shares to Topcoder its usage data, to be used for debugging and future
+    development purposes. This behavior can be disabled from extension
+    settings (`Ctrl+,` > Extensions > Topcoder Workflow > Share Telemetry to TC):
+
+    ![share-telemetry-switch](https://i.imgur.com/kiBDjfm.png)
+
+8.  `Topcoder Environment`: Extension can work against production, or development
+    Topcoder backend. This can be switched inside extension preferences
+    (`Ctrl+,` > Extensions > Topcoder Workflow > Use Development Endpoint).
+    The default is development environment, for convenience of development
+    before extension release. The currently selected environment is shown
+    in the bottom right corner, in the status bar. To switch between environments
+    you should also manually logout and login again, using corresponding
+    extension commands:
+
+    ![tc-env](https://i.imgur.com/tXETz35.png)

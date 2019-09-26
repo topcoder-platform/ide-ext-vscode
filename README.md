@@ -21,12 +21,26 @@ This extension exposes the following settings:
 
 - `TCVSCodeIDE.credentials.username`: your topcoder username
 - `TCVSCodeIDE.credentials.password`: your topcoder password
+- `TCVSCodeIDE.shareTelemetryToTC`: the option to share extension usage data
+  to Topcoder.
+
+  To perform telemetry sharing, the URL where to post the data
+  should be set inside `src/constants.ts` file, in `DEV_ENV.URLS.TELEMETRY`,
+  or `PROD_ENV.URLS.TELEMETRY` constant (for development and production TC
+  environments). By default, the dev URL is set to be
+  https://webhook.site/cb4d7abf-f9a8-47f8-ab40-f8f43bd3367c and all calls
+  to that endpoint can be viewed at
+  https://webhook.site/#!/cb4d7abf-f9a8-47f8-ab40-f8f43bd3367c/fe1f0259-a618-4631-8660-e90de933d388. The URL for prod is not set,
+  as it is extremely dangerous to share production data to such mock
+  destination.
+
+- `TCVSCodeIDE.useDevelopEndpoint`: the option to work against development
+  Topcoder environment instead of the production one (for now, enabled by
+  default).
 
 These can be set in user preferences (`Ctrl+,` or `Cmd+,`)
 
 In order to use the command "Upload submission", your workspace needs to have a .topcoderrc file, which will contain json. It will have only one attribute named "challengeId" which will contain a string value. The value will be the id of the challenge to which you wish to upload the workspace too. You can find the id of the challenge by looking at the url of the challenge details. It will be of the form `https://www.topcoder.com/challenges/{challengeId}`
-
-The field "useDevelopEndpoint" in "src/constants.ts" can be used to switch between topcoder develop endpoint or production endpoint.
 
 ## Commands
 
