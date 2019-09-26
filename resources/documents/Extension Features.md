@@ -1,4 +1,7 @@
-## VSCode Extension for Topcoder - Features
+# Topcoder Workflow Extension
+
+## Features
+
 This extension has the following features:
 
 1. `View Open Challenges:`

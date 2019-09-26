@@ -1,8 +1,8 @@
 {
   "name": "tcvscodeide",
-  "displayName": "TCVSCodeIDE",
-  "description": "This extension is meant to closely integrate the Topcoder platform with the text editors, to allow the user to perform actions from within the editor, without having to open a browser.",
-  "version": "0.0.1",
+  "displayName": "Topcoder Workflow",
+  "description": "This extension is meant to closely integrate the Topcoder platform with VSCode, to allow the user to perform actions from within the editor, without having to open a browser.",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.36.0"
   },
@@ -30,12 +30,12 @@
         },
         "TCVSCodeIDE.shareTelemetryToTC": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Permits the extension to send telemetry data to Topcoder."
         },
         "TCVSCodeIDE.useDevelopEndpoint": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Activate to work against the development version of Topcoder backend. To complete the switch logout and reload the window."
         }
       }
@@ -175,5 +175,14 @@
     "hooks": {
       "pre-commit": "npm run lint"
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/topcoder-platform/ide-ext-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/topcoder-platform/ide-ext-vscode.git"
+  },
+  "publisher": "Topcoder",
+  "homepage": "https://github.com/topcoder-platform/ide-ext-vscode/blob/master/README.md"
 }
