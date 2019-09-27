@@ -15,7 +15,7 @@ import VSCode from './helpers/VSCode';
 export function activate(context: vscode.ExtensionContext) {
   const vs = new VSCode(context);
 
-  console.log('[tcvscodeide] The extension is active.');
+  console.log('[topcoder-workflow] The extension is active.');
 
   const authController = new AuthController(context);
   const challengeController = new ChallengeController(context);

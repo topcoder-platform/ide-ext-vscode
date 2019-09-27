@@ -1,14 +1,19 @@
 {
-  "name": "tcvscodeide",
+  "name": "topcoder-workflow",
   "displayName": "Topcoder Workflow",
   "description": "This extension is meant to closely integrate the Topcoder platform with VSCode, to allow the user to perform actions from within the editor, without having to open a browser.",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.36.0"
   },
+  "icon": "images/logo.png",
   "categories": [
     "Other"
   ],
+  "galleryBanner": {
+    "color": "#2984BD",
+    "theme": "dark"
+  },
   "activationEvents": [
     "*"
   ],
@@ -184,5 +189,6 @@
     "url": "https://github.com/topcoder-platform/ide-ext-vscode.git"
   },
   "publisher": "Topcoder",
-  "homepage": "https://github.com/topcoder-platform/ide-ext-vscode/blob/master/README.md"
+  "homepage": "https://github.com/topcoder-platform/ide-ext-vscode/blob/master/README.md",
+  "license": "gpl-3.0"
 }

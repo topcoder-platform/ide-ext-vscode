@@ -99,7 +99,7 @@ export const DEV_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
-    TELEMETRY: 'https://webhook.site/cb4d7abf-f9a8-47f8-ab40-f8f43bd3367c'
+    TELEMETRY: ''
   }
 };
 

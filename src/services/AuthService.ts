@@ -34,7 +34,7 @@ export default class AuthService {
         if (err) {
           return reject(new Error(constants.authenticationFailedMessage));
         }
-        console.log(token);
+
         return resolve(token);
       });
     });
@@ -58,7 +58,7 @@ export default class AuthService {
   public static async getToken(savedToken?: string) {
     // Missing token
     if (!savedToken) {
-      console.log('Fetching new token.');
+      console.log('No saved token. Fetching new token.');
       return this.fetchToken();
     }
 
@@ -66,7 +66,7 @@ export default class AuthService {
 
     // Token is is invalid
     if (!decodedToken) {
-      console.log('Fetching new token.');
+      console.log('Decoded token is invalid. Fetching new token.');
       return this.fetchToken();
     }
 

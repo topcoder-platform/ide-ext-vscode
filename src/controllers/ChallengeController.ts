@@ -69,7 +69,6 @@ export default class ChallengeController {
       const newToken = await AuthService.updateTokenGlobalState(this.context);
       const workspacePath = vscode.workspace.rootPath || '';
       const response = await ChallengeService.uploadSubmmission(newToken, workspacePath);
-      console.log('Submit challenge response: ' + JSON.stringify(response));
     } catch (err) {
       console.log(`Error occur when submit challenge (${err.toString()})`);
       Notification.showErrorNotification(err.toString());

@@ -23,6 +23,7 @@ export default class TelemetryService {
    */
   public static async share(data: object, userToken?: string) {
     const url = getEnv().URLS.TELEMETRY;
+    /* Disable telemetry until that is finalized
     if (url && getConfig().get(CONST.shareTelemetryToTC)) {
       const headers: any = {};
       if (userToken) {
@@ -35,5 +36,6 @@ export default class TelemetryService {
         data,
       });
     }
+    */
   }
 }
