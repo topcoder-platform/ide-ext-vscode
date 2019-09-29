@@ -294,7 +294,7 @@ export default class Html {
             return challengeDetails.technologies.some((y: string) => x.name.toLowerCase() === y.toLowerCase());
           }
 
-          return false
+          return false;
         });
 
         return filter.length > 0 && this.isApplyPhase(challengeDetails) ?
