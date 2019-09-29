@@ -1,8 +1,9 @@
 name: Pubish extension on release
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   lint:
