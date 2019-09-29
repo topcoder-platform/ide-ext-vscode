@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    name: Check lint errors
+    name: Check for any lint errors
     runs-on: ubuntu-latest
     steps:
       - name: Checking out source code
@@ -21,21 +21,21 @@ jobs:
           npm install
           npm run lint
 
-  test:
-    name: Check test success
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checking out source code
-        uses: actions/checkout@master
-      - name: Setting up nodejs version 10
-        uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-      - name: Starting tests
-        run: |
-          npm install
-          npm test
+  # test:
+  #   name: Verify that tests succeed
+  #   needs: lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checking out source code
+  #       uses: actions/checkout@master
+  #     - name: Setting up nodejs version 10
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '10.x'
+  #     - name: Starting tests
+  #       run: |
+  #         npm install
+  #         npm test
 #   publish:
 #     name: Publish on marketplace
 #     needs: test
