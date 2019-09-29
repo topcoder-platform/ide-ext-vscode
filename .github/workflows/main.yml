@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Checking out source code
         uses: actions/checkout@master
+
       - name: Setting up nodejs version 10
         uses: actions/setup-node@v1
         with:
@@ -28,6 +29,7 @@ jobs:
   #   steps:
   #     - name: Checking out source code
   #       uses: actions/checkout@master
+
   #     - name: Setting up nodejs version 10
   #       uses: actions/setup-node@v1
   #       with:
@@ -44,11 +46,13 @@ jobs:
     steps:
       - name: Checking out source code
         uses: actions/checkout@master
+
       - name: Setting up nodejs version 10
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
       - name: Publish to marketplace
+        if: github.ref == 'master'
         run: |
           npm i -g vsce
           npm install
