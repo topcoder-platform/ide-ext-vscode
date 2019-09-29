@@ -1,13 +1,12 @@
 name: Pubish extension on release
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published, prereleased]
 
 jobs:
   lint:
-    name: Check lint errors
+    name: Check for any lint errors
     runs-on: ubuntu-latest
     steps:
       - name: Checking out source code
@@ -17,24 +16,42 @@ jobs:
         with:
           node-version: '10.x'
       - name: Starting lint check
-        run: npm run lint
-    
-#   test:
-#     name: Check test success
-#     needs: lint
-#     runs-on: ubuntu-latest
-#   publish:
-#     name: Publish on marketplace
-#     needs: test
-#     runs-on: ubuntu-latest
+        run: |
+          npm install
+          npm run lint
 
-#     runs-on: ubuntu-latest
-    
-#     steps:
-#     - uses: actions/checkout@v1
-#     - name: Run a one-line script
-#       run: echo Hello, world!
-#     - name: Run a multi-line script
-#       run: |
-#         echo Add other actions to build,
-#         echo test, and deploy your project.
+  # Need to figure out how to run tests in headless environment
+  # test:
+  #   name: Verify that tests succeed
+  #   needs: lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checking out source code
+  #       uses: actions/checkout@master
+  #     - name: Setting up nodejs version 10
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '10.x'
+  #     - name: Starting tests
+  #       run: |
+  #         npm install
+  #         npm test
+
+  publish:
+    name: Publish on marketplace
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out source code
+        uses: actions/checkout@master
+      - name: Setting up nodejs version 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Publish to marketplace
+        with:
+          vsce_token: ${{ secrets.VSCE_TOKEN }}
+        run: |
+          npm i -g vsce
+          npm install
+          vsce publish -p $vsce_token
