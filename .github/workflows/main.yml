@@ -2,7 +2,7 @@ name: Pubish extension on release
 
 on:
   release:
-    types: [published, prereleased]
+    types: [published]
 
 jobs:
   lint:
@@ -49,9 +49,7 @@ jobs:
         with:
           node-version: '10.x'
       - name: Publish to marketplace
-        with:
-          vsce_token: ${{ secrets.VSCE_TOKEN }}
         run: |
           npm i -g vsce
           npm install
-          vsce publish -p $vsce_token
+          vsce publish -p ${{ secrets.VSCE_TOKEN }}
