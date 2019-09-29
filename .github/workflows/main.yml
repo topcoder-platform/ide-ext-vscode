@@ -3,7 +3,7 @@ name: Pubish extension on release
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   lint:
@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: '10.x'
       - name: Starting lint check
+        run: npm install
         run: npm run lint
     
 #   test:
