@@ -289,8 +289,13 @@ export default class Html {
      * @param challengeDetails The challenge details
      */
     private static generateCloneStarterPackButtonHtml(challengeDetails: any) {
-        const filter = packConfig.filter((x: any) =>
-            challengeDetails.technologies.some((y: string) => x.name.toLowerCase() === y.toLowerCase()));
+        const filter = packConfig.filter((x: any) => {
+          if (challengeDetails.technologies && challengeDetails.technologies.length > 0) {
+            return challengeDetails.technologies.some((y: string) => x.name.toLowerCase() === y.toLowerCase());
+          }
+
+          return false
+        });
 
         return filter.length > 0 && this.isApplyPhase(challengeDetails) ?
             `<button class="workspaceBtns" style="margin-top:10px"

@@ -1,0 +1,39 @@
+name: Pubish extension on release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    name: Check lint errors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Starting lint check
+      - run: npm run lint
+      
+    
+#   test:
+#     name: Check test success
+#     needs: lint
+#     runs-on: ubuntu-latest
+#   publish:
+#     name: Publish on marketplace
+#     needs: test
+#     runs-on: ubuntu-latest
+
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Run a one-line script
+#       run: echo Hello, world!
+#     - name: Run a multi-line script
+#       run: |
+#         echo Add other actions to build,
+#         echo test, and deploy your project.
