@@ -1,9 +1,8 @@
 name: Pubish extension on release
 
 on:
-  push:
-    branches:
-      - develop
+  release:
+    types: [published, prereleased]
 
 jobs:
   lint:
@@ -21,6 +20,7 @@ jobs:
           npm install
           npm run lint
 
+  # Need to figure out how to run tests in headless environment
   # test:
   #   name: Verify that tests succeed
   #   needs: lint
@@ -36,18 +36,22 @@ jobs:
   #       run: |
   #         npm install
   #         npm test
-#   publish:
-#     name: Publish on marketplace
-#     needs: test
-#     runs-on: ubuntu-latest
 
-#     runs-on: ubuntu-latest
-    
-#     steps:
-#     - uses: actions/checkout@v1
-#     - name: Run a one-line script
-#       run: echo Hello, world!
-#     - name: Run a multi-line script
-#       run: |
-#         echo Add other actions to build,
-#         echo test, and deploy your project.
+  publish:
+    name: Publish on marketplace
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out source code
+        uses: actions/checkout@master
+      - name: Setting up nodejs version 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Publish to marketplace
+        with:
+          vsce_token: ${{ secrets.VSCE_TOKEN }}
+        run: |
+          npm i -g vsce
+          npm install
+          vsce publish -p $vsce_token
