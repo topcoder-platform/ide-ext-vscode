@@ -10,13 +10,14 @@ jobs:
     name: Check lint errors
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
+      - name: Checking out source code
+        uses: actions/checkout@master
+      - name: Setting up nodejs version 10
+        uses: actions/setup-node@v1
         with:
           node-version: '10.x'
       - name: Starting lint check
-      - run: npm run lint
-      
+        run: npm run lint
     
 #   test:
 #     name: Check test success
