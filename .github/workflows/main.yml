@@ -17,9 +17,10 @@ jobs:
         with:
           node-version: '10.x'
       - name: Starting lint check
-        run: npm install
-        run: npm run lint
-    
+        run: |
+          npm install
+          npm run lint
+
 #   test:
 #     name: Check test success
 #     needs: lint
