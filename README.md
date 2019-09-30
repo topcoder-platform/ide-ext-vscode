@@ -2,16 +2,21 @@
 
 This extension is meant to closely integrate the Topcoder platform with [VSCode](https://code.visualstudio.com/), the text editor, to allow the user to perform actions related to the Topcoder platform from within the editor, without having to open a browser.
 
-## Settings
+## Setup your environment
 
-Below are the settings you need to set before you can use the extension. You need to reload the VSCode window for any changes in these settings to take effect.
+- Before you can use the extension, you need to provide your Topcoder credentials
+- This extension provides two settings in this regard
 
-- `TCVSCodeIDE.credentials.username`: Your Topcoder username
-- `TCVSCodeIDE.credentials.password`: Your Topcoder password
-- `TCVSCodeIDE.shareTelemetryToTC`: the option to share extension usage data with Topcoder. This is a work in progress and at the moment is not active, irrespective of your settings
-- `TCVSCodeIDE.useDevelopEndpoint`: the option to work on the development environment of Topcoder instead of production
+```bash
+TCVSCodeIDE.credentials.username: Your Topcoder username
+TCVSCodeIDE.credentials.password: Your Topcoder password
+```
 
-## Commands
+You can also set them in your Extension specific Settings:
+
+![Settings Credentials](/images/settings_credentials.png)
+
+## Userful Commands
 
 The extension provides several commands in the Command Palette:
 
@@ -20,8 +25,6 @@ The extension provides several commands in the Command Palette:
 - *Topcoder: View open challenges* to list active challenges in a tabular view. Upon clicking on a challenge title, challenge details will be displayed in a new tab.
 - *Topcoder: Upload submission* to upload the current workspace to topcoder challenge.
 
-All commands require you to provide your Topcoder username and password, so make sure to set them _before_ you execute them
-
 ## Activity Bar
 
 The extensions adds an activity bar item that has 3 sections.
@@ -29,6 +32,8 @@ The extensions adds an activity bar item that has 3 sections.
 - *Your Active Contests*  will list all the contests that you have registered to.
 - *Your Active Submissions* will list all the submissions that you have done. You will be able to view the reviews and artifacts (if any) for the submission.
 - *Home* has 3 parts, which will allow you to access the extension features guide, the setup guid or the list of all active challenges respectively.
+
+![Activity Bar](/images/activity_bar.gif)
 
 ## Features
 
@@ -40,3 +45,19 @@ The extensions adds an activity bar item that has 3 sections.
 - If your workspace is initialized, you can see the time until the end of the submission phase in the side bar
 - You can also see the current time (as used by the Topcoder platform, for example in Online Review) status bar
 - Finally you can switch between the topcoder production and development instances
+
+## Other Settings
+
+Besides setting your username and password, you can also:
+
+- Switch between the development and production instances of Topcoder when using the extension. By default, you will be using the production instance
+- Opt out of telemetry that is sent to Topcoder. We capture your interaction with the extension anonymously which will help us improve the extension. You can opt out of this
+
+These settings are named:
+
+```bash
+TCVSCodeIDE.shareTelemetryToTC: Boolean value. true by default
+TCVSCodeIDE.useDevelopEndpoint: Boolean value. false by default
+```
+
+### NOTE: When any configuration is changed, you have to logout and reload your VSCode window for the changes to take effect
