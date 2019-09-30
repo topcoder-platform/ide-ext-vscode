@@ -33,15 +33,17 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - name: Checking out source code
+      - name: Checking out master branch
         uses: actions/checkout@master
-
+        with:
+          ref: master
       - name: Setting up nodejs version 10
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+      - name: Debugging which ref this workflow is for
+        run: echo ${{ github.ref }}
       - name: Publish to marketplace
-        if: github.ref == 'master'
         run: |
           npm i -g vsce
           npm install
