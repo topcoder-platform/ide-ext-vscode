@@ -41,8 +41,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - name: Debugging which ref this workflow is for
-        run: echo ${{ github.ref }}
       - name: Publish to marketplace
         run: |
           npm i -g vsce
