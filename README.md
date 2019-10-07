@@ -51,7 +51,7 @@ The extensions adds an activity bar item that has 3 sections.
 Besides setting your username and password, you can also:
 
 - Switch between the development and production instances of Topcoder when using the extension. By default, you will be using the production instance
-- Opt out of telemetry that is sent to Topcoder. We capture your interaction with the extension anonymously which will help us improve the extension. You can opt out of this
+- At the moment, we capture telemetry of your usage of this extension to help improve the extension. **Since we are still in beta, the configuration that controls if you have opted in or our of telemetry is disabled. Setting this has no effect - all telemetry is capture** We will support this configuration when we come out of beta
 
 These settings are named:
 
