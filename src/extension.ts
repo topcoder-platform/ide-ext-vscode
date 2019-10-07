@@ -7,6 +7,7 @@ import createTcTimeToSubmit from './status-bar/tc-time-to-submit';
 import AuthController from './controllers/AuthController';
 import ChallengeController from './controllers/ChallengeController';
 import * as constants from './constants';
+import TelemetryService from './services/TelemetryService';
 import { ActiveSubmissionsProvider, ActiveContestsProvider, HomeViewProvider } from './view-providers';
 
 import VSCode from './helpers/VSCode';
@@ -14,6 +15,7 @@ import VSCode from './helpers/VSCode';
 // This method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
   const vs = new VSCode(context);
+  TelemetryService.Initialize(context);
 
   console.log('[topcoder-workflow] The extension is active.');
 
@@ -54,7 +56,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when the extension is deactivated
 /* tslint:disable-next-line */
-export function deactivate() { }
+export async function deactivate() {
+  await TelemetryService.dispose();
+}
 
 /**
  * Login first then take action
