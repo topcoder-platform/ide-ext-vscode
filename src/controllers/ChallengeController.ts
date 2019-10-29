@@ -177,6 +177,88 @@ export default class ChallengeController {
     }
   }
 
+  public async cloneGitUrl() {
+    try {
+      const workspacePath = path.join(vscode.workspace.rootPath || '');
+      const gitUrl = await vscode.window.showInputBox(
+        {
+          placeHolder: 'Set git url',
+        }
+      ) || '';
+
+      if (!gitUrl.includes('https://github.com/') && !gitUrl.includes('https://gitlab.com/')) {
+        Notification.showErrorNotification(constants.onlyRepositoryAccepted);
+        return;
+      }
+
+      Notification.showInfoNotification(constants.cloningRepositoryStarted);
+
+      TelemetryService.share({
+        event: 'Clonning own git repository',
+        repoUrl: gitUrl,
+      }, AuthService.getSavedToken(this.context));
+
+      git.plugins.set('fs', fs);
+      // clone it to root
+      await git.clone({
+        dir: workspacePath,
+        url: gitUrl as string,
+        singleBranch: true,
+      });
+      // removing the git folder, since no need to get attached to that repository
+      fs.removeSync(path.join(workspacePath, '.git'));
+
+      Notification.showInfoNotification(constants.cloningRepositorySuccess);
+    } catch (err) {
+      Notification.showErrorNotification(constants.cloningRepositoryFailed);
+    }
+
+  }
+  /**
+   * Clone a repository/template available in organization
+   */
+  public async cloneTemplate() {
+    Notification.showInfoNotification(constants.loadOrganizationReposStarted);
+    // error is handled in service
+    const result = await ChallengeService.getOrganizationRepositories();
+    Notification.showInfoNotification(constants.loadOrganizationReposSuccess);
+    const choice = await vscode.window.showQuickPick(
+      result.map((r: any) => r.name),
+      {
+        canPickMany: false,
+        placeHolder: 'Choose a template'
+      }
+    );
+    if (!choice) {
+      Notification.showInfoNotification(constants.templateNotCloned);
+      return;
+    }
+    // get selected repository
+    const repo = result.find((t: any) => t.name === choice);
+    const workspacePath = path.join(vscode.workspace.rootPath || '', choice as string);
+    Notification.showInfoNotification(constants.cloneTemplateStarted);
+
+    TelemetryService.share({
+      event: 'Clonning template repository',
+      repoUrl: repo.clone_url,
+      repoName: repo.name
+    }, AuthService.getSavedToken(this.context));
+    // start clone
+    try {
+      git.plugins.set('fs', fs);
+      await git.clone({
+        dir: workspacePath,
+        url: repo.clone_url,
+        singleBranch: true,
+      });
+      // removing the git folder, since no need to get attached to that repository
+      fs.removeSync(path.join(workspacePath, '.git'));
+      Notification.showInfoNotification(constants.cloneTemplateSuccess);
+    } catch (err) {
+      Notification.showErrorNotification(constants.cloneTemplateFailed);
+    }
+  }
+
   /**
    * Check if user has logged in.
    */
@@ -221,8 +303,8 @@ export default class ChallengeController {
         await this.initializeWorkspaceForChallenge(message.data.challengeId);
         break;
       }
-      case constants.webviewMessageActions.CLONE_STARTER_PACK: {
-        await this.showCloneStarterPack(message.data.filter, message.data.challengeId);
+      case constants.webviewMessageActions.CLONE_REPOSITORY: {
+        await this.cloneRepositories(message.data.challengeId, message.data.repos);
         break;
       }
       case constants.webviewMessageActions.DOWNLOAD_ARTIFACT: {
@@ -265,67 +347,40 @@ export default class ChallengeController {
   }
 
   /**
-   * Show starter packs. This way a user can pick one, and clone a starter pack project
-   * @param filteredTechs object containing the techs that exist in the challenge
+   * Clones challenge repositories
+   * @param challengeId challenge identifier
+   * @param repos list of git repositories
+   *
    */
-  private async showCloneStarterPack(filteredTechs: any, challengeId: string) {
-    // get all the repos that exist in configuration
-    const workspacePath = path.join(vscode.workspace.rootPath || '');
-    const repos = _.flatten(filteredTechs.map((f: any) => f.repos.map((repo: any) => repo)));
-    const choice = await vscode.window.showQuickPick(
-      repos.map((r: any) => r.title),
-      {
-        canPickMany: false,
-        placeHolder: 'Choose a starter pack'
-      }
-    );
-    // if the user don't make a selection, warn him that nothing was downloaded.
-    if (!choice) {
-      Notification.showWarningNotification(constants.noStarterPackDownloaded);
-      return;
-    }
-    // get the url for the selected repo
-    const selection = repos.find((t: any) => t.title === choice) as any;
+  private async cloneRepositories(challengeId: string, repos: string[]) {
+
     TelemetryService.share({
-      event: 'Clonning Repo',
+      event: 'Clonning challenge repositories',
       challengeId,
-      repoUrl: selection.url,
     }, AuthService.getSavedToken(this.context));
     try {
-      // ensure that folder is empty and let the user decide if wants to clear or not the folder
-      if (fs.readdirSync(workspacePath).length > 0) {
-        const isEmptyChoice = await vscode.window.showQuickPick(
-          ['Yes', 'No'],
-          {
-            canPickMany: false,
-            placeHolder: 'Folder is not empty. If you continue, all files will be delete. Are you sure?'
-          }
-        );
-        // in case user don't want to clear folder
-        if (isEmptyChoice !== 'Yes') {
-          Notification.showWarningNotification(constants.noStarterPackDownloaded);
-          return;
-        }
-      }
-      // delete all files
-      fs.emptyDirSync(workspacePath);
-      Notification.showInfoNotification(constants.cloningStarterPackStarted);
-
+      const workspacePath = path.join(vscode.workspace.rootPath || '');
       git.plugins.set('fs', fs);
-      // clone it to root
-      await git.clone({
-        dir: workspacePath,
-        url: selection.url,
-        singleBranch: true,
-      });
-      // removing the git folder, since no need to get attached to that repository
-      fs.removeSync(path.join(workspacePath, '.git'));
+      Notification.showInfoNotification(constants.cloningChallengeRepositoriesStarted);
+      repos.forEach(async (repo: string) => {
+        // let's get the repo name by getting the last part of the url
+        const temp = repo.split('/');
+        const repoPath = path.join(workspacePath, temp[temp.length - 1]);
+        // clone it to root
+        await git.clone({
+          dir: repoPath,
+          url: repo,
+          singleBranch: true,
+        });
+        // removing the git folder, since no need to get attached to that repository
+        fs.removeSync(path.join(workspacePath, '.git'));
 
+      });
+      Notification.showInfoNotification(constants.cloningChallengeRepositoriesSuccess);
       // initialize the workspace with the challenge id
       await this.initializeWorkspaceForChallenge(challengeId);
-      Notification.showInfoNotification(constants.cloningStarterPackSuccess);
     } catch (err) {
-      Notification.showErrorNotification(constants.errorCloningStarterPack);
+      Notification.showErrorNotification(constants.cloningChallengeRepositoriesFailed);
     }
   }
 

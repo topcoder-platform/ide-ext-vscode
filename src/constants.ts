@@ -32,16 +32,27 @@ export const helpFilesLoadFailed = 'Failed to load content.';
 export const initializingWorkspaceMessage = 'Initializing workspace for submission.';
 export const workspaceInitializationFailedMessage = 'Failed to initialize the current workspace.';
 export const workspaceInitializationSuccessMessage = 'This workspace has been initialized successfully.';
-export const errorCloningStarterPack = 'An error occured cloning starter pack';
-export const cloningStarterPackSuccess = 'Cloning started pack ended with success';
-export const cloningStarterPackStarted = 'Cloning starter pack started';
+export const cloningChallengeRepositoriesFailed = 'An error occured while cloning challenge repositories';
+export const cloningChallengeRepositoriesSuccess = 'Cloning challenge repositories ended with success';
+export const cloningChallengeRepositoriesStarted = 'Cloning challenge repositories started';
 export const loadSubmissionFailed = 'Loading submission details failed';
 export const loadSubmissionStarted = 'Loading submission details started';
 export const loadSubmissionSuccess = 'Submission details loaded with success';
 export const artifactDownloadStart = 'Download artifact started';
 export const artifactDownloadFailed = 'Download artifact failed';
 export const artifactDownloadSuccess = 'Download artifact with success';
-export const noStarterPackDownloaded = 'No starter pack downloaded';
+export const noRepositoryCloned = 'No repository was cloned';
+export const cloningRepositoryStarted = 'Cloning git repository started';
+export const cloningRepositorySuccess = 'Cloned git repository with success';
+export const cloningRepositoryFailed = 'Clone git repository failed';
+export const onlyRepositoryAccepted = 'Only gitlab or github repositories are available to clone';
+export const failedToLoadOrganizationRepos = 'Failed to load repositories';
+export const loadOrganizationReposStarted = 'Load organization repositories started';
+export const loadOrganizationReposSuccess = 'Loaded organization repositories with success';
+export const cloneTemplateStarted = 'Clone template started';
+export const cloneTemplateSuccess = 'Cloned template with success';
+export const cloneTemplateFailed = 'Clone template failed';
+export const templateNotCloned = 'Template not cloned';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
@@ -55,6 +66,13 @@ export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
+
+export const gitRepoUrls = [
+  'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
+  'https://github.com/topcoderinc/Topcoder-StarterPack_Ionic',
+  'https://github.com/topcoderinc/Topcoder-StarterPack_BluemixNode',
+  'https://github.com/topcoderinc/Topcoder-StarterPack_Node-Backend'
+];
 
 /**
  * Interface of a constant set, which fully defines a Topcoder environment
@@ -127,6 +145,7 @@ export const PROD_ENV: IENV = {
 };
 
 export const submitType = 'Contest Submission';
+export const organizationRepoUrl = 'https://api.github.com/orgs/topcoder-platform-templates/repos';
 
 export const webviewMessageActions = {
   DISPLAY_CHALLENGE_DETAILS: 'DISPLAY_CHALLENGE_DETAILS',
@@ -135,5 +154,5 @@ export const webviewMessageActions = {
   INITIALIZE_WORKSPACE: 'INITIALIZE_WORKSPACE',
   DOWNLOAD_ARTIFACT: 'DOWNLOAD_ARTIFACT',
 
-  CLONE_STARTER_PACK: 'CLONE_STARTER_PACK'
+  CLONE_REPOSITORY: 'CLONE_REPOSITORY'
 };

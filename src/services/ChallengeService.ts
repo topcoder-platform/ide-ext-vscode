@@ -255,6 +255,18 @@ export default class ChallengeService {
   }
 
   /**
+   * Gets the organization available repositories
+   */
+  public static async getOrganizationRepositories() {
+    try {
+      const { data } = await axios.get(constants.organizationRepoUrl);
+      return data;
+    } catch (err) {
+      throw new Error(constants.failedToLoadOrganizationRepos);
+    }
+  }
+
+  /**
    * Get all files list in the workspace which not ignored
    * @param workspaceRootDir the workspace path to submit
    * @param currentDir current directory

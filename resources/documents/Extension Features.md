@@ -24,20 +24,28 @@ will create a file named `.topcoderrc` in the root of the workspace, with the ch
 }
 ![initialize-workspace](https://i.imgur.com/PhWINcn.gif)
 
-5. `Clone a starter pack`
-After registering to a contest, a button to clone a starter pack is enabled when there are configured starter packs for the challenge tech stack.
-Clicking on that button will show a list of starter packs that a user can selectt to clone.
-If the root folder is not empty, it will ask if the user wants to proceed.
+5. `Clone challenge repositories`
+After registering to a contest, a button to clone challenge repositories is enabled when there are configured git repositories for that challenge.
 This will automatically initialize the workspace by creating the `.topcoderrc` file.
-![clone-starter-pack](https://media.giphy.com/media/QuaGaa7sary08FyQgO/giphy.gif)
+![clone-challenge-repo](https://media.giphy.com/media/KziJ0CvYGPU1Arc35l/giphy.gif)
 
-5.  `Topcoder Time` aka EDT, Eastern Time, New York Time, UTC-04:00 (or -05:00,
+6. `Clone templates`
+The user can clone an available template to it's own workspace. Available templates comes from https://github.com/topcoder-platform-templates.
+This feature can be accessed either using the `Topcoder: Clone templates` command from the Command Palette (`Ctrl+Shift+P`)
+![clone-templat-repo](https://media.giphy.com/media/JNsuTLYNyrDuLPU8AQ/giphy.gif)
+
+7. `Clone repository`
+This feature allows the user to clone a public repository from github/gitlab.
+This feature can be accessed either using the `Topcoder: Clone repository` command from the Command Palette (`Ctrl+Shift+P`)
+![clone-repo](https://media.giphy.com/media/kdF85BqsDhOPuX3Yqf/giphy.gif)
+
+8.  `Topcoder Time` aka EDT, Eastern Time, New York Time, UTC-04:00 (or -05:00,
     depending on the the season), is shown in the status bar, in the bottom
     right corner, and it is updated automatically:
 
     ![topcoder-time](https://i.imgur.com/ZwBreJA.png)
 
-6.  `Time To Submission Deadline`: If the folder opened in IDE contains
+9.  `Time To Submission Deadline`: If the folder opened in IDE contains
     `.topcoderrc` configuration file, which has `challengeId` entry pointing
     to a valid challenge with future submission deadline, the time to deadline
     is shown inside the status bar, in the bottom-left corner, in a human-

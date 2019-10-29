@@ -84,6 +84,16 @@
           "dark": "resources/images/dark/reload.svg",
           "light": "resources/images/light/reload.svg"
         }
+      },
+      {
+        "command": "extension.cloneRepository",
+        "title": "Clone a repository",
+        "category": "Topcoder"
+      },
+      {
+        "command": "extension.cloneOrganizationRepository",
+        "title": "Clone templates",
+        "category": "Topcoder"
       }
     ],
     "menus": {
@@ -130,7 +140,7 @@
       "activitybar": [
         {
           "icon": "resources/icons/Logo Active.svg",
-          "title": "TOPCODER",
+          "title": "Topcoder",
           "id": "topcoder-container"
         }
       ]
