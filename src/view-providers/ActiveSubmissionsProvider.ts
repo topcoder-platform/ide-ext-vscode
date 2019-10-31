@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { IListItem } from './interfaces';
+import * as path from 'path';
 import * as _ from 'lodash';
 import ChallengeController from '../controllers/ChallengeController';
 import VSCode from '../helpers/VSCode';
@@ -12,13 +13,13 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
      * @param {vscode.ExtensionContext} context
      */
     public static Register(
-      challengeController: ChallengeController,
-      context: vscode.ExtensionContext,
+        challengeController: ChallengeController,
+        context: vscode.ExtensionContext,
     ) {
         if (!this.provider) {
             this.provider = new ActiveSubmissionsProvider(
-              challengeController,
-              context,
+                challengeController,
+                context,
             );
         }
         vscode.window.createTreeView('user-active-submissions', {
@@ -30,16 +31,18 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
     public readonly onDidChangeTreeData: vscode.Event<IListItem | undefined>;
     private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
         new vscode.EventEmitter<IListItem | undefined>();
+    private extensionPath: string;
+
     private constructor(
-      private challengeController: ChallengeController,
-      context: vscode.ExtensionContext,
+        private challengeController: ChallengeController,
+        context: vscode.ExtensionContext,
     ) {
         this.onDidChangeTreeData = this.onDidChangeTreeDataEmitter.event;
-
+        this.extensionPath = context.extensionPath;
         const vs = new VSCode(context);
 
         vs.registerCommand(
-          'activeSubmissions.openChallengeWithActiveSubmission',
+            'activeSubmissions.openChallengeWithActiveSubmission',
             async (id) => {
                 await this.challengeController.loadUserSubmission(id); // errors are handled internally
             },
@@ -47,10 +50,10 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
             (telemetry, challengeId) => ({ ...telemetry, challengeId }));
 
         vs.registerCommand(
-          'activeSubmissions.reload',
-          async () => {
-            this.onDidChangeTreeDataEmitter.fire();
-          });
+            'activeSubmissions.reload',
+            async () => {
+                this.onDidChangeTreeDataEmitter.fire();
+            });
     }
 
     /**
@@ -62,6 +65,10 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
             label: element.name,
             id: element.id,
             description: element.description,
+            iconPath: {
+                light: path.join(this.extensionPath, 'out/resources/icons/light', '02-icon-submission.svg'),
+                dark: path.join(this.extensionPath, 'out/resources/icons/dark', '02-icon-submission.svg'),
+            },
             command: element.id === '' ? undefined : {
                 command: 'activeSubmissions.openChallengeWithActiveSubmission',
                 arguments: [element.id],

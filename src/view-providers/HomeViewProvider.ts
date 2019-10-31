@@ -48,16 +48,17 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
     private readonly featuresItem: IListItem = {
         name: 'Extension Features',
         id: 'extension-features',
-        iconPath: vscode.ThemeIcon.File
+        iconPath: '03-icon-features.svg'
     };
     private readonly setupItem: IListItem = {
         name: 'Getting Started',
         id: 'getting-started',
-        iconPath: vscode.ThemeIcon.File
+        iconPath: '04-icon-how-to.svg'
     };
     private readonly activeChallengesItem: IListItem = {
         name: 'Active Challenges',
-        id: 'active-challenges'
+        id: 'active-challenges',
+        iconPath: '05-icon-challenge-list.svg'
     };
 
     private extensionPath: string;

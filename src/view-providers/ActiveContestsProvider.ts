@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
+import * as path from 'path';
 import { IListItem } from './interfaces';
 import ChallengeController from '../controllers/ChallengeController';
 import VSCode from '../helpers/VSCode';
@@ -12,13 +13,13 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
      * @param {vscode.ExtensionContext} context
      */
     public static Register(
-      challengeController: ChallengeController,
-      context: vscode.ExtensionContext,
+        challengeController: ChallengeController,
+        context: vscode.ExtensionContext,
     ) {
         if (!this.provider) {
             this.provider = new ActiveContestsProvider(
-              challengeController,
-              context,
+                challengeController,
+                context,
             );
         }
         vscode.window.createTreeView('user-active-contests', {
@@ -31,25 +32,27 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
     private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
         new vscode.EventEmitter<IListItem | undefined>();
 
+    private extensionPath: string;
     private constructor(
-      private challengeController: ChallengeController,
-      context: vscode.ExtensionContext,
+        private challengeController: ChallengeController,
+        context: vscode.ExtensionContext,
     ) {
+        this.extensionPath = context.extensionPath;
         const vs = new VSCode(context);
         this.onDidChangeTreeData = this.onDidChangeTreeDataEmitter.event;
         vs.registerCommand(
-          'activeContests.openSelectedChallenge',
-          async (id) => {
-            await this.challengeController.viewChallengeDetails(id); // errors are handled internally
-          },
-          undefined,
-          (telemetry, challengeId) => ({ ...telemetry, challengeId }),
+            'activeContests.openSelectedChallenge',
+            async (id) => {
+                await this.challengeController.viewChallengeDetails(id); // errors are handled internally
+            },
+            undefined,
+            (telemetry, challengeId) => ({ ...telemetry, challengeId }),
         );
         vs.registerCommand(
-          'activeContests.reload',
-          async () => {
-            this.onDidChangeTreeDataEmitter.fire();
-          }
+            'activeContests.reload',
+            async () => {
+                this.onDidChangeTreeDataEmitter.fire();
+            }
         );
     }
 
@@ -62,6 +65,10 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
             label: element.name,
             id: element.id,
             description: element.description,
+            iconPath: {
+                light: path.join(this.extensionPath, 'out/resources/icons/light', '01-icon-challenge.svg'),
+                dark: path.join(this.extensionPath, 'out/resources/icons/dark', '01-icon-challenge.svg'),
+            },
             command: element.id === '' ? void 0 : {
                 command: 'activeContests.openSelectedChallenge',
                 arguments: [element.id],

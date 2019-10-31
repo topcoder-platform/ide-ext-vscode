@@ -148,7 +148,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "copy:resources": "copyfiles resources/**/* out",
+    "copy:resources": "copyfiles resources/**/**/* out",
     "compile": "tsc -p ./ && npm run copy:resources",
     "lint": "tslint -p ./",
     "watch": "tsc -watch -p ./",
