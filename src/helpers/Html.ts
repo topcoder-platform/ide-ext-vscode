@@ -289,7 +289,7 @@ export default class Html {
    * @param challengeDetails The challenge details
    */
   private static generateCloneStarterPackButtonHtml(challengeDetails: any) {
-    const repos = challengeDetails.gitRepoURLs || constants.gitRepoUrls;
+    const repos = challengeDetails.codeRepo || challengeDetails.gitRepoURLs || constants.gitRepoUrls;
 
     return repos.length > 0 && this.isApplyPhase(challengeDetails) ?
       `<button class="workspaceBtns" style="margin-top:10px"
