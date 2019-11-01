@@ -52,6 +52,16 @@ export function activate(context: vscode.ExtensionContext) {
     async () =>
       await loginThenAction(context, authController, challengeController.uploadSubmmission.bind(challengeController))
   );
+  vs.registerCommandAndSubscription(
+    'extension.cloneRepository',
+    challengeController.cloneGitUrl,
+    challengeController,
+  );
+  vs.registerCommandAndSubscription(
+    'extension.cloneOrganizationRepository',
+    challengeController.cloneTemplate,
+    challengeController,
+  );
 }
 
 // This method is called when the extension is deactivated

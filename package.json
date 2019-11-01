@@ -2,7 +2,7 @@
   "name": "topcoder-workflow",
   "displayName": "Topcoder Workflow",
   "description": "This extension is meant to closely integrate the Topcoder platform with VSCode, to allow the user to perform actions from within the editor, without having to open a browser.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "aiKey": "afe30591-235f-4f76-b20e-6b65693fb041",
   "engines": {
     "vscode": "^1.36.0"
@@ -84,6 +84,16 @@
           "dark": "resources/images/dark/reload.svg",
           "light": "resources/images/light/reload.svg"
         }
+      },
+      {
+        "command": "extension.cloneRepository",
+        "title": "Clone a repository",
+        "category": "Topcoder"
+      },
+      {
+        "command": "extension.cloneOrganizationRepository",
+        "title": "Clone templates",
+        "category": "Topcoder"
       }
     ],
     "menus": {
@@ -130,7 +140,7 @@
       "activitybar": [
         {
           "icon": "resources/icons/Logo Active.svg",
-          "title": "TOPCODER",
+          "title": "Topcoder",
           "id": "topcoder-container"
         }
       ]
@@ -138,7 +148,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "copy:resources": "copyfiles resources/**/* out",
+    "copy:resources": "copyfiles resources/**/**/* out",
     "compile": "tsc -p ./ && npm run copy:resources",
     "lint": "tslint -p ./",
     "watch": "tsc -watch -p ./",

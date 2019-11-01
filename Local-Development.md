@@ -56,18 +56,3 @@ You may also run the tests by running `npm test` in a terminal
 
 - `npm run lint`
 
-## Available starter pack configuration
-
-In `src/config/packs.ts` is located the file to manage which technologies have starter packs available to clone.
-The structure is:
-
-```js
-{
-    name: string - the technology that matches the challenge details technologies property,
-    repos: array - contains repo title and url
-        {
-            title: string - The title of the starter pack,
-            url: string - The public url available to clone
-        }
-}
-```

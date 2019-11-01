@@ -8,7 +8,8 @@ import ChallengeService from '../../services/ChallengeService';
 import {
   v3Token, challenges, submitSuccessResponse, validChallengeDetails,
   unregisteredChallengeDetails, closedForSubmissionChallengeDetails,
-  memberChallengesList, submissionDetails, artifactsDetails
+  memberChallengesList, submissionDetails, artifactsDetails,
+  orgRepos
 } from './testData';
 import * as fs from 'fs';
 import * as assert from 'assert';
@@ -24,6 +25,7 @@ const validArtifactId = 123467;
 suite('ChallengeService Unit tests', () => {
   suiteSetup(() => {
     const env = getEnv();
+    const orgsPath = url.parse(constants.organizationRepoUrl);
     const challengesUrl = url.parse(env.URLS.ACTIVATE_CHALLENGES);
     const uploadSubmmissionUrl = url.parse(
       env.URLS.UPLOAD_SUBMISSION + '/submissions');
@@ -39,7 +41,7 @@ suite('ChallengeService Unit tests', () => {
       env.URLS.MEMBER_CHALLENGES.replace('{memberId}', 'mess'));
     const submissionUrl = url.parse(
       env.URLS.MEMBER_SUBMISSION
-      .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '99998888'));
+        .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '99998888'));
     const artifactsUrl = url.parse(env.URLS.SUBMISSION_ARTIFACTS.replace('{submissionId}', `${validSubmissionId}`));
     const downloadArtifactUrl = url.parse(env.URLS.DOWNLOAD_SUBMISSION.replace('{submissionId}', `${validSubmissionId}`)
       .replace('{artifactId}', `${validArtifactId}`));
@@ -62,6 +64,8 @@ suite('ChallengeService Unit tests', () => {
       .reply(200, { result: { content: memberChallengesList } })
       .get(submissionUrl.path as string)
       .reply(200, submissionDetails)
+      .get(orgsPath.path as string)
+      .reply(200, orgRepos)
       .get(artifactsUrl.path as string)
       .reply(200, artifactsDetails)
       .get(downloadArtifactUrl.path as string)
@@ -206,5 +210,15 @@ suite('ChallengeService Unit tests', () => {
   });
   test('downloadArtifact() should fail with invalid token', async () => {
     assert.rejects(async () => { await ChallengeService.downloadArtifact('', '', ''); });
+  });
+
+  test('getOrganizationRepositories() should return the organization repositories', async () => {
+    const result = await ChallengeService.getOrganizationRepositories();
+    expect(result.data).to.be.deep.equal(orgRepos.data);
+  });
+
+  test('getOrganizationRepositories() should throw exception if any error occurs', async () => {
+    assert.rejects(async () =>
+      await ChallengeService.getOrganizationRepositories());
   });
 });
