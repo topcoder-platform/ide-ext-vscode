@@ -34,11 +34,6 @@
           "default": "",
           "description": "Your Topcoder password."
         },
-        "TCVSCodeIDE.shareTelemetryToTC": {
-          "type": "boolean",
-          "default": false,
-          "description": "Permits the extension to send telemetry data to Topcoder."
-        },
         "TCVSCodeIDE.useDevelopEndpoint": {
           "type": "boolean",
           "default": false,
