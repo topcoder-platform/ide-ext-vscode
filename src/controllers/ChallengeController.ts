@@ -109,11 +109,19 @@ export default class ChallengeController {
       reviews = await Promise.all(result.map(async (sub: any) => {
         const artifactsResult = await ChallengeService.getSubmissionArtifacts(sub.id, token);
         const artifacts = _.get(artifactsResult, 'artifacts', []);
+        const reviewTypes = sub.review.map(async (r: any) => {
+          let res;
+          try {
+            res = await ChallengeService.getReviewType(r.typeId, token);
+          } catch (err) {
+            Notification.showErrorNotification(constants.loadReviewTypeInfoError);
+          }
+          return { score: r.score, created: new Date(r.created).toUTCString(), review: res.name || '' };
+        });
         return {
           artifacts,
           id: sub.id,
-          rev: sub.review.map((r: any) =>
-            ({ score: r.score, created: new Date(r.created).toUTCString() }))
+          rev: await Promise.all(reviewTypes)
         };
       }));
     } catch (err) {
