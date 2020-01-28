@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.1 - 28th January, 2020
+
+### Changes
+
+- Bumped the version of a dependency to fix an issue with publishing to marketplace
+
 ## v0.3.0 - 28th January, 2020
 
 ### Changes

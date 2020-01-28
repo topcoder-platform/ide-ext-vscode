@@ -168,7 +168,7 @@
     "vscode-test": "^1.2.0"
   },
   "dependencies": {
-    "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
+    "@topcoder-platform/topcoder-submission-api-wrapper": "^1.2.0",
     "@types/archiver": "^3.0.0",
     "@types/fs-extra": "^8.0.0",
     "@types/moment-timezone": "^0.5.12",
