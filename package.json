@@ -2,7 +2,7 @@
   "name": "topcoder-workflow",
   "displayName": "Topcoder Workflow",
   "description": "This extension is meant to closely integrate the Topcoder platform with VSCode, to allow the user to perform actions from within the editor, without having to open a browser.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "aiKey": "afe30591-235f-4f76-b20e-6b65693fb041",
   "engines": {
     "vscode": "^1.36.0"
@@ -33,11 +33,6 @@
           "type": "string",
           "default": "",
           "description": "Your Topcoder password."
-        },
-        "TCVSCodeIDE.shareTelemetryToTC": {
-          "type": "boolean",
-          "default": false,
-          "description": "Permits the extension to send telemetry data to Topcoder."
         },
         "TCVSCodeIDE.useDevelopEndpoint": {
           "type": "boolean",
@@ -148,7 +143,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "copy:resources": "copyfiles resources/**/**/* out",
+    "copy:resources": "copyfiles resources/**/* resources/**/**/* out",
     "compile": "tsc -p ./ && npm run copy:resources",
     "lint": "tslint -p ./",
     "watch": "tsc -watch -p ./",

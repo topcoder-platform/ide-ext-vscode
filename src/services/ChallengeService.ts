@@ -25,6 +25,25 @@ function getSubmissionApi() {
 export default class ChallengeService {
 
   /**
+   * Gets the review type
+   * @param reviewId review identifer
+   * @param token user token
+   */
+  public static async getReviewType(reviewId: string, token: string) {
+    const url = `${getEnv().URLS.REVIEW_TYPES}/${reviewId}`;
+    try {
+      const { data } = await axios.get(url,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      return data;
+    } catch (err) {
+      console.log(err);
+      throw new Error(constants.loadSubmissionFailed);
+    }
+  }
+
+  /**
    * Gets the details of a submission
    * @param challengeId challenge identifier
    * @param token user token

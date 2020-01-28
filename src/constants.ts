@@ -53,6 +53,7 @@ export const cloneTemplateStarted = 'Clone template started';
 export const cloneTemplateSuccess = 'Cloned template with success';
 export const cloneTemplateFailed = 'Clone template failed';
 export const templateNotCloned = 'Template not cloned';
+export const loadReviewTypeInfoError = 'Failed to load review type';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const usernameConfig = 'credentials.username';
@@ -95,6 +96,7 @@ export interface IENV {
     SUBMISSION_ARTIFACTS: string,
     DOWNLOAD_SUBMISSION: string,
     TELEMETRY: string,
+    REVIEW_TYPES: string,
   };
 }
 
@@ -117,7 +119,8 @@ export const DEV_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
-    TELEMETRY: ''
+    TELEMETRY: '',
+    REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes'
   }
 };
 
@@ -126,7 +129,7 @@ export const DEV_ENV: IENV = {
  */
 export const PROD_ENV: IENV = {
   CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
-  CLIENT_V2CONNECTION: 'LDAP',
+  CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Prod',
   URLS: {
     AUTHN: 'https://topcoder.auth0.com/oauth/ro',
@@ -141,6 +144,7 @@ export const PROD_ENV: IENV = {
     SUBMISSION_ARTIFACTS: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
     TELEMETRY: '',
+    REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes'
   }
 };
 

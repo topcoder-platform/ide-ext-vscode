@@ -416,12 +416,14 @@ export default class Html {
               <tr>
                 <th>Score</th>
                 <th>Created at</th>
+                <th>Review type</th>
               </tr>
             ${_.flatten(reviews.map((review: any) =>
-        (review.rev.map(({ score, created }: any) => {
+        (review.rev.map(({ score, created, review: reviewType }: any) => {
           return `<tr>
                   <td>${score}</td>
                   <td>${created}</td>
+                  <td>${reviewType}</td>
                 </tr>`;
         })
         ))).join('')} </table>`;
