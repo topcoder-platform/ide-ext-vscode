@@ -2,7 +2,7 @@
   "name": "topcoder-workflow",
   "displayName": "Topcoder Workflow",
   "description": "This extension is meant to closely integrate the Topcoder platform with VSCode, to allow the user to perform actions from within the editor, without having to open a browser.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "aiKey": "afe30591-235f-4f76-b20e-6b65693fb041",
   "engines": {
     "vscode": "^1.36.0"
@@ -168,7 +168,7 @@
     "vscode-test": "^1.2.0"
   },
   "dependencies": {
-    "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
+    "@topcoder-platform/topcoder-submission-api-wrapper": "^1.2.0",
     "@types/archiver": "^3.0.0",
     "@types/fs-extra": "^8.0.0",
     "@types/moment-timezone": "^0.5.12",
