@@ -129,7 +129,7 @@ export const DEV_ENV: IENV = {
  */
 export const PROD_ENV: IENV = {
   CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
-  CLIENT_V2CONNECTION: 'LDAP',
+  CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Prod',
   URLS: {
     AUTHN: 'https://topcoder.auth0.com/oauth/ro',
