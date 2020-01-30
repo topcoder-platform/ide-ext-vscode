@@ -55,12 +55,11 @@ The extensions adds an activity bar item that has 3 sections.
 Besides setting your username and password, you can also:
 
 - Switch between the development and production instances of Topcoder when using the extension. By default, you will be using the production instance
-- At the moment, we capture telemetry of your usage of this extension to help improve the extension. **Since we are still in beta, the configuration that controls if you have opted in or our of telemetry is disabled. Setting this has no effect - all telemetry is capture** We will support this configuration when we come out of beta
+- At the moment, we capture telemetry of your usage of this extension to help improve the extension. Although we now have a stable release, option to control telemetry did not make it to the latest release. We intend to provide this soon
 
 These settings are named:
 
 ```bash
-TCVSCodeIDE.shareTelemetryToTC: Boolean value. true by default
 TCVSCodeIDE.useDevelopEndpoint: Boolean value. false by default
 ```
 

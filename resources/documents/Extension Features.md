@@ -39,13 +39,13 @@ This feature allows the user to clone a public repository from github/gitlab.
 This feature can be accessed either using the `Topcoder: Clone repository` command from the Command Palette (`Ctrl+Shift+P`)
 ![clone-repo](https://media.giphy.com/media/kdF85BqsDhOPuX3Yqf/giphy.gif)
 
-8.  `Topcoder Time` aka EDT, Eastern Time, New York Time, UTC-04:00 (or -05:00,
+8. `Topcoder Time` aka EDT, Eastern Time, New York Time, UTC-04:00 (or -05:00,
     depending on the the season), is shown in the status bar, in the bottom
     right corner, and it is updated automatically:
 
     ![topcoder-time](https://i.imgur.com/ZwBreJA.png)
 
-9.  `Time To Submission Deadline`: If the folder opened in IDE contains
+9. `Time To Submission Deadline`: If the folder opened in IDE contains
     `.topcoderrc` configuration file, which has `challengeId` entry pointing
     to a valid challenge with future submission deadline, the time to deadline
     is shown inside the status bar, in the bottom-left corner, in a human-
@@ -53,14 +53,7 @@ This feature can be accessed either using the `Topcoder: Clone repository` comma
 
     ![time-to-submission-deadline](https://i.imgur.com/Wvg8V3T.png)
 
-7.  `Sharing of usage data to Topcoder`. By default, this extension tracks and
-    shares to Topcoder its usage data, to be used for debugging and future
-    development purposes. This behavior can be disabled from extension
-    settings (`Ctrl+,` > Extensions > Topcoder Workflow > Share Telemetry to TC):
-
-    ![share-telemetry-switch](https://i.imgur.com/kiBDjfm.png)
-
-8.  `Topcoder Environment`: Extension can work against production, or development
+10. `Topcoder Environment`: Extension can work against production, or development
     Topcoder backend. This can be switched inside extension preferences
     (`Ctrl+,` > Extensions > Topcoder Workflow > Use Development Endpoint).
     The default is development environment, for convenience of development
