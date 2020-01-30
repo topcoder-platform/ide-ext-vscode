@@ -42,3 +42,13 @@ You may also run the tests by running `npm test` in a terminal
 ## Typescript code lint
 
 - `npm run lint`
+
+## Publishing
+
+- Ensure that you have updated `Changelog.md` file to reflect the changes made for the new release
+- Run `npm version major|minor|patch -m 'Upgrade to %s'` command to publish a new release. Do this in the `develop` branch
+- Create and merge a PR from `develop` to `master` branch
+- Create a new relase.
+  - Specify the tag with prefix `v`. Example - `v1.0.2`
+  - The title will be the tag itself
+  - The description will be a copy of the `Changelog.md` file, with the header tags corrected (to indicate the correct level)
