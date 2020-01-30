@@ -21,19 +21,6 @@ This extension exposes the following settings:
 
 - `TCVSCodeIDE.credentials.username`: your topcoder username
 - `TCVSCodeIDE.credentials.password`: your topcoder password
-- `TCVSCodeIDE.shareTelemetryToTC`: the option to share extension usage data
-  to Topcoder.
-
-  To perform telemetry sharing, the URL where to post the data
-  should be set inside `src/constants.ts` file, in `DEV_ENV.URLS.TELEMETRY`,
-  or `PROD_ENV.URLS.TELEMETRY` constant (for development and production TC
-  environments). By default, the dev URL is set to be
-  https://webhook.site/cb4d7abf-f9a8-47f8-ab40-f8f43bd3367c and all calls
-  to that endpoint can be viewed at
-  https://webhook.site/#!/cb4d7abf-f9a8-47f8-ab40-f8f43bd3367c/fe1f0259-a618-4631-8660-e90de933d388. The URL for prod is not set,
-  as it is extremely dangerous to share production data to such mock
-  destination.
-
 - `TCVSCodeIDE.useDevelopEndpoint`: the option to work against development
   Topcoder environment instead of the production one (for now, enabled by
   default).
@@ -55,4 +42,3 @@ You may also run the tests by running `npm test` in a terminal
 ## Typescript code lint
 
 - `npm run lint`
-

@@ -1,4 +1,17 @@
-# Changelog
+# Changelog - Topcoder Workflow VSCode Extension
+
+## v1.0.1 - 30th January, 2020
+
+### Changes
+
+- Cleaned up README to emphasize that telemetry is still turned on and option to control this is a WIP
+- Updated Changelog
+
+## v1.0.0 - 30th January, 2020
+
+### Changes
+
+- We are no longer in beta and now have a stable release!
 
 ## v0.3.1 - 28th January, 2020
 
