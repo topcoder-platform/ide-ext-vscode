@@ -1,5 +1,11 @@
 # Changelog - Topcoder Workflow VSCode Extension
 
+## v1.0.2 - 30th January, 2020
+
+### Changes
+
+- Updated instructions on how to publish the extension for local deployment
+
 ## v1.0.1 - 30th January, 2020
 
 ### Changes

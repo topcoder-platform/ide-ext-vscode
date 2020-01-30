@@ -25,7 +25,7 @@ The extension provides several commands in the Command Palette:
 - *Topcoder: View open challenges* to list active challenges in a tabular view. Upon clicking on a challenge title, challenge details will be displayed in a new tab.
 - *Topcoder: Upload submission* to upload the current workspace to topcoder challenge.
 - *Topcoder: Clone a repository* to clone a gitlab/github public repository.
-- *Topcoder: Clone templates* to clone a template - available at https://github.com/topcoder-platform-templates.
+- *Topcoder: Clone templates* to clone a template - available at [Topcoder Templates](https://github.com/topcoder-platform-templates)
 
 ## Activity Bar
 
@@ -44,7 +44,7 @@ The extensions adds an activity bar item that has 3 sections.
 - You can register for open challenges
 - You can initialize your workspace after registering for a challenge. This creates a `.topcoderrc` file with the challenge details present in it. This file is used by the extension and never to be altered manually
 - You can also clone challenge repositories right into your workspace
-- You can also clone a template repository from https://github.com/topcoder-platform-templates into your workspace
+- You can also clone a template repository from [Topcoder Templates](https://github.com/topcoder-platform-templates) into your workspace
 - You can clone any public gitlab or github repository into your workspace
 - If your workspace is initialized, you can see the time until the end of the submission phase in the side bar
 - You can also see the current time (as used by the Topcoder platform, for example in Online Review) status bar
