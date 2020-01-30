@@ -1,7 +1,5 @@
 # VSCode Extension for Topcoder
 
-![Pubish extension on release](https://github.com/topcoder-platform/ide-ext-vscode/workflows/Pubish%20extension%20on%20release/badge.svg)
-
 This extension is meant to closely integrate the Topcoder platform with [VSCode](https://code.visualstudio.com/), the text editor, to allow the user to perform actions related to the Topcoder platform from within the editor, without having to open a browser.
 
 ## Setup your environment
