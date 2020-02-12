@@ -1,5 +1,16 @@
-# VSCode Extension for Topcoder
+# Topcoder Extension for VSCode 
 
+## Welcome
+Welcome to the _**Topcoder Extension for VSCode**_ ! Are you a Topcoder competitor? Are you tired of clicking around websites and would much rather use your keyboard? Then this is the extension for you! With this extension you can interact with the Topcoder platfrom all from within the comfort and safety of your IDE. With this extension you can: 
+- Find active challenges
+- Register for a challenge
+- Check out a project starter pack
+- Submit your solutions to a challenge
+- View your scores for your submissions
+
+**So install this extension and get Topcodering today!**
+
+## Summary
 This extension is meant to closely integrate the Topcoder platform with [VSCode](https://code.visualstudio.com/), the text editor, to allow the user to perform actions related to the Topcoder platform from within the editor, without having to open a browser.
 
 ## Setup your environment
