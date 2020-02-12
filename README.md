@@ -16,7 +16,7 @@ You can also set them in your Extension specific Settings:
 
 ![Settings Credentials](/images/settings_credentials.png)
 
-## Userful Commands
+## Useful Commands
 
 The extension provides several commands in the Command Palette:
 
