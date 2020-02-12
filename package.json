@@ -1,6 +1,6 @@
 {
   "name": "topcoder-workflow",
-  "displayName": "Topcoder Workflow",
+  "displayName": "Topcoder",
   "description": "This extension is meant to closely integrate the Topcoder platform with VSCode, to allow the user to perform actions from within the editor, without having to open a browser.",
   "version": "1.0.2",
   "aiKey": "afe30591-235f-4f76-b20e-6b65693fb041",
@@ -22,7 +22,7 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Topcoder Workflow",
+      "title": "Topcoder",
       "properties": {
         "TCVSCodeIDE.credentials.username": {
           "type": "string",
