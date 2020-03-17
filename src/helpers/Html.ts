@@ -1,12 +1,60 @@
 import * as constants from '../constants';
 import * as _ from 'lodash';
 import * as jwt from 'jsonwebtoken';
+import * as QRCode from 'qrcode';
 
 /**
  * Keeps all the logic to generate HTML for challenges
  */
 
 export default class Html {
+  /**
+   * Generate HTML page content with a QR code for device authorizaion
+   * @param data data from /oauth/device/code
+   * @return the html page content
+   */
+  public static async generateDeviceAuthorizationHtml(data: any, topcoderImage: string) {
+    const qr = await QRCode.toDataURL(data.verification_uri_complete);
+
+    return `<!doctype html>
+      <html lang="en"
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${constants.deviceAuthorizationPageTitle}</title>
+          <style>
+            h1, h2 {text-align: center;}
+            img {display: block; margin: 15px auto; }
+            h2 {margin: 30px 10px;}
+            #error-box {color: orangered; }
+          </style>
+        </head>
+        <body>
+          <img id="topcoderLogo" src="${topcoderImage}"/>
+          <h1>Topcoder</h1>
+          <h2>To login to Topcoder and start using the extension:</h2>
+          <ol>
+            <li>On your computer or mobile device, go to: <a href="${data.verification_uri}">${data.verification_uri}</a></li>
+            <li>Enter the following code: ${data.user_code}</li>
+          </ol>
+          <img src="${qr}"/>
+          <div id="error-box"></div>
+          <script type="text/javascript">
+            window.addEventListener('message', (event) => {
+              console.log(event);
+              const message = event.data;
+              switch (message.command) {
+                case '${constants.webviewMessageActions.DISPLAY_ERROR_MESSAGE}':
+                  console.log(message.message);
+                  document.getElementById('error-box').textContent = message.message;
+                  break;
+              }
+            });
+          </script>
+        </body>
+      </html>`;
+
+  }
 
   /**
    * Generate html page content from reviews and artifacts
@@ -131,12 +179,16 @@ export default class Html {
             }
             button {
               background: #0681ff;
+              display: block;
               width: 220px;
               color: white;
               border-color: transparent;
               cursor: pointer;
               height: 28px;
               border-radius: 4px;
+            }
+            button + button {
+              margin-top: 10px;
             }
             #specifications span, #submission-guidelines span {
               /* Override inline styles */
@@ -203,6 +255,18 @@ export default class Html {
             }
 
             /**
+             * Opens the challenge page in the user's browser
+             */
+            function navigateToChallenge(challengeId) {
+              vscode.postMessage({
+                action: '${constants.webviewMessageActions.NAVIGATE_TO_CHALLENGE}',
+                data: {
+                  challengeId
+                }
+              });
+            }
+
+            /**
              * Show the workspace buttons that are hidden by default
              */
             function showWorkspaceButtons() {
@@ -234,6 +298,7 @@ export default class Html {
           ${this.generateRegisterButtonHTML(challengeDetails, userToken)}
           ${this.generateInitWorkspaceButtonHtml(challengeDetails)}
           ${this.generateCloneStarterPackButtonHtml(challengeDetails)}
+          ${this.generateNavigateToChallengeButtonHtml(challengeDetails)}
           <h2>Prizes</h2>
           <div>${this.generateHtmlFromChallengePrizes(challengeDetails.prizes)}</div>
           <h2>Meta</h2>
@@ -292,10 +357,17 @@ export default class Html {
     const repos = challengeDetails.codeRepo || challengeDetails.gitRepoURLs || constants.gitRepoUrls;
 
     return repos.length > 0 && this.isApplyPhase(challengeDetails) ?
-      `<button class="workspaceBtns" style="margin-top:10px"
+      `<button class="workspaceBtns"
              onclick='cloneRepositories(${challengeDetails.challengeId}, ${JSON.stringify(repos)})'>
              Clone challenge repositories
              </button>` : '';
+  }
+
+  private static generateNavigateToChallengeButtonHtml(challengeDetails: any) {
+    return `
+    <button onclick="navigateToChallenge(${challengeDetails.challengeId})">
+      View challenge in browser
+    </button>`;
   }
 
   /**

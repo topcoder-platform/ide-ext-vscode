@@ -5,19 +5,19 @@ import * as url from 'url';
 import * as vscode from 'vscode';
 import * as constants from '../../constants';
 import AuthService from '../../services/AuthService';
-import { v2Token, v3Token, refreshedToken, expiredToken } from './testData';
+import { v2Token, v3Token, oauthRefreshedToken, expiredToken } from './testData';
 
 suite('AuthService Unit tests', () => {
   suiteSetup(() => {
     const env = getEnv();
-    const refreshTokenUrl = url.parse(env.URLS.REFRESH_TOKEN);
+    const refreshTokenUrl = url.parse(env.URLS.AUTH_TOKEN);
     const AUTHN_URL = url.parse(env.URLS.AUTHN);
     const AUTHZ_URL = url.parse(env.URLS.AUTHZ);
 
-    nock(/\.com/)
+    nock(/.*\.com/)
       .persist()
-      .get(refreshTokenUrl.path as string)
-      .reply(200, refreshedToken)
+      .post(refreshTokenUrl.path as string)
+      .reply(200, oauthRefreshedToken)
       .post(AUTHN_URL.path as string)
       .reply(200, v2Token)
       .post(AUTHZ_URL.path as string)
@@ -28,29 +28,24 @@ suite('AuthService Unit tests', () => {
     nock.cleanAll();
   });
 
-  test('fetchToken() should fetch a new token', async () => {
-    const token = await AuthService.fetchToken();
-    expect(token).to.be.equal(v3Token.result.content.token);
-  });
-
   test('refreshToken() should refresh the token', async () => {
     const token = await AuthService.refreshToken(v3Token.result.content.token);
-    expect(token).to.be.equal(refreshedToken.result.content.token);
+    expect(token).to.be.equal(oauthRefreshedToken.data.access_token);
   });
 
-  test('getToken() without previous saved token should fetch a new token', async () => {
+  test('getToken() without previous saved token should retun an empty token', async () => {
     const token = await AuthService.getToken();
-    expect(token).to.be.equal(v3Token.result.content.token);
+    expect(token).to.be.equal('');
   });
 
-  test('getToken() with invalid token should fetch a new token', async () => {
+  test('getToken() with invalid token should refresh a token', async () => {
     const token = await AuthService.getToken('invalid_token');
-    expect(token).to.be.equal(v3Token.result.content.token);
+    expect(token).to.be.equal(oauthRefreshedToken.data.access_token);
   });
 
   test('getToken() with expired token should refresh the token', async () => {
     const token = await AuthService.getToken(expiredToken);
-    expect(token).to.be.equal(refreshedToken.result.content.token);
+    expect(token).to.be.equal(oauthRefreshedToken.data.access_token);
   });
 
   test('isTokenExpired() should return true when the token is expired', async () => {

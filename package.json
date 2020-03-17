@@ -24,20 +24,15 @@
       "type": "object",
       "title": "Topcoder",
       "properties": {
-        "TCVSCodeIDE.credentials.username": {
-          "type": "string",
-          "default": "",
-          "description": "Your Topcoder username."
-        },
-        "TCVSCodeIDE.credentials.password": {
-          "type": "string",
-          "default": "",
-          "description": "Your Topcoder password."
-        },
         "TCVSCodeIDE.useDevelopEndpoint": {
           "type": "boolean",
           "default": false,
           "description": "Activate to work against the development version of Topcoder backend. To complete the switch logout and reload the window."
+        },
+        "TCVSCodeIDE.shareTelemetryToTC": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow telemetry data to be sent to Topcoder"
         }
       }
     },
@@ -156,6 +151,7 @@
     "@types/mocha": "^2.2.42",
     "@types/nock": "^10.0.3",
     "@types/node": "^10.12.21",
+    "@types/qrcode": "^1.3.4",
     "@types/vscode": "^1.36.0",
     "chai": "^4.2.0",
     "copyfiles": "^2.1.1",
@@ -180,6 +176,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "moment-timezone": "^0.5.26",
+    "qrcode": "^1.4.4",
+    "rxjs": "^6.5.4",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils",
     "vscode-extension-telemetry": "^0.1.2"
   },
