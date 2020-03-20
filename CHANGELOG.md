@@ -1,5 +1,21 @@
 # Changelog - Topcoder Workflow VSCode Extension
 
+## v1.0.5 - 20th March, 2020
+
+- Telemetry key updated in the extension. v1.0.4 incorrectly set an unused variable instead. Telemetry is now correctly captured.
+
+## v1.0.4 - 27th Febrary, 2020
+
+### Changes
+
+- New Telemetry key added
+
+## v1.0.3 - 13th February, 2020
+
+### Changes
+
+- Updated the README for public release on Topcoder's website
+
 ## v1.0.2 - 30th January, 2020
 
 ### Changes
