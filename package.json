@@ -27,12 +27,12 @@
         "TCVSCodeIDE.useDevelopEndpoint": {
           "type": "boolean",
           "default": false,
-          "description": "Activate to work against the development version of Topcoder backend. To complete the switch logout and reload the window."
+          "description": "Controls whether to use Topcoder's development instance. If you change this value logout and reload the window for the changes to take effect."
         },
         "TCVSCodeIDE.shareTelemetryToTC": {
           "type": "boolean",
           "default": true,
-          "description": "Allow telemetry data to be sent to Topcoder"
+          "description": "Controls whether telemetry data is sent to Topcoder"
         }
       }
     },

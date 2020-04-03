@@ -139,7 +139,6 @@ export default class AuthService {
           refresh_token: refreshToken
         }
       );
-      console.error('AAAAAA');
       console.log(res);
       const token = _.get(res.data, 'access_token', '');
 

@@ -5,7 +5,6 @@ export const authenticationFailedMessage = 'Failed to authenticate user. Please 
 export const tokenRefreshFailedMessage = 'Failed to refresh authentication token. Please login again.';
 export const sessionExpieredMessage = 'You took too long to login. Session expired.';
 export const accessDeniedMessage = 'Access denied. Login unsuccessful. Please try again.';
-export const loggingInMessage = 'Logging in user.';
 export const loggedInMessage = 'You have logged in successfully';
 export const loggedOutMessage = 'Logged out.';
 export const loadingOpenChallengesMessage = 'Loading open challenges.';
@@ -137,14 +136,14 @@ export const DEV_ENV: IENV = {
  */
 export const PROD_ENV: IENV = {
   CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
-  AUTH0_CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
+  AUTH0_CLIENT_ID: 'K3dYEUlU4Clj95RLIrQi7P9eIVl7U9SK',
   CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Prod',
   URLS: {
     AUTHN: 'https://topcoder.auth0.com/oauth/ro',
     AUTHZ: 'https://api.topcoder.com/v3/authorizations',
-    AUTH_TOKEN: 'https://topcoder.auth0.com/oauth/token',
     DEVICE_AUTH: 'https://topcoder.auth0.com/oauth/device/code',
+    AUTH_TOKEN: 'https://topcoder.auth0.com/oauth/token',
     REFRESH_TOKEN: 'https://api.topcoder.com/v3/authorizations/1',
     ACTIVATE_CHALLENGES: 'https://api.topcoder.com/v4/challenges/?filter=status%3DACTIVE',
     UPLOAD_SUBMISSION: 'https://api.topcoder.com/v5',
