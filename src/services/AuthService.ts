@@ -196,7 +196,7 @@ export default class AuthService {
               break;
             case 'expired_token':
             case 'invalid_grant':
-              subscriber.error(constants.sessionExpieredMessage);
+              subscriber.error(constants.sessionExpiredMessage);
               break;
             case 'access_denied':
               subscriber.error(constants.accessDeniedMessage);

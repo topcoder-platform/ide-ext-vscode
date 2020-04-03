@@ -3,7 +3,7 @@
 export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
 export const authenticationFailedMessage = 'Failed to authenticate user. Please check your settings and try again.';
 export const tokenRefreshFailedMessage = 'Failed to refresh authentication token. Please login again.';
-export const sessionExpieredMessage = 'You took too long to login. Session expired.';
+export const sessionExpiredMessage = 'You took too long to login. Session expired.';
 export const accessDeniedMessage = 'Access denied. Login unsuccessful. Please try again.';
 export const loggedInMessage = 'You have logged in successfully';
 export const loggedOutMessage = 'Logged out.';
