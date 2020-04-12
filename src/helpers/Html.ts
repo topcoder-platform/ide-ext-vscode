@@ -105,7 +105,7 @@ export default class Html {
                      break;
                   }
                   case '${constants.webviewMessageActions.SESSION_CREATED}': {
-                     document.getElementById("status").innerHTML = "Paired";
+                     document.getElementById("status").innerHTML = "Active";
                      document.getElementById("success").style.display = "block";
                      break;
                   }
