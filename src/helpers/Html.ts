@@ -1,8 +1,7 @@
 import * as constants from '../constants';
 import * as _ from 'lodash';
-import * as jwt from 'jsonwebtoken';
 import * as QRCode from 'qrcode';
-
+import {AuthTokenDecoder, IDecodedToken} from './Decoding';
 /**
  * Keeps all the logic to generate HTML for challenges
  */
@@ -317,6 +316,7 @@ export default class Html {
    * @param userToken The user token
    */
   private static generateRegisterButtonHTML(challengeDetails: any, userToken: string) {
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(userToken);
     const buttonHtml = `
       <button id="registerButton" onclick='registerForChallenge(${challengeDetails.challengeId})'>
         Register
@@ -324,7 +324,6 @@ export default class Html {
       `;
     // add register button to DOM only if this user has not already registered
     const registrants: any[] = _.get(challengeDetails, 'registrants', []);
-    const decodedToken: any = jwt.decode(userToken);
     const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined
       && this.isApplyPhase(challengeDetails);
     return registerEnabled ? buttonHtml : '';

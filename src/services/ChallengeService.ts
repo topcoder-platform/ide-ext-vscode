@@ -5,7 +5,7 @@ import * as constants from '../constants';
 import * as fs from 'fs';
 import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
-import * as jwt from 'jsonwebtoken';
+import {AuthTokenDecoder , IDecodedToken} from '../helpers/Decoding';
 import * as archiver from 'archiver';
 import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
 
@@ -49,11 +49,10 @@ export default class ChallengeService {
    * @param token user token
    */
   public static async getSubmissionDetails(challengeId: string, token: string) {
-    const decodedToken: any = jwt.decode(token);
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(token);
     const url = getEnv().URLS.MEMBER_SUBMISSION
       .replace('{challengeId}', challengeId)
       .replace('{memberId}', decodedToken.userId);
-
     try {
       const { data } = await axios.get(url,
         {
@@ -61,6 +60,7 @@ export default class ChallengeService {
         });
       return data;
     } catch (err) {
+      console.log(err);
       throw new Error(constants.loadSubmissionFailed);
     }
   }
@@ -192,7 +192,7 @@ export default class ChallengeService {
     // get challenge details if challenge exists
     const challengeDetails = await this.getChallengeDetails(challengeId, savedToken);
     // check if this user has registered for this challenge
-    const decodedToken: any = jwt.decode(savedToken);
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(savedToken);
     const registrants: any[] = _.get(challengeDetails, 'result.content.registrants', []);
     const hasUserRegistered = registrants.find((profile) => profile.handle === decodedToken.handle) !== undefined;
     if (!hasUserRegistered) {
@@ -240,7 +240,7 @@ export default class ChallengeService {
    */
   public static async getActiveChallengesOfUser(token: string) {
     try {
-      const profile: any = jwt.decode(token);
+      const profile: IDecodedToken = AuthTokenDecoder.decode(token);
       const url = getEnv().URLS.MEMBER_CHALLENGES
         .replace('{memberId}', profile.handle);
       const { data } = await axios.get(url, {
@@ -346,7 +346,7 @@ export default class ChallengeService {
    * @return the response of submit endpoint
    */
   private static async submitFileToChallenge(filePath: string, challengeId: string, savedToken: string): Promise<any> {
-    const decodedToken: any = jwt.decode(savedToken);
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(savedToken);
     const submissionData = {
       submission: {
         name: path.basename(filePath),
