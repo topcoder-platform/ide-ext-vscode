@@ -11111,4 +11111,14 @@ export const orgRepos = {
       }
     }
   ]
-};
+}
+
+export const pairingSession = {
+  "id": "tre43-43ref-454ergre",
+  "status": "Pairing"
+}
+
+export const activatedSession = {
+  "id": "tre43-43ref-454ergre",
+  "status": "Active"
+}
