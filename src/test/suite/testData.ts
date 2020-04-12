@@ -7,13 +7,16 @@ export const oauthToken = {
       "expires_in": 86400,
       "token_type": "Bearer",
 }
+
 export const oauthRefreshedToken = {
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NzkzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.pxSRzacohYPI_2j0jhUt7-lDYW6FbJtMg6FBAYUu2t8",
     "expires_in": 86400,
     "token_type": "Bearer",
     "scope": "offline_access openid profile refresh_token"
 }
+
 export const expiredToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NTQzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.zULI6dqM8xyOgz5B_x9etVwB4WSeeeSq49OtgJrdhw8';
+
 export const challenges = {
   "id": "-7151b0f2:16b0caee32c:3392",
   "result": {
@@ -11109,11 +11112,3 @@ export const orgRepos = {
     }
   ]
 };
-export const pairingSession = {
-   "id": "tre43-43ref-454ergre",
-   "status": "Pairing"
-}
-export const activatedSession = {
-   "id": "tre43-43ref-454ergre",
-   "status": "Active"
-}

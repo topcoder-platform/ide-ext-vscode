@@ -107,6 +107,7 @@ export interface IENV {
     TELEMETRY: string,
     TOPCODER: string,
     REVIEW_TYPES: string,
+    AUTH_AUDIENCE: string,
   };
 }
 
@@ -135,7 +136,8 @@ export const DEV_ENV: IENV = {
     SECURE_SESSION_HOST: 'http://127.0.0.1:3000', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder-dev.com',
-    REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes'
+    REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
+    AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/'
   }
 };
 
@@ -164,7 +166,8 @@ export const PROD_ENV: IENV = {
     SECURE_SESSION_HOST: 'http://example.com', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder.com',
-    REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes'
+    REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
+    AUTH_AUDIENCE: 'https://api.topcoder.com/'
   }
 };
 
