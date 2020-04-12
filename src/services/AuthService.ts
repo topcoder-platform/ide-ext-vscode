@@ -123,7 +123,7 @@ export default class AuthService {
     return axios.post<IDeviceAuthData>(env.URLS.DEVICE_AUTH, {
       client_id: env.AUTH0_CLIENT_ID,
       scope: 'offline_access openid profile refresh_token',
-      audience: 'https://m2m.topcoder-dev.com/'
+      audience: env.URLS.AUTH_AUDIENCE
     }).then((res) => res.data);
   }
 
