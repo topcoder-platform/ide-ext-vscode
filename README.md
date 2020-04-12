@@ -33,7 +33,7 @@ The extensions adds an activity bar item that has 3 sections.
 
 - *Your Active Contests*  will list all the contests that you have registered to.
 - *Your Active Submissions* will list all the submissions that you have done. You will be able to view the reviews and artifacts (if any) for the submission.
-- *Home* has 4 parts, which will allow you to open the list of all active challenges, report a problem, configure settins and login/logout.
+- *Home* has 5 parts, which will allow you to open the list of all active challenges, report a problem, configure settings, login/logout and start secure session.
 
 ![Activity Bar](/images/activity_bar.gif)
 
@@ -49,7 +49,7 @@ The extensions adds an activity bar item that has 3 sections.
 - If your workspace is initialized, you can see the time until the end of the submission phase in the side bar
 - You can also see the current time (as used by the Topcoder platform, for example in Online Review) status bar
 - Finally you can switch between the topcoder production and development instances
-
+- Start secure session
 ## Other Settings
 
 You can:

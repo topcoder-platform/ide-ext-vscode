@@ -10,7 +10,7 @@ import ChallengeController from '../controllers/ChallengeController';
 import VSCode from '../helpers/VSCode';
 import AuthService from '../services/AuthService';
 import TelemetryService from '../services/TelemetryService';
-
+import SecretSessionController from '../controllers/SessionController';
 export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
 
   /**
@@ -22,12 +22,14 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   public static Register(
     authController: AuthController,
     challengeController: ChallengeController,
+    secretSessionController: SecretSessionController,
     context: vscode.ExtensionContext,
   ) {
     if (!this.provider) {
       this.provider = new HomeViewProvider(
         authController,
         challengeController,
+        secretSessionController,
         context,
       );
     }
@@ -77,7 +79,11 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
     id: 'configure-settings',
     iconPath: '04-icon-how-to.svg' // FIXME
   };
-
+  private readonly secureSession: IListItem = {
+   name: 'Secure Session',
+   id: 'secure-session',
+   iconPath: '04-icon-how-to.svg' // FIXME
+  };
   private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
     new vscode.EventEmitter<IListItem | undefined>();
   private extensionPath: string;
@@ -86,6 +92,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   private constructor(
     private authController: AuthController,
     private challengeController: ChallengeController,
+    private secretSessionController: SecretSessionController,
     context: vscode.ExtensionContext,
   ) {
     this.context = context;
@@ -111,6 +118,10 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
           case this.configureSettings.id: {
             await this.openSettings();
           }                               break;
+          case this.secureSession.id: {
+            await this.secretSessionController.initializeSecretSession();
+            break;
+          }
         }
       },
       undefined,
@@ -166,7 +177,8 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
             this.activeChallengesItem,
             this.reportProblem,
             this.configureSettings,
-            token ? this.logoutItem : this.loginItem
+            token ? this.logoutItem : this.loginItem,
+            this.secureSession
           ]);
         });
       });

@@ -6,7 +6,6 @@ import axios from 'axios';
 import TCAuth = require('topcoder-api-utils/TCAuth');
 import * as constants from '../constants';
 import { getEnv } from '../config';
-
 interface IDeviceAuthData {
   device_code: string;
   user_code: string;
@@ -20,35 +19,6 @@ interface IDeviceAuthData {
  * Interacts with authentication APIs.
  */
 export default class AuthService {
-
-  /**
-   * Log in the user and return the token.
-   */
-  public static async fetchToken(): Promise<string> {
-    const config = vscode.workspace.getConfiguration(constants.extensionConfigSectionName);
-
-    const env = getEnv();
-
-    const tcAuth = new TCAuth({
-      AUTHN_URL: env.URLS.AUTHN,
-      AUTHZ_URL: env.URLS.AUTHZ,
-      CLIENT_ID: env.CLIENT_ID,
-      CLIENT_V2CONNECTION: env.CLIENT_V2CONNECTION
-    }, console);
-
-    const username = 'lazybaer';
-    const password = 'appirio123';
-
-    return new Promise((resolve, reject) => {
-      tcAuth.login(username, password, (err: any, token: string) => {
-        if (err) {
-          return reject(new Error(constants.authenticationFailedMessage));
-        }
-
-        return resolve(token);
-      });
-    });
-  }
 
   /**
    * Gets saved user token, if any.
@@ -84,15 +54,12 @@ export default class AuthService {
 
     if (savedToken) {
       const decodedToken: any = jwt.decode(savedToken);
-
       // Token is is invalid
       if (!decodedToken) {
         console.log('Decoded token is invalid. Refreshing.');
         return this.refreshToken(refreshToken);
       }
-
       const MINUTES_TO_EXPIRE = 5;
-
       // If the token is still fresh for at least another minute
       if (!this.isTokenExpired(decodedToken, 60)) {
         // If the token will expire in the next 5 minutes, refresh it
@@ -139,7 +106,6 @@ export default class AuthService {
           refresh_token: refreshToken
         }
       );
-      console.log(res);
       const token = _.get(res.data, 'access_token', '');
 
       return token;
@@ -180,9 +146,6 @@ export default class AuthService {
       }).then((res) => {
         context.globalState.update(constants.tokenStateKey, res.data.access_token);
         context.globalState.update(constants.refreshTokenStateKey, res.data.refresh_token);
-
-        this.fetchToken().then((token) => context.globalState.update(constants.tokenStateKey, token));
-
         subscriber.next(res.data);
         subscriber.complete();
       }).catch((err) => {

@@ -1,8 +1,7 @@
 import * as constants from '../constants';
 import * as _ from 'lodash';
-import * as jwt from 'jsonwebtoken';
 import * as QRCode from 'qrcode';
-
+import {AuthTokenDecoder, IDecodedToken} from './Decoding';
 /**
  * Keeps all the logic to generate HTML for challenges
  */
@@ -17,7 +16,7 @@ export default class Html {
     const qr = await QRCode.toDataURL(data.verification_uri_complete);
 
     return `<!doctype html>
-      <html lang="en"
+      <html lang="en">
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +54,76 @@ export default class Html {
       </html>`;
 
   }
-
+  /**
+   * Generate HTML page with a QR Code for pairing secure session
+   * @param sessionId id received from created secure session
+   * @return the html page
+   */
+  public static async generateSecureSessionFlowHtml(sessionId: any) {
+    const qr = await QRCode.toDataURL(sessionId);
+    return `<!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${constants.secureSessionStartPageTitle}</title>
+          <style>
+            h1, h2 {text-align: center;}
+            img {display: block; margin: 15px auto; }
+            h2 {margin: 30px 10px;}
+            #error-box {color: orangered; }
+            #success { display: none; }
+            #timed-out { display: none; }
+            button { margin: 0 auto; display: block;}
+          </style>
+         </head>
+          <body>
+            <h1> Device Pairing </h1>
+            <p> Open the Topcoder App on your mobile device and login to Topcoder. After login, procced to tap the "Pair a Session" button to pen the QR Code Scanner and scan the QR Code below. </p>
+            <img src="${qr}">
+            <b>Status: </b><span id="status">Pairing...</span>
+            <div id="timed-out">
+               <p> You have not read the QR Code in time. The session pairing has timed out. Refresh to generate a new pairing session.</p>
+               <button onClick=onRefreshClick()>Refresh</button>
+            </div>
+            <div id="success">
+               <p> Device Pairing has been completed successfully. You can now proceed to the next stop - Enrollment.</p>
+               <button>Next</button>
+            </div>
+            <script type="text/javascript">
+             var vscode;
+             var timedOut = false;
+             (function () {
+               vscode = acquireVsCodeApi();
+             }());
+             window.addEventListener('message', (event) => {
+               switch (event.data.command) {
+                  case '${constants.webviewMessageActions.SESSION_CREATION_TIMED_OUT}': {
+                     document.getElementById("status").innerHTML = "Timed Out";
+                     document.getElementById("timed-out").style.display = "block";
+                     timedOut = true;
+                     break;
+                  }
+                  case '${constants.webviewMessageActions.SESSION_CREATED}': {
+                     document.getElementById("status").innerHTML = "Paired";
+                     document.getElementById("success").style.display = "block";
+                     break;
+                  }
+                  case '${constants.webviewMessageActions.SESSION_CREATION_FAILED}': {
+                     document.getElementById("status").innerHTML = "Failed"
+                     break;
+                  }
+               }
+              })
+              function onRefreshClick() {
+                  vscode.postMessage({
+                        action: '${constants.webviewMessageActions.SESSION_CREATION_REFRESH}'
+                  });
+              }
+            </script>
+        </body>
+      </html>`;
+  }
   /**
    * Generate html page content from reviews and artifacts
    * @param reviews the reviews with artifacts
@@ -317,6 +385,7 @@ export default class Html {
    * @param userToken The user token
    */
   private static generateRegisterButtonHTML(challengeDetails: any, userToken: string) {
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(userToken);
     const buttonHtml = `
       <button id="registerButton" onclick='registerForChallenge(${challengeDetails.challengeId})'>
         Register
@@ -324,7 +393,6 @@ export default class Html {
       `;
     // add register button to DOM only if this user has not already registered
     const registrants: any[] = _.get(challengeDetails, 'registrants', []);
-    const decodedToken: any = jwt.decode(userToken);
     const registerEnabled = registrants.find((profile) => profile.handle === decodedToken.handle) === undefined
       && this.isApplyPhase(challengeDetails);
     return registerEnabled ? buttonHtml : '';

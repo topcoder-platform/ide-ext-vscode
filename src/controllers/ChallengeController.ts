@@ -10,7 +10,6 @@ import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
 import TelemetryService from '../services/TelemetryService';
 import { getEnv } from '../config';
-
 /**
  * Controller for handling challenge commands.
  */

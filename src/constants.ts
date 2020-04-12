@@ -53,7 +53,8 @@ export const cloneTemplateSuccess = 'Cloned template with success';
 export const cloneTemplateFailed = 'Clone template failed';
 export const templateNotCloned = 'Template not cloned';
 export const loadReviewTypeInfoError = 'Failed to load review type';
-
+export const sessionActiveStatus = 'Active';
+export const sessionTimedOutStatus = 'Timed-Out';
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const useDevelopEndpoint = 'useDevelopEndpoint';
 export const shareTelemetryToTC = 'shareTelemetryToTC';
@@ -66,13 +67,18 @@ export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
-
+export const secureSessionStartPageTitle = 'Topcoder Secure Session: Pairing';
+export const generatingSecureSession = 'Generating secure session';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
   'https://github.com/topcoderinc/Topcoder-StarterPack_Ionic',
   'https://github.com/topcoderinc/Topcoder-StarterPack_BluemixNode',
   'https://github.com/topcoderinc/Topcoder-StarterPack_Node-Backend'
 ];
+export const SECRET_SESSION_STATUS_POOL_ERROR = 'Failed to get session status.';
+// Time values for secure session (in milliseconds)
+export const SECURE_SESSION_POOL_INTERVAL = 15000;
+export const SECURE_SESSION_TIMEOUT = 300000;
 
 /**
  * Interface of a constant set, which fully defines a Topcoder environment
@@ -97,6 +103,7 @@ export interface IENV {
     MEMBER_SUBMISSION: string,
     SUBMISSION_ARTIFACTS: string,
     DOWNLOAD_SUBMISSION: string,
+    SECURE_SESSION_HOST: string,
     TELEMETRY: string,
     TOPCODER: string,
     REVIEW_TYPES: string,
@@ -125,6 +132,7 @@ export const DEV_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
+    SECURE_SESSION_HOST: 'http://127.0.0.1:3000', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes'
@@ -153,6 +161,7 @@ export const PROD_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
+    SECURE_SESSION_HOST: 'http://example.com', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder.com',
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes'
@@ -171,6 +180,10 @@ export const webviewMessageActions = {
   NAVIGATE_TO_CHALLENGE: 'NAVIGATE_TO_CHALLENGE',
 
   CLONE_REPOSITORY: 'CLONE_REPOSITORY',
-
+  SESSION_CREATION_REFRESH: 'SESSION_REFRESH',
+  SESSION_CREATION_TIMED_OUT: 'SESSION_CREATION_TIMED_OUT',
+  SESSION_CREATED: 'SESSION_CREATED',
+  SESSION_CREATION_FAILED: 'SESSION_CREATION_FAILED',
+  SESSION_PAIRING_START: 'SESSION_PAIRING_START',
   DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE'
 };
