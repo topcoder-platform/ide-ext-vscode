@@ -92,7 +92,7 @@ export default class Html {
          </head>
           <body>
             <h1> Device Pairing </h1>
-            <p> Open the Topcoder App on your mobile device and login to Topcoder. After login, procced to tap the "Pair a Session" button to pen the QR Code Scanner and scan the QR Code below. </p>
+            <p> Open the Topcoder App on your mobile device and login to Topcoder. After login, procced to tap the "Pair a Session" button to open the QR Code Scanner and scan the QR Code below. </p>
             <img src="${qr}">
             <b>Status: </b><span id="status">Pairing...</span>
             <div id="timed-out">
@@ -100,7 +100,7 @@ export default class Html {
                <button onClick=onRefreshClick()>Refresh</button>
             </div>
             <div id="success">
-               <p> Device Pairing has been completed successfully. You can now proceed to the next stop - Enrollment.</p>
+               <p> Device Pairing has been completed successfully. You can now proceed to the next step - Enrollment.</p>
                <button onClick=onNextClick()>Next</button>
             </div>
             <script type="text/javascript">
@@ -168,7 +168,7 @@ export default class Html {
           </head>
           <body>
             <h1> Biometric Enrollment </h1>
-            <p> We will now proceed to access your camera and capture a photo of you. The photo will be used to enroll for our Biometric Verification process. Make sure you are in front of camera and facing the camera. Ensure there is sufficet light falling on your face. Also make sure that you are close to camera. </p>
+            <p> We will now proceed to access your camera and capture a photo of you. The photo will be used to enroll for our Biometric Verification process. Make sure you are in front of the camera and facing the camera. Ensure there is sufficet light falling on your face. Also make sure that you are close to camera. </p>
             <b>Camera Detected: </b><span id="status"></span>
             <div id="camera-detected">
                 <p>When you are ready, click on Capture below. We will proceed to capture your photo</p>
@@ -272,7 +272,7 @@ export default class Html {
         </head>
         <body>
           <h1> Secure Session </h1>
-          <p> We will now proceed to access your camera and capture a photo of you. The photo will be used to enroll for our Biometric Verification process. Make sure you are in front of camera and facing the camera. Ensure there is sufficet light falling on your face. Also make sure that you are close to camera. </p>
+          <p> We will now proceed to access your camera and capture a photo of you. The photo will be used to enroll for our Biometric Verification process. Make sure you are in front of the camera and facing the camera. Ensure there is sufficet light falling on your face. Also make sure that you are close to camera. </p>
           <b>Status: </b><span id="status">Active</span>
           <p>Your session is still active. You can continue to code your solution. </p>
           <p>When you are done, click on End Session below. The extension will stop capturing your photo at this point and the session will end.</p>

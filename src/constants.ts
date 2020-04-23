@@ -53,6 +53,7 @@ export const cloneTemplateSuccess = 'Cloned template with success';
 export const cloneTemplateFailed = 'Clone template failed';
 export const templateNotCloned = 'Template not cloned';
 export const loadReviewTypeInfoError = 'Failed to load review type';
+export const sessionPairingStatus = 'Pairing';
 export const sessionActiveStatus = 'Active';
 export const sessionTimedOutStatus = 'Timed-Out';
 export const sessionClosedStatus = 'Closed';
@@ -97,7 +98,6 @@ export const BCID_PREFIX = 'bws/1182/';
  * to work against.
  */
 export interface IENV {
-  CLIENT_ID: string;
   AUTH0_CLIENT_ID: string;
   CLIENT_V2CONNECTION: string;
   NAME: string;
@@ -128,8 +128,7 @@ export interface IENV {
  * Constant set for TC Dev environment.
  */
 export const DEV_ENV: IENV = {
-  CLIENT_ID: 'JFDo7HMkf0q2CkVFHojy3zHWafziprhT',
-  AUTH0_CLIENT_ID: '1NpddnMe5M3r04W71F95wDZZTNubWl5u',
+  AUTH0_CLIENT_ID: 'NY97yLYz1wHg3DBtI7NMEEksfI34KkXB',
   CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Dev',
   URLS: {
@@ -159,7 +158,6 @@ export const DEV_ENV: IENV = {
  * Constant set for TC Prod environment.
  */
 export const PROD_ENV: IENV = {
-  CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
   AUTH0_CLIENT_ID: 'K3dYEUlU4Clj95RLIrQi7P9eIVl7U9SK',
   CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Prod',
