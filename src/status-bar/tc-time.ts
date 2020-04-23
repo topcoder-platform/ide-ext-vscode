@@ -11,7 +11,7 @@ import * as moment from 'moment-timezone';
  */
 export default function create(): vscode.StatusBarItem {
   const item = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Right);
+    vscode.StatusBarAlignment.Right, 200);
   item.tooltip = 'Current Topcoder Time (aka Eastern Time, New York Time)';
 
   const update = () => {

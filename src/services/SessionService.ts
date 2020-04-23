@@ -3,6 +3,8 @@ import axios from 'axios';
 import * as constants from '../constants';
 import { getEnv} from '../config';
 import {AuthTokenDecoder, IDecodedToken} from '../helpers/Decoding';
+import * as FormData from 'form-data';
+
 export default class SessionService {
    /**
     * Create new secure session with "Pairing" status and return its id
@@ -25,6 +27,68 @@ export default class SessionService {
          throw err;
       }
    }
+
+  /**
+   * This method will send a POST request to BioID verify endpoint
+   * @param token bearer token for BioID API authentication
+   * @param imagePath imagePath of the image which needs to be sent
+   * @return boolean
+   */
+  public static async verifyBioid(token: string, userToken: string, imagePath: string) {
+      const formData = new FormData();
+      const url = getEnv().URLS.BIOMETERIC_VALIDATION_HOST + `/bioid/verify`;
+      formData.append('image', imagePath);
+      const { data } = await axios.post(url, formData, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          },
+          params: {
+            bcid: this.generateBcid(userToken)
+          }
+        });
+      return data.Success;
+    }
+
+    /**
+     * This method will send a POST request to BioID enroll endpoint
+     * @param token bearer token for BioID API authentication
+     * @param userToken bearer token for authentication for proofsAPI
+     * @param imagePath imagePath of the image which needs to be sent
+     * @return boolean
+     */
+    public static async enrollBioid(token: string, userToken: string, imagePath: string) {
+        const formData = new FormData();
+        const url = getEnv().URLS.BIOMETERIC_VALIDATION_HOST + `/bioid/enroll`;
+        formData.append('image', imagePath);
+        const { data } = await axios.post(url, formData, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          },
+          params: {
+            bcid: this.generateBcid(userToken)
+          }
+          });
+        return data.Success;
+      }
+
+  /**
+   * This method will close a session by a sending Patch Request
+   * @param token user's access token
+   * @param sessionId id of the session
+   * @return boolean
+   */
+   public static async closeSession(token: string, sessionId: any) {
+    const url = getEnv().URLS.SECURE_SESSION_HOST + `/sessions/${sessionId}`;
+    const { data } = await axios.patch(url, {
+        status: constants.sessionClosedStatus
+      }, {
+        headers: { Authorization: `Bearer ${token}`}
+      });
+    return data;
+  }
+
    /**
     * Check if secure session status has changed to Active
     * @param token user's access token
@@ -64,4 +128,14 @@ export default class SessionService {
      }
 
    }
+
+  /**
+   * Generates BCID from userId
+   * @param userToken bearer authentication token
+   * @return bcid string
+   */
+  private static generateBcid(userToken: string) {
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(userToken);
+    return constants.BCID_PREFIX + decodedToken.userId;
+  }
 }

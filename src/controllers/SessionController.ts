@@ -7,23 +7,45 @@ import Notification from '../helpers/Notification';
 import * as constants from '../constants';
 import SessionService from '../services/SessionService';
 import Html from '../helpers/Html';
+import * as path from 'path';
+
+// tslint:disable-next-line: no-var-requires
+const NodeWebcam = require('node-webcam');
 
 export default class SecretSessionController {
 
    private pairingWebviewPanel: vscode.WebviewPanel | undefined = undefined;
    private poolingInterval: any = undefined;
    private poolingTimeout: any = undefined;
+   private verifyBioIdInterval: any = undefined;
    private hasPendingRefresh: boolean = false;
    private hasPendingCheck: boolean = false;
+   private hasOnGoingSession: boolean = false;
+   private capturingImage: boolean = false;
+   private opts = {
+    width: 1280,
+    height: 720,
+    quality: 100,
+    delay: 0,
+    saveShots: true,
+    output: 'jpeg',
+    device: false,
+    callbackReturn: 'location',
+    verbose: false
+  };
    constructor(private context: vscode.ExtensionContext) {}
    /**
     * Create webview for secret session pairing, if there is't any
     */
    public async initializeSecretSession() {
-         if (this.pairingWebviewPanel) {
-            return;
-         }
+    if (this.pairingWebviewPanel) {
+      return;
+    }
+    if (this.hasOnGoingSession) {
+        await this.displayOnGoingSession();
+    } else {
          await this.startNewSession();
+    }
    }
    /**
     * Start new pairing session
@@ -32,6 +54,10 @@ export default class SecretSessionController {
       try {
          // Make sure there is no interval nor timeout running in the background
          if (this.poolingInterval) { this.removeInterval(); }
+         if (this.verifyBioIdInterval) {
+           clearInterval(this.verifyBioIdInterval);
+           this.verifyBioIdInterval = undefined;
+         }
          if (this.poolingTimeout) { this.removeTimeout(); }
          const token = await AuthService.updateTokenGlobalState(this.context);
          if (!token) {
@@ -40,9 +66,11 @@ export default class SecretSessionController {
          Notification.showInfoNotification(constants.generatingSecureSession);
          // Start session and get its id
          const sessionId = await SessionService.generateSecureSessionId(token);
+         this.context.globalState.update(constants.sessionIdKey, sessionId);
          if (!this.pairingWebviewPanel) {
             this.pairingWebviewPanel = this.makeWebViewAvailable(constants.secureSessionStartPageTitle);
          }
+         this.hasOnGoingSession = true;
          await this.setWebviewContent(
             this.pairingWebviewPanel, await Html.generateSecureSessionFlowHtml(sessionId));
          this.hasPendingRefresh = false;
@@ -58,11 +86,98 @@ export default class SecretSessionController {
       }
    }
    /**
+    * Display on going session
+    */
+   private async displayOnGoingSession() {
+      const token = await AuthService.updateTokenGlobalState(this.context);
+      if (!token) {
+        throw new Error(constants.notLoggedInMessage);
+      }
+
+      if (!this.pairingWebviewPanel) {
+        this.pairingWebviewPanel = this.makeWebViewAvailable(constants.secureSessionStartPageTitle);
+      }
+      await this.setWebviewContent(
+        this.pairingWebviewPanel, await Html.generateEndSecureSessionHtml());
+    }
+   /**
     * Handle messages received from webview page
     * @param message message object
     */
    private handleMessagesFromWebView = async (message: any) => {
       switch (message.action) {
+        case constants.webviewMessageActions.PROCEED_TO_BIOMETERIC_ENROLLMENT: {
+          await this.setWebviewContent(this.pairingWebviewPanel, await Html.generateBiometricEnrollmentHtml());
+          const cameraDetected = await this.detectCamera();
+          // Check if a camera is detected or not
+          if (cameraDetected) {
+            this.pairingWebviewPanel!.webview.postMessage({
+              command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_DETECTED
+           });
+          } else {
+            this.pairingWebviewPanel!.webview.postMessage({
+              command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED
+           });
+          }
+          break;
+        }
+        case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_REDETECT_CAMERA: {
+          const cameraDetected = await this.detectCamera();
+          if (cameraDetected) {
+            this.pairingWebviewPanel!.webview.postMessage({
+              command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_DETECTED
+           });
+          } else {
+            this.pairingWebviewPanel!.webview.postMessage({
+              command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED
+           });
+          }
+          break;
+        }
+        case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE: {
+            if (this.capturingImage) {
+             break;
+            }
+            this.capturingImage = true;
+            const image = vscode.Uri.file(path.join(this.context.extensionPath, 'images', constants.TEMP_IMAGE_NAME));
+            await this.takePhotoFromWebCam(image.fsPath);
+            // If image is captured then procced else display a notification
+            if (image !== undefined) {
+              const imagePath = (this.pairingWebviewPanel!.webview as any).asWebviewUri(image);
+              this.pairingWebviewPanel!.webview.html = await HtmlHelper.generateBiometricEnrollmentHtml(imagePath);
+              this.pairingWebviewPanel!.webview.postMessage({
+                command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED,
+                path: imagePath
+              });
+            } else {
+              Notification.showInfoNotification(constants.imageCapturedFailedMessage);
+            }
+            this.capturingImage = false;
+            break;
+        }
+        case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETE: {
+          const userToken = await AuthService.updateTokenGlobalState(this.context);
+          const imagePath = path.join(this.context.extensionPath, 'images', constants.TEMP_IMAGE_NAME);
+          const isEnrolled = await SessionService.enrollBioid(this.getBioIdAuthToken(), userToken, imagePath);
+          this.context.globalState.update(constants.activeSessionKey, isEnrolled);
+          if (isEnrolled) {
+            this.pairingWebviewPanel!.webview.postMessage({
+              command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETED
+            });
+            if (this.hasOnGoingSession) {
+              this.takePhotoPeriodically(this.getBioIdAuthToken(), userToken);
+            }
+          } else {
+            // Displays Error Notification if enrollment fails
+            Notification.showErrorNotification(constants.enrollmentFailedMessage);
+          }
+          break;
+        }
+        case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CLOSE_WINDOW: {
+          // Closes the WebView Panel
+          this.pairingWebviewPanel!.dispose();
+          break;
+        }
          case constants.webviewMessageActions.SESSION_CREATION_REFRESH: {
             // Prevent multiple refresh button clicks
             if (this.hasPendingRefresh) { return; }
@@ -70,8 +185,82 @@ export default class SecretSessionController {
             await this.startNewSession();
             break;
          }
+         case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_END_SESSION: {
+           // clear the session
+           const sessionId = this.context.globalState.get(constants.sessionIdKey);
+           const userToken = await AuthService.updateTokenGlobalState(this.context);
+           clearInterval(this.verifyBioIdInterval);
+           SessionService.closeSession(userToken, sessionId);
+           this.hasOnGoingSession = false;
+           this.pairingWebviewPanel!.dispose();
+           this.context.globalState.update(constants.activeSessionKey, false);
+         }
       }
-   }
+  }
+
+  // Function to get token for BioID API
+  private getBioIdAuthToken() {
+    return 'sample-token';
+  }
+
+  /**
+   * This function will take the photos and send it to verify endpoint periodically
+   * @param token bearer token for BioId API authentication
+   * @param userToken bearer token for proofs API authentication
+   */
+  private takePhotoPeriodically(token: string, userToken: string) {
+    this.verifyBioIdInterval = setInterval(async () => {
+      const photoPath = path.join(this.context.extensionPath, 'images',
+        constants.TEMP_PERIODIC_IMAGE_NAME);
+      await this.takePhotoFromWebCam(photoPath);
+      if (photoPath !== undefined) {
+        await SessionService.verifyBioid(token, userToken, photoPath);
+      }
+   }, constants.BIOID_VERIFY_INTERVAL);
+  }
+
+  /**
+   * This funtion will only return true if a camera is detected
+   * @return boolean
+   */
+  private detectCamera = async (): Promise<boolean> => {
+      const Webcam = NodeWebcam.create(this.opts);
+      return new Promise((res, reject) => {
+        Webcam.hasCamera(async (data: any) => {
+        try {
+          if (data) {
+            res(data);
+          } else {
+            res(false);
+          }
+        } catch {
+          reject();
+        }
+        });
+    });
+  }
+
+  /**
+   * This function will take a new photo and returns the image path
+   * @param imagePath accepts the image path where the image needs to be stored
+   * @return imagePath or undefined
+   */
+  private takePhotoFromWebCam = async (imagePath: string): Promise<any> => {
+    return new Promise((res, reject) => {
+      NodeWebcam.capture(imagePath, this.opts, (err: any, data: any) => {
+          try {
+            if (data) {
+              res(imagePath);
+            } else {
+              res(undefined);
+            }
+          } catch {
+            reject(err);
+          }
+        });
+    });
+  }
+
    /**
     * Call with session checking timeout, show success message if status is now Available, otherwise expire
     * @param token user access token

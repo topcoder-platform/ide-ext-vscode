@@ -10,7 +10,7 @@ import { getEnv } from '../config';
  * @return {vscode.StatusBarItem}
  */
 export default function create(): vscode.StatusBarItem {
-  const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+  const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
   item.tooltip = 'Current environment of Topcoder Extension';
 
   const update = () => {

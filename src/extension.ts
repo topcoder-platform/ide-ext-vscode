@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import createTcEnvironmentStatusBarItem from './status-bar/tc-environment';
 import createTcTimeStatusBarItem from './status-bar/tc-time';
 import createTcTimeToSubmit from './status-bar/tc-time-to-submit';
+import createTcSecureSessionBarItem from './status-bar/tc-secure-session';
 
 import AuthController from './controllers/AuthController';
 import ChallengeController from './controllers/ChallengeController';
@@ -29,6 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
   HomeViewProvider.Register(authController, challengeController, secretSessionController, context);
 
   // Register commands
+  context.subscriptions.push(createTcSecureSessionBarItem(context));
   context.subscriptions.push(createTcEnvironmentStatusBarItem());
   context.subscriptions.push(createTcTimeStatusBarItem());
   context.subscriptions.push(createTcTimeToSubmit(context));

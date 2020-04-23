@@ -55,12 +55,18 @@ export const templateNotCloned = 'Template not cloned';
 export const loadReviewTypeInfoError = 'Failed to load review type';
 export const sessionActiveStatus = 'Active';
 export const sessionTimedOutStatus = 'Timed-Out';
+export const sessionClosedStatus = 'Closed';
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const useDevelopEndpoint = 'useDevelopEndpoint';
 export const shareTelemetryToTC = 'shareTelemetryToTC';
 
+export const imageCapturedFailedMessage = 'Image Could Not Be Captured';
+export const enrollmentFailedMessage = 'Enrollment unsuccessful';
+
 export const tokenStateKey = 'TC_JWT_TOKEN';
 export const refreshTokenStateKey = 'TC_JWT_REFRESH_TOKEN';
+export const sessionIdKey = 'TC_SESSION_ID';
+export const activeSessionKey = 'TC_SESSION_ACTIVE';
 
 export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
@@ -69,6 +75,7 @@ export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 export const secureSessionStartPageTitle = 'Topcoder Secure Session: Pairing';
 export const generatingSecureSession = 'Generating secure session';
+export const biometricSessionPageTitle = 'Topcoder: Biometric Enrollment';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
   'https://github.com/topcoderinc/Topcoder-StarterPack_Ionic',
@@ -79,6 +86,11 @@ export const SECRET_SESSION_STATUS_POOL_ERROR = 'Failed to get session status.';
 // Time values for secure session (in milliseconds)
 export const SECURE_SESSION_POOL_INTERVAL = 15000;
 export const SECURE_SESSION_TIMEOUT = 300000;
+export const BIOID_VERIFY_INTERVAL = 20000;
+
+export const TEMP_IMAGE_NAME = 'enrollment.jpg';
+export const TEMP_PERIODIC_IMAGE_NAME = 'verification.jpg';
+export const BCID_PREFIX = 'bws/1182/';
 
 /**
  * Interface of a constant set, which fully defines a Topcoder environment
@@ -108,6 +120,7 @@ export interface IENV {
     TOPCODER: string,
     REVIEW_TYPES: string,
     AUTH_AUDIENCE: string,
+    BIOMETERIC_VALIDATION_HOST: string
   };
 }
 
@@ -133,11 +146,12 @@ export const DEV_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
-    SECURE_SESSION_HOST: 'http://127.0.0.1:3000', // UPDATE AFTER DEPLOYMENT
+    SECURE_SESSION_HOST: '', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
-    AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/'
+    AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
+    BIOMETERIC_VALIDATION_HOST: '' // UPDATE AFTER DEPLOYMENT
   }
 };
 
@@ -167,7 +181,8 @@ export const PROD_ENV: IENV = {
     TELEMETRY: '',
     TOPCODER: 'https://topcoder.com',
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
-    AUTH_AUDIENCE: 'https://api.topcoder.com/'
+    AUTH_AUDIENCE: 'https://api.topcoder.com/',
+    BIOMETERIC_VALIDATION_HOST: 'http://example.com' // UPDATE AFTER DEPLOYMENT
   }
 };
 
@@ -188,5 +203,15 @@ export const webviewMessageActions = {
   SESSION_CREATED: 'SESSION_CREATED',
   SESSION_CREATION_FAILED: 'SESSION_CREATION_FAILED',
   SESSION_PAIRING_START: 'SESSION_PAIRING_START',
-  DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE'
+  DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE',
+  BIOMETRIC_ENROLLMENT_CAMERA_DETECTED: 'BIOMETRIC_ENROLLMENT_CAMERA_DETECTED',
+  BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED: 'BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED',
+  BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED: 'BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED',
+  BIOMETRIC_ENROLLMENT_COMPLETED: 'BIOMETRIC_ENROLLMENT_COMPLETED',
+  BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE: 'BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE',
+  BIOMETRIC_ENROLLMENT_COMPLETE: 'BIOMETRIC_ENROLLMENT_COMPLETE',
+  BIOMETRIC_ENROLLMENT_REDETECT_CAMERA: 'BIOMETRIC_ENROLLMENT_REDETECT_CAMERA',
+  BIOMETRIC_ENROLLMENT_CLOSE_WINDOW: 'BIOMETRIC_ENROLLMENT_CLOSE_WINDOW',
+  PROCEED_TO_BIOMETERIC_ENROLLMENT: 'PROCEED_TO_BIOMETERIC_ENROLLMENT',
+  BIOMETRIC_ENROLLMENT_END_SESSION: 'BIOMETRIC_ENROLLMENT_END_SESSION'
 };

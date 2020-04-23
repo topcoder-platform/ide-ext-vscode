@@ -50,6 +50,10 @@ The extensions adds an activity bar item that has 3 sections.
 - You can also see the current time (as used by the Topcoder platform, for example in Online Review) status bar
 - Finally you can switch between the topcoder production and development instances
 - Start secure session
+
+## Status
+- When your secure session is active you will see "Secure Session: Active" in the bottom right corner.
+
 ## Other Settings
 
 You can:
