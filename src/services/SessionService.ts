@@ -13,7 +13,7 @@ export default class SessionService {
     */
    public static async generateSecureSessionId(token: string) {
       const decodedToken: IDecodedToken = AuthTokenDecoder.decode(token);
-      const url = getEnv().URLS.SECURE_SESSION_HOST + '/sessions';
+      const url = getEnv().URLS.PROOFS_API_ENDPOINT + '/sessions';
       try {
          const { data} = await axios.post(url, {
             userId: decodedToken.userId,
@@ -80,7 +80,7 @@ export default class SessionService {
    * @return boolean
    */
    public static async closeSession(token: string, sessionId: any) {
-    const url = getEnv().URLS.SECURE_SESSION_HOST + `/sessions/${sessionId}`;
+    const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
     const { data } = await axios.patch(url, {
         status: constants.sessionClosedStatus
       }, {
@@ -96,7 +96,7 @@ export default class SessionService {
     * @return boolean, true if status is Active
     */
    public static async checkForStatusUpdate(token: string, sessionId: string) {
-      const url = getEnv().URLS.SECURE_SESSION_HOST + `/sessions/${sessionId}`;
+      const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
       try {
          const { data } = await axios.get(url, {
             headers: { Authorization: `Bearer ${token}`}
@@ -114,7 +114,7 @@ export default class SessionService {
     * @returns api response
     */
    public static async timeOutPairingSession(token: string, sessionId: string) {
-      const url = getEnv().URLS.SECURE_SESSION_HOST + `/sessions/${sessionId}`;
+      const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
       try {
       const { data } = await axios.patch(url, {
          status: constants.sessionTimedOutStatus

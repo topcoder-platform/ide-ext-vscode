@@ -9,7 +9,7 @@ import * as assert from 'assert';
 suite('Session Service tests', () => {
    suiteSetup(() => {
       const env = getEnv();
-      const sessionUrl = env.URLS.SECURE_SESSION_HOST;
+      const sessionUrl = env.URLS.PROOFS_API_ENDPOINT;
       const sessionId = pairingSession.id;
       nock(/\.com/)
          .persist()

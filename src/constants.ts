@@ -1,6 +1,6 @@
 // Constants definition file
 
-export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
+export const notLoggedInMessage = 'You need to login to Topcoder first before you can carry out that action.';
 export const authenticationFailedMessage = 'Failed to authenticate user. Please check your settings and try again.';
 export const tokenRefreshFailedMessage = 'Failed to refresh authentication token. Please login again.';
 export const sessionExpiredMessage = 'You took too long to login. Session expired.';
@@ -115,7 +115,7 @@ export interface IENV {
     MEMBER_SUBMISSION: string,
     SUBMISSION_ARTIFACTS: string,
     DOWNLOAD_SUBMISSION: string,
-    SECURE_SESSION_HOST: string,
+    PROOFS_API_ENDPOINT: string,
     TELEMETRY: string,
     TOPCODER: string,
     REVIEW_TYPES: string,
@@ -146,7 +146,7 @@ export const DEV_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
-    SECURE_SESSION_HOST: '', // UPDATE AFTER DEPLOYMENT
+    PROOFS_API_ENDPOINT: 'https://topcoder-dev-proofs-api.herokuapp.com/api/1.0',
     TELEMETRY: '',
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
@@ -177,12 +177,12 @@ export const PROD_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
-    SECURE_SESSION_HOST: 'http://example.com', // UPDATE AFTER DEPLOYMENT
+    PROOFS_API_ENDPOINT: '', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder.com',
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://api.topcoder.com/',
-    BIOMETERIC_VALIDATION_HOST: 'http://example.com' // UPDATE AFTER DEPLOYMENT
+    BIOMETERIC_VALIDATION_HOST: '' // UPDATE AFTER DEPLOYMENT
   }
 };
 

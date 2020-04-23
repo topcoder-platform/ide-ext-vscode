@@ -82,7 +82,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   private readonly secureSession: IListItem = {
    name: 'Secure Session',
    id: 'secure-session',
-   iconPath: '04-icon-how-to.svg' // FIXME
+   iconPath: '08-icon-secure-session.svg' // FIXME
   };
   private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
     new vscode.EventEmitter<IListItem | undefined>();
