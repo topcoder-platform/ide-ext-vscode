@@ -9,6 +9,7 @@ import AuthService from '../services/AuthService';
 import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
 import TelemetryService from '../services/TelemetryService';
+import { getEnv } from '../config';
 
 /**
  * Controller for handling challenge commands.
@@ -320,6 +321,11 @@ export default class ChallengeController {
         await this.downloadArtifact(submissionId, artifactId);
         break;
       }
+      case constants.webviewMessageActions.NAVIGATE_TO_CHALLENGE: {
+        const { challengeId } = message.data;
+        await this.navigateToChallenge(challengeId);
+        break;
+      }
     }
   }
 
@@ -390,6 +396,16 @@ export default class ChallengeController {
     } catch (err) {
       Notification.showErrorNotification(constants.cloningChallengeRepositoriesFailed);
     }
+  }
+
+  /**
+   * Opens the challenge page in the user's browser
+   * @param challengeId challenge identifier
+   *
+   */
+  private async navigateToChallenge(challengeId: string) {
+    const uri = vscode.Uri.parse(getEnv().URLS.TOPCODER + '/challenges/' + challengeId);
+    await vscode.commands.executeCommand('vscode.open', uri);
   }
 
   /**

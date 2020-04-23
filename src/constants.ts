@@ -1,12 +1,11 @@
 // Constants definition file
 
-export const missingUsernameMessage = 'Missing username. Configure your username in the settings screen.';
-export const missingPasswordMessage = 'Missing password. Configure your password in the settings screen.';
 export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
 export const authenticationFailedMessage = 'Failed to authenticate user. Please check your settings and try again.';
 export const tokenRefreshFailedMessage = 'Failed to refresh authentication token. Please login again.';
-export const loggingInMessage = 'Logging in user.';
-export const loggedInMessage = 'You are logged in.';
+export const sessionExpiredMessage = 'You took too long to login. Session expired.';
+export const accessDeniedMessage = 'Access denied. Login unsuccessful. Please try again.';
+export const loggedInMessage = 'You have logged in successfully';
 export const loggedOutMessage = 'Logged out.';
 export const loadingOpenChallengesMessage = 'Loading open challenges.';
 export const openChallengesLoadedMessage = 'Open challenges have been loaded.';
@@ -56,16 +55,16 @@ export const templateNotCloned = 'Template not cloned';
 export const loadReviewTypeInfoError = 'Failed to load review type';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
-export const usernameConfig = 'credentials.username';
-export const passwordConfig = 'credentials.password';
 export const useDevelopEndpoint = 'useDevelopEndpoint';
 export const shareTelemetryToTC = 'shareTelemetryToTC';
 
 export const tokenStateKey = 'TC_JWT_TOKEN';
+export const refreshTokenStateKey = 'TC_JWT_REFRESH_TOKEN';
 
 export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
+export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 
 export const gitRepoUrls = [
@@ -81,11 +80,14 @@ export const gitRepoUrls = [
  */
 export interface IENV {
   CLIENT_ID: string;
+  AUTH0_CLIENT_ID: string;
   CLIENT_V2CONNECTION: string;
   NAME: string;
   URLS: {
     AUTHN: string,
     AUTHZ: string,
+    AUTH_TOKEN: string,
+    DEVICE_AUTH: string,
     REFRESH_TOKEN: string,
     ACTIVATE_CHALLENGES: string,
     UPLOAD_SUBMISSION: string,
@@ -96,7 +98,9 @@ export interface IENV {
     SUBMISSION_ARTIFACTS: string,
     DOWNLOAD_SUBMISSION: string,
     TELEMETRY: string,
+    TOPCODER: string,
     REVIEW_TYPES: string,
+    AUTH_AUDIENCE: string,
   };
 }
 
@@ -105,10 +109,13 @@ export interface IENV {
  */
 export const DEV_ENV: IENV = {
   CLIENT_ID: 'JFDo7HMkf0q2CkVFHojy3zHWafziprhT',
+  AUTH0_CLIENT_ID: '1NpddnMe5M3r04W71F95wDZZTNubWl5u',
   CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Dev',
   URLS: {
     AUTHN: 'https://topcoder-dev.auth0.com/oauth/ro',
+    DEVICE_AUTH: 'https://topcoder-dev.auth0.com/oauth/device/code',
+    AUTH_TOKEN: 'https://topcoder-dev.auth0.com/oauth/token',
     AUTHZ: 'https://api.topcoder-dev.com/v3/authorizations',
     REFRESH_TOKEN: 'https://api.topcoder-dev.com/v3/authorizations/1',
     ACTIVATE_CHALLENGES: 'https://api.topcoder-dev.com/v4/challenges/?filter=status%3DACTIVE',
@@ -120,7 +127,9 @@ export const DEV_ENV: IENV = {
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
     TELEMETRY: '',
-    REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes'
+    TOPCODER: 'https://topcoder-dev.com',
+    REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
+    AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/'
   }
 };
 
@@ -129,11 +138,14 @@ export const DEV_ENV: IENV = {
  */
 export const PROD_ENV: IENV = {
   CLIENT_ID: '6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P',
+  AUTH0_CLIENT_ID: 'K3dYEUlU4Clj95RLIrQi7P9eIVl7U9SK',
   CLIENT_V2CONNECTION: 'TC-User-Database',
   NAME: 'Prod',
   URLS: {
     AUTHN: 'https://topcoder.auth0.com/oauth/ro',
     AUTHZ: 'https://api.topcoder.com/v3/authorizations',
+    DEVICE_AUTH: 'https://topcoder.auth0.com/oauth/device/code',
+    AUTH_TOKEN: 'https://topcoder.auth0.com/oauth/token',
     REFRESH_TOKEN: 'https://api.topcoder.com/v3/authorizations/1',
     ACTIVATE_CHALLENGES: 'https://api.topcoder.com/v4/challenges/?filter=status%3DACTIVE',
     UPLOAD_SUBMISSION: 'https://api.topcoder.com/v5',
@@ -144,7 +156,9 @@ export const PROD_ENV: IENV = {
     SUBMISSION_ARTIFACTS: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
     TELEMETRY: '',
-    REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes'
+    TOPCODER: 'https://topcoder.com',
+    REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
+    AUTH_AUDIENCE: 'https://api.topcoder.com/'
   }
 };
 
@@ -157,6 +171,9 @@ export const webviewMessageActions = {
   REGISTERED_FOR_CHALLENGE: 'REGISTERED_FOR_CHALLENGE',
   INITIALIZE_WORKSPACE: 'INITIALIZE_WORKSPACE',
   DOWNLOAD_ARTIFACT: 'DOWNLOAD_ARTIFACT',
+  NAVIGATE_TO_CHALLENGE: 'NAVIGATE_TO_CHALLENGE',
 
-  CLONE_REPOSITORY: 'CLONE_REPOSITORY'
+  CLONE_REPOSITORY: 'CLONE_REPOSITORY',
+
+  DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE'
 };
