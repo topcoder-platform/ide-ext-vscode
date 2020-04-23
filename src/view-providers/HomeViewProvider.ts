@@ -55,12 +55,12 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   private readonly loginItem: IListItem = {
     name: 'Login',
     id: 'login',
-    iconPath: '04-icon-how-to.svg' // FIXME
+    iconPath: '09-icon-login.svg'
   };
   private readonly logoutItem: IListItem = {
     name: 'Logout',
     id: 'logout',
-    iconPath: '04-icon-how-to.svg' // FIXME
+    iconPath: '10-icon-logout.svg'
   };
   private readonly activeChallengesItem: IListItem = {
     name: 'Active Challenges',
@@ -70,12 +70,12 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   private readonly reportProblem: IListItem = {
     name: 'Report a Problem',
     id: 'report-problem',
-    iconPath: '04-icon-how-to.svg' // FIXME
+    iconPath: '07-icon-report-problem.svg'
   };
   private readonly configureSettings: IListItem = {
     name: 'Configure Settings',
     id: 'configure-settings',
-    iconPath: '04-icon-how-to.svg' // FIXME
+    iconPath: '06-icon-configure-settings.svg'
   };
 
   private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
