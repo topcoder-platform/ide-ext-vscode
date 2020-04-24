@@ -8,7 +8,7 @@ import * as constants from '../constants';
 import SessionService from '../services/SessionService';
 import Html from '../helpers/Html';
 import * as path from 'path';
-import { proofEvent } from '../interfaces'
+import { IProofEvent } from '../interfaces';
 
 // tslint:disable-next-line: no-var-requires
 const NodeWebcam = require('node-webcam');
@@ -209,12 +209,12 @@ export default class SecretSessionController {
       const photoPath = path.join(this.context.extensionPath, 'images',
         constants.TEMP_PERIODIC_IMAGE_NAME);
       const image = await this.takePhotoFromWebCam(photoPath);
-      const proof: proofEvent = {
+      const proof: IProofEvent = {
         sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
         deviceId: '1497d519-1ba8-456c-90f2-dc1b7527c328', // TODO - change this value to be read off api
         proofType: ['Identity'],
         idProof: image
-      }
+      };
       if (photoPath !== undefined) {
         await SessionService.verifyBioid(token, photoPath, proof);
       }

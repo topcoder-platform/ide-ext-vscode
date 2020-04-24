@@ -5,7 +5,7 @@ import * as FormData from 'form-data';
 import * as constants from '../constants';
 import { getEnv } from '../config';
 import { AuthTokenDecoder, IDecodedToken } from '../helpers/Decoding';
-import { proofEvent } from '../interfaces'
+import { IProofEvent } from '../interfaces';
 
 export default class SessionService {
   /**
@@ -36,7 +36,7 @@ export default class SessionService {
    * @param proof The proof event object to submit after successful verification
    * @return boolean
    */
-  public static async verifyBioid(token: string, imagePath: string, proof: proofEvent) {
+  public static async verifyBioid(token: string, imagePath: string, proof: IProofEvent) {
     const formData = new FormData();
     const url = getEnv().URLS.BIOMETRIC_API_ENDPOINT + `/bioid/verify`;
     formData.append('image', fs.createReadStream(imagePath));
@@ -48,7 +48,7 @@ export default class SessionService {
     });
     // TODO - if biometrics fails, should we still submit proof?
     // Every biometric
-    await this.submitProof(token, proof)
+    await this.submitProof(token, proof);
     return data.Success;
   }
 
@@ -139,12 +139,12 @@ export default class SessionService {
   /**
    * Submits the proof event
    * @param token The auth token for the endpoint
-   * @param proofEvent The proof event to submit
+   * @param proof The proof event to submit
    */
-  private static async submitProof(token: string, proofEvent: proofEvent) {
+  private static async submitProof(token: string, proof: IProofEvent) {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/proofEvents`;
     try {
-      await axios.post(url, proofEvent, {
+      await axios.post(url, proof, {
         headers: { Authorization: `Bearer ${token}` }
       });
     } catch (err) {

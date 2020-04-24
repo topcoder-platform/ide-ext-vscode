@@ -76,7 +76,7 @@ export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 export const secureSessionStartPageTitle = 'Topcoder Secure Session: Pairing';
 export const generatingSecureSession = 'Generating secure session';
-export const completingEnrollment = 'Completing enrollment. Please wait..'
+export const completingEnrollment = 'Completing enrollment. Please wait..';
 export const biometricSessionPageTitle = 'Topcoder: Biometric Enrollment';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
