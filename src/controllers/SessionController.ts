@@ -8,6 +8,7 @@ import * as constants from '../constants';
 import SessionService from '../services/SessionService';
 import Html from '../helpers/Html';
 import * as path from 'path';
+import { proofEvent } from '../interfaces'
 
 // tslint:disable-next-line: no-var-requires
 const NodeWebcam = require('node-webcam');
@@ -86,7 +87,7 @@ export default class SecretSessionController {
     }
   }
   /**
-   * Display on going session
+   * Display ongoing session
    */
   private async displayOnGoingSession() {
     const token = await AuthService.updateTokenGlobalState(this.context);
@@ -156,16 +157,17 @@ export default class SecretSessionController {
         break;
       }
       case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETE: {
-        const userToken = await AuthService.updateTokenGlobalState(this.context);
+        const token = await AuthService.updateTokenGlobalState(this.context);
         const imagePath = path.join(this.context.extensionPath, 'images', constants.TEMP_IMAGE_NAME);
-        const isEnrolled = await SessionService.enrollBioid(this.getBioIdAuthToken(), userToken, imagePath);
+        Notification.showInfoNotification(constants.completingEnrollment);
+        const isEnrolled = await SessionService.enrollBioid(token, imagePath);
         this.context.globalState.update(constants.activeSessionKey, isEnrolled);
         if (isEnrolled) {
           this.pairingWebviewPanel!.webview.postMessage({
             command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETED
           });
           if (this.hasOnGoingSession) {
-            this.takePhotoPeriodically(this.getBioIdAuthToken(), userToken);
+            this.takePhotoPeriodically(token);
           }
         } else {
           // Displays Error Notification if enrollment fails
@@ -188,9 +190,9 @@ export default class SecretSessionController {
       case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_END_SESSION: {
         // clear the session
         const sessionId = this.context.globalState.get(constants.sessionIdKey);
-        const userToken = await AuthService.updateTokenGlobalState(this.context);
+        const token = await AuthService.updateTokenGlobalState(this.context);
         clearInterval(this.verifyBioIdInterval);
-        SessionService.closeSession(userToken, sessionId);
+        SessionService.closeSession(token, sessionId);
         this.hasOnGoingSession = false;
         this.pairingWebviewPanel!.dispose();
         this.context.globalState.update(constants.activeSessionKey, false);
@@ -198,23 +200,23 @@ export default class SecretSessionController {
     }
   }
 
-  // Function to get token for BioID API
-  private getBioIdAuthToken() {
-    return 'sample-token';
-  }
-
   /**
    * This function will take the photos and send it to verify endpoint periodically
-   * @param token bearer token for BioId API authentication
-   * @param userToken bearer token for proofs API authentication
+   * @param token Authorization token for api endpoints
    */
-  private takePhotoPeriodically(token: string, userToken: string) {
+  private takePhotoPeriodically(token: string) {
     this.verifyBioIdInterval = setInterval(async () => {
       const photoPath = path.join(this.context.extensionPath, 'images',
         constants.TEMP_PERIODIC_IMAGE_NAME);
-      await this.takePhotoFromWebCam(photoPath);
+      const image = await this.takePhotoFromWebCam(photoPath);
+      const proof: proofEvent = {
+        sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
+        deviceId: '1497d519-1ba8-456c-90f2-dc1b7527c328', // TODO - change this value to be read off api
+        proofType: ['Identity'],
+        idProof: image
+      }
       if (photoPath !== undefined) {
-        await SessionService.verifyBioid(token, userToken, photoPath);
+        await SessionService.verifyBioid(token, photoPath, proof);
       }
     }, constants.BIOID_VERIFY_INTERVAL);
   }

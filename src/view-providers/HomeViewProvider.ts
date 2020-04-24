@@ -182,8 +182,8 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
             this.activeChallengesItem,
             this.reportProblem,
             this.configureSettings,
-            token ? this.logoutItem : this.loginItem,
-            this.secureSession
+            this.secureSession,
+            token ? this.logoutItem : this.loginItem
           ]);
         });
       });

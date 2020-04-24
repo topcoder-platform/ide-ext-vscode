@@ -76,6 +76,7 @@ export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 export const secureSessionStartPageTitle = 'Topcoder Secure Session: Pairing';
 export const generatingSecureSession = 'Generating secure session';
+export const completingEnrollment = 'Completing enrollment. Please wait..'
 export const biometricSessionPageTitle = 'Topcoder: Biometric Enrollment';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
@@ -87,6 +88,7 @@ export const SECRET_SESSION_STATUS_POOL_ERROR = 'Failed to get session status.';
 // Time values for secure session (in milliseconds)
 export const SECURE_SESSION_POOL_INTERVAL = 15000;
 export const SECURE_SESSION_TIMEOUT = 300000;
+// Setting bio id interval too low will cause an error with QLDB where it is not able to commit the transaction in time
 export const BIOID_VERIFY_INTERVAL = 20000;
 
 export const TEMP_IMAGE_NAME = 'enrollment.jpg';

@@ -82,7 +82,7 @@ export default class Html {
           <title>${constants.secureSessionStartPageTitle}</title>
           <style>
             h1, h2 {text-align: center;}
-            img {display: block; margin: 15px auto; }
+            img {display: block; margin: 15px auto; width: 200px; height: 200px; }
             h2 {margin: 30px 10px;}
             #error-box {color: orangered; }
             #success { display: none; }
@@ -162,6 +162,7 @@ export default class Html {
             #camera-detected { display: none; }
             #camera-not-detected { display: none; }
             #image-captured { display: none; }
+            .capture {width: 350px; height: 350px; display: block; margin: 15px auto; }
             #enrollment-completed { display: none; }
             button { margin: 0 auto; display: block;}
           </style>
@@ -179,7 +180,7 @@ export default class Html {
                 <button onClick=onTryAgainClick()>Try Again</button>
             </div>
             <div id="image-captured">
-                <img src="${capturedImage}?${this.getNonce()}"/>
+                <img src="${capturedImage}?${this.getNonce()}" class="capture"/>
                 <p>Have we captured it correctly? If yes kindly proceed. Else you can capture another snapshot.</p>
                 <div style="width: 100%; text-align: center;">
                   <button style="display: inline-block;" onClick=onCaptureAndRecaptureClick()>Capture Again</button>
@@ -187,7 +188,7 @@ export default class Html {
                 </div>
             </div>
             <div id="enrollment-completed">
-                <img src="${capturedImage}?${this.getNonce()}"/>
+                <img src="${capturedImage}?${this.getNonce()}" class="capture"/>
                 <p>You have enrolled successfully. You can now close this page.</p>
                 <p>The extension will periodically send your photo to our servers. This is needed for Biometric Verification. Thus, ensure that you follow the same practices as mentioned above:</p>
                 <ul>

@@ -1,10 +1,11 @@
 import * as _ from 'lodash';
 import axios from 'axios';
 import * as fs from 'fs-extra';
+import * as FormData from 'form-data';
 import * as constants from '../constants';
 import { getEnv } from '../config';
 import { AuthTokenDecoder, IDecodedToken } from '../helpers/Decoding';
-import * as FormData from 'form-data';
+import { proofEvent } from '../interfaces'
 
 export default class SessionService {
   /**
@@ -32,36 +33,39 @@ export default class SessionService {
    * This method will send a POST request to BioID verify endpoint
    * @param token bearer token for BioID API authentication
    * @param imagePath imagePath of the image which needs to be sent
+   * @param proof The proof event object to submit after successful verification
    * @return boolean
    */
-  public static async verifyBioid(token: string, userToken: string, imagePath: string) {
+  public static async verifyBioid(token: string, imagePath: string, proof: proofEvent) {
     const formData = new FormData();
     const url = getEnv().URLS.BIOMETRIC_API_ENDPOINT + `/bioid/verify`;
     formData.append('image', fs.createReadStream(imagePath));
     const { data } = await axios.post(url, formData, {
       headers: _.merge(formData.getHeaders(), { Authorization: `Bearer ${token}`}),
       params: {
-        bcid: this.generateBcid(userToken)
+        bcid: this.generateBcid(token)
       }
     });
+    // TODO - if biometrics fails, should we still submit proof?
+    // Every biometric
+    await this.submitProof(token, proof)
     return data.Success;
   }
 
   /**
    * This method will send a POST request to BioID enroll endpoint
    * @param token bearer token for BioID API authentication
-   * @param userToken bearer token for authentication for proofsAPI
    * @param imagePath imagePath of the image which needs to be sent
    * @return boolean
    */
-  public static async enrollBioid(token: string, userToken: string, imagePath: string) {
+  public static async enrollBioid(token: string, imagePath: string) {
     const formData = new FormData();
     const url = getEnv().URLS.BIOMETRIC_API_ENDPOINT + `/bioid/enroll`;
     formData.append('image', fs.createReadStream(imagePath));
     const { data } = await axios.post(url, formData, {
       headers: _.merge(formData.getHeaders(), { Authorization: `Bearer ${token}`}),
       params: {
-        bcid: this.generateBcid(userToken)
+        bcid: this.generateBcid(token)
       }
     });
     return data.Success;
@@ -120,16 +124,32 @@ export default class SessionService {
       console.error(err);
       throw err;
     }
-
   }
 
   /**
    * Generates BCID from userId
-   * @param userToken bearer authentication token
+   * @param token bearer authentication token
    * @return bcid string
    */
-  private static generateBcid(userToken: string) {
-    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(userToken);
+  private static generateBcid(token: string) {
+    const decodedToken: IDecodedToken = AuthTokenDecoder.decode(token);
     return constants.BCID_PREFIX + decodedToken.userId;
+  }
+
+  /**
+   * Submits the proof event
+   * @param token The auth token for the endpoint
+   * @param proofEvent The proof event to submit
+   */
+  private static async submitProof(token: string, proofEvent: proofEvent) {
+    const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/proofEvents`;
+    try {
+      await axios.post(url, proofEvent, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch (err) {
+      console.error(err);
+      // TODO - what should happen if proofs are not submitted successfully
+    }
   }
 }
