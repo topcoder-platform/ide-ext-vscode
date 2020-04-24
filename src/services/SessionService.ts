@@ -16,7 +16,7 @@ export default class SessionService {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + '/sessions';
     try {
       const { data } = await axios.post(url, {
-        status: [constants.sessionPairingStatus]
+        status: constants.sessionPairingStatus
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -81,7 +81,7 @@ export default class SessionService {
   public static async closeSession(token: string, sessionId: any) {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
     const { data } = await axios.patch(url, {
-      status: [constants.sessionClosedStatus]
+      status: constants.sessionClosedStatus
     }, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -100,7 +100,7 @@ export default class SessionService {
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      return data.status.includes(constants.sessionActiveStatus);
+      return data.status === constants.sessionActiveStatus;
     } catch (err) {
       console.error(err);
       throw err;
@@ -116,7 +116,7 @@ export default class SessionService {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
     try {
       const { data } = await axios.patch(url, {
-        status: [constants.sessionTimedOutStatus]
+        status: constants.sessionTimedOutStatus
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
