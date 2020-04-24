@@ -27,10 +27,10 @@ export default class SecretSessionController {
     height: 720,
     quality: 100,
     delay: 0,
-    saveShots: true,
+    saveShots: false,
     output: 'jpeg',
     device: false,
-    callbackReturn: 'location',
+    callbackReturn: 'base64',
     verbose: false
   };
   constructor(private context: vscode.ExtensionContext) { }
@@ -246,16 +246,12 @@ export default class SecretSessionController {
    * @return imagePath or undefined
    */
   private takePhotoFromWebCam = async (imagePath: string): Promise<any> => {
-    return new Promise((res, reject) => {
+    return new Promise((resolve, reject) => {
       NodeWebcam.capture(imagePath, this.opts, (err: any, data: any) => {
-        try {
-          if (data) {
-            res(imagePath);
-          } else {
-            res(undefined);
-          }
-        } catch {
+        if (err) {
           reject(err);
+        } else {
+          resolve(data);
         }
       });
     });

@@ -120,7 +120,7 @@ export interface IENV {
     TOPCODER: string,
     REVIEW_TYPES: string,
     AUTH_AUDIENCE: string,
-    BIOMETERIC_VALIDATION_HOST: string
+    BIOMETRIC_API_ENDPOINT: string
   };
 }
 
@@ -150,7 +150,7 @@ export const DEV_ENV: IENV = {
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
-    BIOMETERIC_VALIDATION_HOST: '' // UPDATE AFTER DEPLOYMENT
+    BIOMETRIC_API_ENDPOINT: 'https://polar-mountain-65096.herokuapp.com' // UPDATE AFTER DEPLOYMENT
   }
 };
 
@@ -180,7 +180,7 @@ export const PROD_ENV: IENV = {
     TOPCODER: 'https://topcoder.com',
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://api.topcoder.com/',
-    BIOMETERIC_VALIDATION_HOST: '' // UPDATE AFTER DEPLOYMENT
+    BIOMETRIC_API_ENDPOINT: '' // UPDATE AFTER DEPLOYMENT
   }
 };
 

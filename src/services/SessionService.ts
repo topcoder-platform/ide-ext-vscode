@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import axios from 'axios';
+import * as fs from 'fs-extra';
 import * as constants from '../constants';
 import { getEnv } from '../config';
 import { AuthTokenDecoder, IDecodedToken } from '../helpers/Decoding';
@@ -16,7 +17,7 @@ export default class SessionService {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + '/sessions';
     try {
       const { data } = await axios.post(url, {
-        status: [constants.sessionPairingStatus]
+        status: constants.sessionPairingStatus
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -35,13 +36,10 @@ export default class SessionService {
    */
   public static async verifyBioid(token: string, userToken: string, imagePath: string) {
     const formData = new FormData();
-    const url = getEnv().URLS.BIOMETERIC_VALIDATION_HOST + `/bioid/verify`;
-    formData.append('image', imagePath);
+    const url = getEnv().URLS.BIOMETRIC_API_ENDPOINT + `/bioid/verify`;
+    formData.append('image', fs.createReadStream(imagePath));
     const { data } = await axios.post(url, formData, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
-      },
+      headers: _.merge(formData.getHeaders(), { Authorization: `Bearer ${token}`}),
       params: {
         bcid: this.generateBcid(userToken)
       }
@@ -58,13 +56,10 @@ export default class SessionService {
    */
   public static async enrollBioid(token: string, userToken: string, imagePath: string) {
     const formData = new FormData();
-    const url = getEnv().URLS.BIOMETERIC_VALIDATION_HOST + `/bioid/enroll`;
-    formData.append('image', imagePath);
+    const url = getEnv().URLS.BIOMETRIC_API_ENDPOINT + `/bioid/enroll`;
+    formData.append('image', fs.createReadStream(imagePath));
     const { data } = await axios.post(url, formData, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
-      },
+      headers: _.merge(formData.getHeaders(), { Authorization: `Bearer ${token}`}),
       params: {
         bcid: this.generateBcid(userToken)
       }
@@ -81,7 +76,7 @@ export default class SessionService {
   public static async closeSession(token: string, sessionId: any) {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
     const { data } = await axios.patch(url, {
-      status: [constants.sessionClosedStatus]
+      status: constants.sessionClosedStatus
     }, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -100,7 +95,7 @@ export default class SessionService {
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      return data.status.includes(constants.sessionActiveStatus);
+      return data.status === constants.sessionActiveStatus;
     } catch (err) {
       console.error(err);
       throw err;
@@ -116,7 +111,7 @@ export default class SessionService {
     const url = getEnv().URLS.PROOFS_API_ENDPOINT + `/sessions/${sessionId}`;
     try {
       const { data } = await axios.patch(url, {
-        status: [constants.sessionTimedOutStatus]
+        status: constants.sessionTimedOutStatus
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });

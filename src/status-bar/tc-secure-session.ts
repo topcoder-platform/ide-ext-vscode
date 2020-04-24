@@ -11,11 +11,11 @@ import * as constants from '../constants';
  */
 export default function create(context: vscode.ExtensionContext): vscode.StatusBarItem {
   const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 50);
-  item.tooltip = 'Current session status of Topcoder Extension';
+  item.tooltip = 'You have successfully set up a Topcoder Secure Session';
 
   const update = () => {
     if (context.globalState.get(constants.activeSessionKey)) {
-      item.text = `Secure Session: Active`;
+      item.text = `Topcoder Secure Session: Active`;
     } else {
       item.text = ``;
     }
