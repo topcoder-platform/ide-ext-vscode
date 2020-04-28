@@ -3,7 +3,7 @@ import * as nock from 'nock';
 import * as url from 'url';
 import { getEnv} from '../../config';
 import { oauthToken, pairingSession, activatedSession } from './testData';
-import SessionService from '../../services/SessionService';
+import ProofsService from '../../services/ProofsService';
 import * as assert from 'assert';
 
 suite('Session Service tests', () => {
@@ -35,22 +35,22 @@ suite('Session Service tests', () => {
       nock.cleanAll();
    });
    test('generateSecureSessionId() should create new session', async () => {
-     const createdSession = await SessionService.generateSecureSessionId(oauthToken.access_token);
+     const createdSession = await ProofsService.generateSecureSessionId(oauthToken.access_token);
      expect(createdSession).to.be.equal(pairingSession.id);
    });
    test('checkForStatusUpdate() should return Available status', async () => {
-      const isActive = await SessionService.checkForStatusUpdate(oauthToken.access_token, pairingSession.id);
+      const isActive = await ProofsService.checkForStatusUpdate(oauthToken.access_token, pairingSession.id);
       expect(isActive).to.be.true; // tslint:disable-line:no-unused-expression
    });
    test('checkForStatusUpdate() should return 404 if session does not exists', async () => {
-      assert.rejects(async () => await SessionService.checkForStatusUpdate(oauthToken.access_token, '2043'));
+      assert.rejects(async () => await ProofsService.checkForStatusUpdate(oauthToken.access_token, '2043'));
    });
    test('timeOutPairingSession() should change status to Timed Out', async () => {
-    const statusUpdate = await SessionService.timeOutPairingSession(oauthToken.access_token, pairingSession.id);
+    const statusUpdate = await ProofsService.timeOutPairingSession(oauthToken.access_token, pairingSession.id);
     expect(statusUpdate.status).to.be.equal('Timed-Out');
    });
    test('closeSession() should change status to Closed', async () => {
-    const statusUpdate = await SessionService.closeSession(oauthToken.access_token, pairingSession.id);
+    const statusUpdate = await ProofsService.closeSession(oauthToken.access_token, pairingSession.id);
     expect(statusUpdate.status).to.be.equal('Closed');
    });
   //  TODO - update test once we stabilize the code

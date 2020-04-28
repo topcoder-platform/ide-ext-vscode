@@ -5,7 +5,8 @@ import { getEnv } from '../config';
 import AuthService from '../services/AuthService';
 import Notification from '../helpers/Notification';
 import * as constants from '../constants';
-import SessionService from '../services/SessionService';
+import ProofsService from '../services/ProofsService';
+import BioIdService from '../services/BioIdService';
 import Html from '../helpers/Html';
 import * as path from 'path';
 import { IProofEvent } from '../interfaces';
@@ -66,7 +67,7 @@ export default class SecretSessionController {
       }
       Notification.showInfoNotification(constants.generatingSecureSession);
       // Start session and get its id
-      const sessionId = await SessionService.generateSecureSessionId(token);
+      const sessionId = await ProofsService.generateSecureSessionId(token);
       this.context.globalState.update(constants.sessionIdKey, sessionId);
       if (!this.pairingWebviewPanel) {
         this.pairingWebviewPanel = this.makeWebViewAvailable(constants.secureSessionStartPageTitle);
@@ -160,18 +161,13 @@ export default class SecretSessionController {
         const token = await AuthService.updateTokenGlobalState(this.context);
         const imagePath = path.join(this.context.extensionPath, 'images', constants.TEMP_IMAGE_NAME);
         Notification.showInfoNotification(constants.completingEnrollment);
-        const isEnrolled = await SessionService.enrollBioid(token, imagePath);
-        this.context.globalState.update(constants.activeSessionKey, isEnrolled);
-        if (isEnrolled) {
-          this.pairingWebviewPanel!.webview.postMessage({
-            command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETED
-          });
-          if (this.hasOnGoingSession) {
-            this.takePhotoPeriodically(token);
-          }
-        } else {
-          // Displays Error Notification if enrollment fails
-          Notification.showErrorNotification(constants.enrollmentFailedMessage);
+        await BioIdService.enrollBioid(token, imagePath);
+        this.context.globalState.update(constants.activeSessionKey, true);
+        this.pairingWebviewPanel!.webview.postMessage({
+          command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETED
+        });
+        if (this.hasOnGoingSession) {
+          this.takePhotoPeriodically(token);
         }
         break;
       }
@@ -192,7 +188,7 @@ export default class SecretSessionController {
         const sessionId = this.context.globalState.get(constants.sessionIdKey);
         const token = await AuthService.updateTokenGlobalState(this.context);
         clearInterval(this.verifyBioIdInterval);
-        SessionService.closeSession(token, sessionId);
+        ProofsService.closeSession(token, sessionId);
         this.hasOnGoingSession = false;
         this.pairingWebviewPanel!.dispose();
         this.context.globalState.update(constants.activeSessionKey, false);
@@ -216,7 +212,7 @@ export default class SecretSessionController {
         idProof: image
       };
       if (photoPath !== undefined) {
-        await SessionService.verifyBioid(token, photoPath, proof);
+        await BioIdService.verifyBioid(token, photoPath, proof);
       }
     }, constants.BIOID_VERIFY_INTERVAL);
   }
@@ -272,10 +268,10 @@ export default class SecretSessionController {
       }
       await clearInterval(this.poolingInterval);
       let command = '';
-      if (await SessionService.checkForStatusUpdate(token, sessionId)) {
+      if (await ProofsService.checkForStatusUpdate(token, sessionId)) {
         command = constants.webviewMessageActions.SESSION_CREATED;
       } else {
-        await SessionService.timeOutPairingSession(token, sessionId);
+        await ProofsService.timeOutPairingSession(token, sessionId);
         command = constants.webviewMessageActions.SESSION_CREATION_TIMED_OUT;
       }
       await this.pairingWebviewPanel!.webview.postMessage({ command });
@@ -296,7 +292,7 @@ export default class SecretSessionController {
       }
       if (this.hasPendingCheck) { return; }
       this.hasPendingCheck = true;
-      if (await SessionService.checkForStatusUpdate(token, sessionId)) {
+      if (await ProofsService.checkForStatusUpdate(token, sessionId)) {
         await this.pairingWebviewPanel!.webview
           .postMessage({ command: constants.webviewMessageActions.SESSION_CREATED });
         this.removeTimeout();

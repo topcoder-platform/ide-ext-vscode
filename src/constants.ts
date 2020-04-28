@@ -62,7 +62,6 @@ export const useDevelopEndpoint = 'useDevelopEndpoint';
 export const shareTelemetryToTC = 'shareTelemetryToTC';
 
 export const imageCapturedFailedMessage = 'Image Could Not Be Captured';
-export const enrollmentFailedMessage = 'Enrollment unsuccessful';
 
 export const tokenStateKey = 'TC_JWT_TOKEN';
 export const refreshTokenStateKey = 'TC_JWT_REFRESH_TOKEN';
@@ -93,7 +92,7 @@ export const BIOID_VERIFY_INTERVAL = 20000;
 
 export const TEMP_IMAGE_NAME = 'enrollment.jpg';
 export const TEMP_PERIODIC_IMAGE_NAME = 'verification.jpg';
-export const BCID_PREFIX = 'bws/1182/';
+export const BCID_PREFIX = 'bws/11757/';
 
 /**
  * Interface of a constant set, which fully defines a Topcoder environment
@@ -152,7 +151,7 @@ export const DEV_ENV: IENV = {
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
-    BIOMETRIC_API_ENDPOINT: 'https://polar-mountain-65096.herokuapp.com' // UPDATE AFTER DEPLOYMENT
+    BIOMETRIC_API_ENDPOINT: 'https://topcoder-dev-bioid-proxy-api.herokuapp.com/v5'
   }
 };
 
