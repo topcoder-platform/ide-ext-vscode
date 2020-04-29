@@ -67,6 +67,8 @@ export const tokenStateKey = 'TC_JWT_TOKEN';
 export const refreshTokenStateKey = 'TC_JWT_REFRESH_TOKEN';
 export const sessionIdKey = 'TC_SESSION_ID';
 export const activeSessionKey = 'TC_SESSION_ACTIVE';
+export const deviceIdKey = 'DEVICE_ID';
+export const deviceType = 'ide';
 
 export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
@@ -123,6 +125,12 @@ export interface IENV {
     AUTH_AUDIENCE: string,
     BIOMETRIC_API_ENDPOINT: string
   };
+  PROFILEKEYS: {
+    USERID: string,
+    EMAIL: string,
+    HANDLE: string,
+    ROLES: string
+  };
 }
 
 /**
@@ -152,6 +160,12 @@ export const DEV_ENV: IENV = {
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
     BIOMETRIC_API_ENDPOINT: 'https://topcoder-dev-bioid-proxy-api.herokuapp.com/v5'
+  },
+  PROFILEKEYS: {
+    USERID: 'https://topcoder-dev-test.com/userId',
+    EMAIL: 'https://topcoder-dev-test.com/email',
+    HANDLE: 'https://topcoder-dev-test.com/handle',
+    ROLES: 'https://topcoder-dev-test.com/roles'
   }
 };
 
@@ -182,6 +196,12 @@ export const PROD_ENV: IENV = {
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://api.topcoder.com/',
     BIOMETRIC_API_ENDPOINT: '' // UPDATE AFTER DEPLOYMENT
+  },
+  PROFILEKEYS: {
+    USERID: '',
+    EMAIL: '',
+    HANDLE: '',
+    ROLES: ''
   }
 };
 

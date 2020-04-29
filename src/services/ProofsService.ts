@@ -1,11 +1,13 @@
+import * as vscode from 'vscode';
 import axios from 'axios';
 import * as constants from '../constants';
 import { getEnv } from '../config';
 import { IProofEvent } from '../interfaces';
+import AuthService from './AuthService';
 
 const proofsEndpoint = getEnv().URLS.PROOFS_API_ENDPOINT;
 
-export default class SessionService {
+export default class ProofsService {
   /**
    * Create a new secure session
    * @param token user's access token
@@ -116,6 +118,66 @@ export default class SessionService {
       console.error(error);
       // TODO - what should happen if proof event creation is not a success
       throw error;
+    }
+  }
+
+  public static async getDeviceId(context: vscode.ExtensionContext, token: string) {
+    let url;
+    let data;
+    // Check if we have the device id in the global state
+    const deviceId = context.globalState.get(constants.deviceIdKey, '');
+
+    if (!deviceId) {
+      // Check if the user has previously registered this device
+      const handle = AuthService.getUserAttribute(context, getEnv().PROFILEKEYS.HANDLE);
+
+      url = `${proofsEndpoint}/devices?name=${handle}&type=${constants.deviceType}`;
+
+      try {
+        const response = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        data = response.data;
+      } catch (error) {
+        console.error(error);
+
+        // TODO - what should happen if we are not able to fetch the device id
+        throw error;
+      }
+
+      if (data.length > 0) {
+        // Store the device id in the global session
+        context.globalState.update(constants.deviceIdKey, data[0].id);
+        return data[0].id;
+      } else {
+        // No device exists. Create one
+        const device = {
+          name: handle,
+          type: constants.deviceType
+        };
+
+        url = `${proofsEndpoint}/devices`;
+
+        try {
+          const response = await axios.post(url, device, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          data = response.data;
+        } catch (error) {
+          console.error(error);
+
+          // TODO - what should happen if we are not able to register the device
+          throw error;
+        }
+
+        // Store the device id in the global session
+        context.globalState.update(constants.deviceIdKey, data.id);
+        return data.id;
+      }
+    } else {
+      return deviceId;
     }
   }
 }

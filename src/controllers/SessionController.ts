@@ -205,9 +205,10 @@ export default class SecretSessionController {
       const photoPath = path.join(this.context.extensionPath, 'images',
         constants.TEMP_PERIODIC_IMAGE_NAME);
       const image = await this.takePhotoFromWebCam(photoPath);
+      const deviceId = await ProofsService.getDeviceId(this.context, token);
       const proof: IProofEvent = {
         sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
-        deviceId: '1497d519-1ba8-456c-90f2-dc1b7527c328', // TODO - change this value to be read off api
+        deviceId,
         proofType: ['Identity'],
         idProof: image
       };

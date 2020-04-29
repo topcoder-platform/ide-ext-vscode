@@ -6,7 +6,7 @@ import { oauthToken, pairingSession, activatedSession } from './testData';
 import ProofsService from '../../services/ProofsService';
 import * as assert from 'assert';
 
-suite('Session Service tests', () => {
+suite('Proofs Service tests', () => {
    suiteSetup(() => {
       const env = getEnv();
       const sessionUrl = env.URLS.PROOFS_API_ENDPOINT;

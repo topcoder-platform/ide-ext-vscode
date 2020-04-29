@@ -193,4 +193,15 @@ export default class AuthService {
 
     return !(decodedToken.exp > (nowInSeconds + offsetSeconds));
   }
+
+  /**
+   * Returns the value for the requested attribute
+   * @param name The attribute name
+   */
+  public static getUserAttribute(context: vscode.ExtensionContext, name: string) {
+    const token = this.getSavedToken(context);
+    const decodedToken: any = jwt.decode(token);
+
+    return decodedToken[name];
+  }
 }
