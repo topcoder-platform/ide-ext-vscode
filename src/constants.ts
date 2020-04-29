@@ -66,7 +66,7 @@ export const imageCapturedFailedMessage = 'Image Could Not Be Captured';
 export const tokenStateKey = 'TC_JWT_TOKEN';
 export const refreshTokenStateKey = 'TC_JWT_REFRESH_TOKEN';
 export const sessionIdKey = 'TC_SESSION_ID';
-export const activeSessionKey = 'TC_SESSION_ACTIVE';
+export const secureSessionsKey = 'SECURE_SESSION';
 export const deviceIdKey = 'DEVICE_ID';
 export const deviceType = 'ide';
 
@@ -75,10 +75,10 @@ export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
-export const secureSessionStartPageTitle = 'Topcoder Secure Session: Pairing';
+export const secureSessionStartPageTitle = 'Topcoder: Secure Session';
 export const generatingSecureSession = 'Generating secure session';
-export const completingEnrollment = 'Completing enrollment. Please wait..';
-export const biometricSessionPageTitle = 'Topcoder: Biometric Enrollment';
+export const submitForVerification = 'Submiting for verification. Please wait..';
+export const biometricSessionPageTitle = 'Topcoder: Biometric Verification';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
   'https://github.com/topcoderinc/Topcoder-StarterPack_Ionic',
@@ -92,8 +92,7 @@ export const SECURE_SESSION_TIMEOUT = 300000;
 // Setting bio id interval too low will cause an error with QLDB where it is not able to commit the transaction in time
 export const BIOID_VERIFY_INTERVAL = 20000;
 
-export const TEMP_IMAGE_NAME = 'enrollment.jpg';
-export const TEMP_PERIODIC_IMAGE_NAME = 'verification.jpg';
+export const BIOMETRIC_IMAGE_NAME = 'verification.jpg';
 export const BCID_PREFIX = 'bws/11757/';
 
 /**
@@ -223,14 +222,14 @@ export const webviewMessageActions = {
   SESSION_CREATION_FAILED: 'SESSION_CREATION_FAILED',
   SESSION_PAIRING_START: 'SESSION_PAIRING_START',
   DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE',
-  BIOMETRIC_ENROLLMENT_CAMERA_DETECTED: 'BIOMETRIC_ENROLLMENT_CAMERA_DETECTED',
-  BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED: 'BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED',
-  BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED: 'BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED',
-  BIOMETRIC_ENROLLMENT_COMPLETED: 'BIOMETRIC_ENROLLMENT_COMPLETED',
-  BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE: 'BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE',
-  BIOMETRIC_ENROLLMENT_COMPLETE: 'BIOMETRIC_ENROLLMENT_COMPLETE',
-  BIOMETRIC_ENROLLMENT_REDETECT_CAMERA: 'BIOMETRIC_ENROLLMENT_REDETECT_CAMERA',
-  BIOMETRIC_ENROLLMENT_CLOSE_WINDOW: 'BIOMETRIC_ENROLLMENT_CLOSE_WINDOW',
-  PROCEED_TO_BIOMETERIC_ENROLLMENT: 'PROCEED_TO_BIOMETERIC_ENROLLMENT',
-  BIOMETRIC_ENROLLMENT_END_SESSION: 'BIOMETRIC_ENROLLMENT_END_SESSION'
+  BIOMETRIC_VERIFICATION_CAMERA_DETECTED: 'BIOMETRIC_VERIFICATION_CAMERA_DETECTED',
+  BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED: 'BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED',
+  BIOMETRIC_VERIFICATION_IMAGE_CAPTURED: 'BIOMETRIC_VERIFICATION_IMAGE_CAPTURED',
+  BIOMETRIC_VERIFICATION_COMPLETED: 'BIOMETRIC_VERIFICATION_COMPLETED',
+  BIOMETRIC_VERIFICATION_CAPTURE_IMAGE: 'BIOMETRIC_VERIFICATION_CAPTURE_IMAGE',
+  BIOMETRIC_COMPLETE_VERIFICATION: 'BIOMETRIC_COMPLETE_VERIFICATION',
+  BIOMETRIC_VERIFICATION_REDETECT_CAMERA: 'BIOMETRIC_VERIFICATION_REDETECT_CAMERA',
+  BIOMETRIC_VERIFICATION_CLOSE_WINDOW: 'BIOMETRIC_VERIFICATION_CLOSE_WINDOW',
+  PROCEED_TO_BIOMETERIC_VERIFICATION: 'PROCEED_TO_BIOMETERIC_VERIFICATION',
+  BIOMETRIC_VERIFICATION_END_SESSION: 'BIOMETRIC_VERIFICATION_END_SESSION'
 };

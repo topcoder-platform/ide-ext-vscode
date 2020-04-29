@@ -62,7 +62,7 @@ export default class AuthController {
     this.context.globalState.update(constants.tokenStateKey, '');
     this.context.globalState.update(constants.refreshTokenStateKey, '');
     this.context.globalState.update(constants.sessionIdKey, '');
-    this.context.globalState.update(constants.activeSessionKey, '');
+    this.context.globalState.update(constants.secureSessionsKey, '');
     this.context.globalState.update(constants.deviceIdKey, '');
     vscode.commands.executeCommand('homeView.refresh');
     Notification.showInfoNotification(constants.loggedOutMessage);

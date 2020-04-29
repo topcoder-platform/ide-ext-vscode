@@ -24,6 +24,7 @@ export default class SecretSessionController {
   private hasPendingCheck: boolean = false;
   private hasOnGoingSession: boolean = false;
   private capturingImage: boolean = false;
+  private capturedVerificationImage: string = '';
   private opts = {
     width: 1280,
     height: 720,
@@ -108,47 +109,47 @@ export default class SecretSessionController {
    */
   private handleMessagesFromWebView = async (message: any) => {
     switch (message.action) {
-      case constants.webviewMessageActions.PROCEED_TO_BIOMETERIC_ENROLLMENT: {
-        await this.setWebviewContent(this.pairingWebviewPanel, await Html.generateBiometricEnrollmentHtml());
+      case constants.webviewMessageActions.PROCEED_TO_BIOMETERIC_VERIFICATION: {
+        await this.setWebviewContent(this.pairingWebviewPanel, await Html.generateBiometricVerificationHtml());
         const cameraDetected = await this.detectCamera();
         // Check if a camera is detected or not
         if (cameraDetected) {
           this.pairingWebviewPanel!.webview.postMessage({
-            command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_DETECTED
+            command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAMERA_DETECTED
           });
         } else {
           this.pairingWebviewPanel!.webview.postMessage({
-            command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED
+            command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED
           });
         }
         break;
       }
-      case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_REDETECT_CAMERA: {
+      case constants.webviewMessageActions.BIOMETRIC_VERIFICATION_REDETECT_CAMERA: {
         const cameraDetected = await this.detectCamera();
         if (cameraDetected) {
           this.pairingWebviewPanel!.webview.postMessage({
-            command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_DETECTED
+            command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAMERA_DETECTED
           });
         } else {
           this.pairingWebviewPanel!.webview.postMessage({
-            command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED
+            command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED
           });
         }
         break;
       }
-      case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE: {
+      case constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAPTURE_IMAGE: {
         if (this.capturingImage) {
           break;
         }
         this.capturingImage = true;
-        const image = vscode.Uri.file(path.join(this.context.extensionPath, 'images', constants.TEMP_IMAGE_NAME));
-        await this.takePhotoFromWebCam(image.fsPath);
-        // If image is captured then procced else display a notification
-        if (image !== undefined) {
+        const image = vscode.Uri.file(path.join(this.context.extensionPath, 'images', constants.BIOMETRIC_IMAGE_NAME));
+        this.capturedVerificationImage = await this.takePhotoFromWebCam(image.fsPath);
+        // If image is captured then proceed else display a notification
+        if (this.capturedVerificationImage) {
           const imagePath = (this.pairingWebviewPanel!.webview as any).asWebviewUri(image);
-          this.pairingWebviewPanel!.webview.html = await HtmlHelper.generateBiometricEnrollmentHtml(imagePath);
+          this.pairingWebviewPanel!.webview.html = await HtmlHelper.generateBiometricVerificationHtml(imagePath);
           this.pairingWebviewPanel!.webview.postMessage({
-            command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED,
+            command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_IMAGE_CAPTURED,
             path: imagePath
           });
         } else {
@@ -157,21 +158,32 @@ export default class SecretSessionController {
         this.capturingImage = false;
         break;
       }
-      case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETE: {
+      case constants.webviewMessageActions.BIOMETRIC_COMPLETE_VERIFICATION: {
         const token = await AuthService.updateTokenGlobalState(this.context);
-        const imagePath = path.join(this.context.extensionPath, 'images', constants.TEMP_IMAGE_NAME);
-        Notification.showInfoNotification(constants.completingEnrollment);
-        await BioIdService.enrollBioid(token, imagePath);
-        this.context.globalState.update(constants.activeSessionKey, true);
+        const imagePath = path.join(this.context.extensionPath, 'images', constants.BIOMETRIC_IMAGE_NAME);
+        Notification.showInfoNotification(constants.submitForVerification);
+        const deviceId = await ProofsService.getDeviceId(this.context, token);
+        const proof: IProofEvent = {
+          sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
+          deviceId,
+          proofType: ['Identity'],
+          idProof: this.capturedVerificationImage
+        };
+        if (this.capturedVerificationImage) {
+          await BioIdService.verifyBioid(token, imagePath, proof);
+        } else {
+          Notification.showInfoNotification(constants.imageCapturedFailedMessage);
+        }
+        this.context.globalState.update(constants.secureSessionsKey, true);
         this.pairingWebviewPanel!.webview.postMessage({
-          command: constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETED
+          command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_COMPLETED
         });
         if (this.hasOnGoingSession) {
           this.takePhotoPeriodically(token);
         }
         break;
       }
-      case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CLOSE_WINDOW: {
+      case constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CLOSE_WINDOW: {
         // Closes the WebView Panel
         this.pairingWebviewPanel!.dispose();
         break;
@@ -183,7 +195,7 @@ export default class SecretSessionController {
         await this.startNewSession();
         break;
       }
-      case constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_END_SESSION: {
+      case constants.webviewMessageActions.BIOMETRIC_VERIFICATION_END_SESSION: {
         // clear the session
         const sessionId = this.context.globalState.get(constants.sessionIdKey);
         const token = await AuthService.updateTokenGlobalState(this.context);
@@ -191,7 +203,7 @@ export default class SecretSessionController {
         ProofsService.closeSession(token, sessionId);
         this.hasOnGoingSession = false;
         this.pairingWebviewPanel!.dispose();
-        this.context.globalState.update(constants.activeSessionKey, false);
+        this.context.globalState.update(constants.secureSessionsKey, false);
       }
     }
   }
@@ -203,7 +215,7 @@ export default class SecretSessionController {
   private takePhotoPeriodically(token: string) {
     this.verifyBioIdInterval = setInterval(async () => {
       const photoPath = path.join(this.context.extensionPath, 'images',
-        constants.TEMP_PERIODIC_IMAGE_NAME);
+        constants.BIOMETRIC_IMAGE_NAME);
       const image = await this.takePhotoFromWebCam(photoPath);
       const deviceId = await ProofsService.getDeviceId(this.context, token);
       const proof: IProofEvent = {

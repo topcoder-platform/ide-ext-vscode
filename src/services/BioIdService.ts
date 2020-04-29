@@ -42,33 +42,6 @@ export default class BioIdService {
   }
 
   /**
-   * Enroll the user with BioID
-   * @param token bearer token for BioID API authentication
-   * @param imagePath imagePath of the image which needs to be sent
-   * @return boolean
-   */
-  public static async enrollBioid(token: string, imagePath: string) {
-    const url = `${bioIdEndpoint}/bioid/enroll`;
-
-    const formData = new FormData();
-    formData.append('image', fs.createReadStream(imagePath));
-
-    try {
-      const { data } = await axios.post(url, formData, {
-        headers: _.merge(formData.getHeaders(), { Authorization: `Bearer ${token}`}),
-        params: {
-          bcid: this.generateBcid(token)
-        }
-      });
-    } catch (error) {
-      console.error(error);
-
-      // TODO - if enrollment fails, what should happen
-      throw error;
-    }
-  }
-
-  /**
    * Generates BCID from userId
    * @param token bearer authentication token
    * @return bcid string

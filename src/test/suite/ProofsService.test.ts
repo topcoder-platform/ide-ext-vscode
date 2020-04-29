@@ -25,8 +25,6 @@ suite('Proofs Service tests', () => {
          .reply(200, {status: 'Closed'});
       nock(/\.com/, { allowUnmocked: true })
         .persist()
-        .post(`/bioid/enroll`)
-        .reply(200, {Success: true})
         .post(`/bioid/verify`)
         .reply(200, {Success: true});
 
@@ -59,11 +57,5 @@ suite('Proofs Service tests', () => {
   //   const verified = await SessionService.verifyBioid('', oauthToken.access_token, testingPath, {});
   //   // tslint:disable-next-line: no-unused-expression
   //   expect(verified).to.be.true;
-  //  });
-  //  test('enrollBioid() should return true if image is sent', async () => {
-  //   const testingPath = './test.jpg';
-  //   const enrolled = await SessionService.enrollBioid('', oauthToken.access_token, testingPath);
-  //   // tslint:disable-next-line: no-unused-expression
-  //   expect(enrolled).to.be.true;
   //  });
 });

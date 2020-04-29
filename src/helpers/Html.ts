@@ -100,7 +100,7 @@ export default class Html {
                <button onClick=onRefreshClick()>Refresh</button>
             </div>
             <div id="success">
-               <p> Device Pairing has been completed successfully. You can now proceed to the next step - Enrollment.</p>
+               <p> Device Pairing has been completed successfully. You can now proceed to the next step - Biometric Verification.</p>
                <button onClick=onNextClick()>Next</button>
             </div>
             <script type="text/javascript">
@@ -135,7 +135,7 @@ export default class Html {
               }
               function onNextClick() {
                 vscode.postMessage({
-                        action: '${constants.webviewMessageActions.PROCEED_TO_BIOMETERIC_ENROLLMENT}'
+                        action: '${constants.webviewMessageActions.PROCEED_TO_BIOMETERIC_VERIFICATION}'
                   });
               }
             </script>
@@ -144,11 +144,11 @@ export default class Html {
   }
 
   /**
-   * Generate HTML page with a QR Code for Biometric Enrollment
+   * Generate HTML page with a QR Code for Biometric Verification
    * @param capturedImage the file path of captured image
    * @return the html page
    */
-  public static async generateBiometricEnrollmentHtml(capturedImage?: string) {
+  public static async generateBiometricVerificationHtml(capturedImage?: string) {
       return `<!doctype html>
       <html lang="en">
         <head>
@@ -163,20 +163,20 @@ export default class Html {
             #camera-not-detected { display: none; }
             #image-captured { display: none; }
             .capture {width: 350px; height: 350px; display: block; margin: 15px auto; }
-            #enrollment-completed { display: none; }
+            #verification-completed { display: none; }
             button { margin: 0 auto; display: block;}
           </style>
           </head>
           <body>
-            <h1> Biometric Enrollment </h1>
-            <p> We will now proceed to access your camera and capture a photo of you. The photo will be used to enroll for our Biometric Verification process. Make sure you are in front of the camera and facing the camera. Ensure there is sufficet light falling on your face. Also make sure that you are close to camera. </p>
+            <h1>Biometric Verification</h1>
+            <p>We will now proceed to access your camera and capture a photo of you. The photo will be used to verify you through our Biometric Verification process. The verification will not work if our systems cannot detect your face properly. Thus, make sure that you are in front of the camera and facing the camera. Ensure there is sufficient light falling on your face. Also make sure that you are close to the camera.</p>
             <b>Camera Detected: </b><span id="status"></span>
             <div id="camera-detected">
                 <p>When you are ready, click on Capture below. We will proceed to capture your photo</p>
                 <button onClick=onCaptureAndRecaptureClick()>Capture</button>
             </div>
             <div id="camera-not-detected">
-                <p>We could NOT detect your camera. Make sure that it is turned on and working properly. We cannot proceed with enrollment process unless we detect and capture your photo</p>
+                <p>We could NOT detect your camera. Make sure that it is turned on and working properly. We cannot proceed with verification process unless we detect and capture your photo. Secure session will also not work until this gets resolved.</p>
                 <button onClick=onTryAgainClick()>Try Again</button>
             </div>
             <div id="image-captured">
@@ -184,17 +184,17 @@ export default class Html {
                 <p>Have we captured it correctly? If yes kindly proceed. Else you can capture another snapshot.</p>
                 <div style="width: 100%; text-align: center;">
                   <button style="display: inline-block;" onClick=onCaptureAndRecaptureClick()>Capture Again</button>
-                  <button style="display: inline-block; margin-left: 30px;" onClick=onCompleteEnrollmentClick()>Complete Enrollment</button>
+                  <button style="display: inline-block; margin-left: 30px;" onClick=onCompleteVerificationClick()>Complete Verification</button>
                 </div>
             </div>
-            <div id="enrollment-completed">
+            <div id="verification-completed">
                 <img src="${capturedImage}?${this.getNonce()}" class="capture"/>
-                <p>You have enrolled successfully. You can now close this page.</p>
-                <p>The extension will periodically send your photo to our servers. This is needed for Biometric Verification. Thus, ensure that you follow the same practices as mentioned above:</p>
+                <p>Biometric verification is a success. You can now close this page.</p>
+                <p>The extension will periodically send your photo to our servers as part of the Biometric Verification process. This will happen in the background and you are not required to do anything. Thus, while secure session is active, ensure that you follow the same practices as mentioned above:</p>
                 <ul>
-                    <li>sit in the front of the camera and face it</li>
-                    <li>ensure there is sufficent light falling on your face</li>
-                    <li>be close to the camera</li>
+                    <li>Sit in the front of the camera and face it</li>
+                    <li>Ensure there is sufficent light falling on your face</li>
+                    <li>Be close to the camera</li>
                 </ul>
                 <button onClick=onCloseWindowClick()>Close Window</button>
             </div>
@@ -206,49 +206,49 @@ export default class Html {
              }());
              window.addEventListener('message', (event) => {
                switch (event.data.command) {
-                  case '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_DETECTED}': {
+                  case '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAMERA_DETECTED}': {
                      document.getElementById("status").innerHTML = "Yes.";
                      document.getElementById("camera-not-detected").style.display = "none";
                      document.getElementById("camera-detected").style.display = "block";
                      break;
                   }
-                  case '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAMERA_NOT_DETECTED}': {
+                  case '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED}': {
                     document.getElementById("camera-detected").style.display = "none";
                      document.getElementById("status").innerHTML = "No";
                      document.getElementById("camera-not-detected").style.display = "block";
                      break;
                   }
-                  case '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_IMAGE_CAPTURED}': {
+                  case '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_IMAGE_CAPTURED}': {
                      document.getElementById("camera-detected").style.display = "none";
 		                 document.getElementById("image-captured").style.display = "block";
                      break;
                   }
-		              case '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETED}': {
+		              case '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_COMPLETED}': {
                      document.getElementById("status").innerHTML = "Yes."
                      document.getElementById("image-captured").style.display = "none";
-                     document.getElementById("enrollment-completed").style.display = "block";
+                     document.getElementById("verification-completed").style.display = "block";
                      break;
                   }
                }
               })
               function onCaptureAndRecaptureClick() {
                   vscode.postMessage({
-                        action: '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CAPTURE_IMAGE}'
+                        action: '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CAPTURE_IMAGE}'
                   });
               }
-              function onCompleteEnrollmentClick() {
+              function onCompleteVerificationClick() {
                   vscode.postMessage({
-                        action: '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_COMPLETE}'
+                        action: '${constants.webviewMessageActions.BIOMETRIC_COMPLETE_VERIFICATION}'
                   });
               }
 	            function onTryAgainClick() {
                   vscode.postMessage({
-                        action: '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_REDETECT_CAMERA}'
+                        action: '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_REDETECT_CAMERA}'
                   });
               }
 	            function onCloseWindowClick() {
                   vscode.postMessage({
-                        action: '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_CLOSE_WINDOW}'
+                        action: '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_CLOSE_WINDOW}'
                   });
               }
             </script>
@@ -272,10 +272,10 @@ export default class Html {
         </style>
         </head>
         <body>
-          <h1> Secure Session </h1>
-          <p> We will now proceed to access your camera and capture a photo of you. The photo will be used to enroll for our Biometric Verification process. Make sure you are in front of the camera and facing the camera. Ensure there is sufficet light falling on your face. Also make sure that you are close to camera. </p>
+          <h1>Secure Session</h1>
           <b>Status: </b><span id="status">Active</span>
-          <p>Your session is still active. You can continue to code your solution. </p>
+          <p>We are capturing periodic photos of you through the web cam for biometric verification. This is happening in the background as long as Secure Session is still active.</p>
+          <p>You can continue to code your solution. </p>
           <p>When you are done, click on End Session below. The extension will stop capturing your photo at this point and the session will end.</p>
           <p>If you want to start a new secure session, end this session and click on the Secure Session node in the sidebar again.</p>
               <button onClick=onEndSessionClick()>End Session</button>
@@ -286,7 +286,7 @@ export default class Html {
             }());
             function onEndSessionClick() {
                 vscode.postMessage({
-                      action: '${constants.webviewMessageActions.BIOMETRIC_ENROLLMENT_END_SESSION}'
+                      action: '${constants.webviewMessageActions.BIOMETRIC_VERIFICATION_END_SESSION}'
                 });
             }
           </script>

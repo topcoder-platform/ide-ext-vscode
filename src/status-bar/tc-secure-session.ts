@@ -14,7 +14,7 @@ export default function create(context: vscode.ExtensionContext): vscode.StatusB
   item.tooltip = 'You have successfully set up a Topcoder Secure Session';
 
   const update = () => {
-    if (context.globalState.get(constants.activeSessionKey)) {
+    if (context.globalState.get(constants.secureSessionsKey)) {
       item.text = `Topcoder Secure Session: Active`;
     } else {
       item.text = ``;
