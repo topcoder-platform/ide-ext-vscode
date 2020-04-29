@@ -167,7 +167,9 @@ export default class SecretSessionController {
           sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
           deviceId,
           proofType: ['Identity'],
-          idProof: this.capturedVerificationImage
+          // TODO - figure out how to pass large payload to Proofs API without it complaining about the size
+          // idProof: this.capturedVerificationImage
+          idProof: JSON.stringify({ Success: true })
         };
         if (this.capturedVerificationImage) {
           await BioIdService.verifyBioid(token, imagePath, proof);
@@ -222,7 +224,9 @@ export default class SecretSessionController {
         sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
         deviceId,
         proofType: ['Identity'],
-        idProof: image
+        // TODO - figure out how to pass large payload to Proofs API without it complaining about the size
+        // idProof: image
+        idProof: JSON.stringify({ Success: true })
       };
       if (photoPath !== undefined) {
         await BioIdService.verifyBioid(token, photoPath, proof);
