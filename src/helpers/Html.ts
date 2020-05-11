@@ -46,8 +46,9 @@ export default class Html {
           <h1>Topcoder</h1>
           <h2>To login to Topcoder and start using the extension:</h2>
           <ol>
-            <li>On your computer or mobile device, go to: <a href="${data.verification_uri}">${data.verification_uri}</a></li>
-            <li>Enter the following code: ${data.user_code}</li>
+            <li>On your computer or mobile device, visit the following link: <a href="${data.verification_uri_complete}">${data.verification_uri_complete}</a></li>
+            <li>Confirm that you see this code in the displayed page: ${data.user_code}</li>
+            <li>Proceed to enter your Topcoder credentials and login. When successful, this page will close on its own and you will see a notification about the login being a success
           </ol>
           <img src="${qr}"/>
           <div id="error-box"></div>
