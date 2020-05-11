@@ -3,7 +3,7 @@ import * as nock from 'nock';
 import * as url from 'url';
 import { getEnv} from '../../config';
 import { oauthToken, pairingSession, activatedSession } from './testData';
-import ProofsService from '../../services/ProofsService';
+import ProofsService from '../../services/secure-sessions/ProofsService';
 import * as assert from 'assert';
 
 suite('Proofs Service tests', () => {

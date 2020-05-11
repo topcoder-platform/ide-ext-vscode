@@ -178,6 +178,7 @@
     "lodash": "^4.17.15",
     "moment-timezone": "^0.5.26",
     "node-webcam": "^0.6.0",
+    "public-ip": "^4.0.1",
     "qrcode": "^1.4.4",
     "rxjs": "^6.5.4",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils",

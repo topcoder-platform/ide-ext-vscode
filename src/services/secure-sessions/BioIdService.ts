@@ -2,11 +2,11 @@ import axios from 'axios';
 import * as fs from 'fs-extra';
 import * as FormData from 'form-data';
 import * as _ from 'lodash';
-import { getEnv } from '../config';
-import * as constants from '../constants';
-import { AuthTokenDecoder, IDecodedToken } from '../helpers/Decoding';
+import { getEnv } from '../../config';
+import * as constants from '../../constants';
+import { AuthTokenDecoder, IDecodedToken } from '../../helpers/Decoding';
 import ProofsService from './ProofsService';
-import { IProofEvent } from '../interfaces';
+import { IProofEvent } from '../../interfaces';
 
 const bioIdEndpoint = getEnv().URLS.BIOMETRIC_API_ENDPOINT;
 

@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
-import * as constants from '../constants';
-import { getEnv } from '../config';
-import { IProofEvent } from '../interfaces';
-import AuthService from './AuthService';
+import * as constants from '../../constants';
+import { getEnv } from '../../config';
+import { IProofEvent } from '../../interfaces';
+import AuthService from '../AuthService';
 
 const proofsEndpoint = getEnv().URLS.PROOFS_API_ENDPOINT;
 

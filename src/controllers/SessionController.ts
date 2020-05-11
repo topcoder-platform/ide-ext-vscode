@@ -5,8 +5,9 @@ import { getEnv } from '../config';
 import AuthService from '../services/AuthService';
 import Notification from '../helpers/Notification';
 import * as constants from '../constants';
-import ProofsService from '../services/ProofsService';
-import BioIdService from '../services/BioIdService';
+import ProofsService from '../services/secure-sessions/ProofsService';
+import BioIdService from '../services/secure-sessions/BioIdService';
+import GeoService from '../services/secure-sessions/GeoService';
 import Html from '../helpers/Html';
 import * as path from 'path';
 import { IProofEvent } from '../interfaces';
@@ -176,6 +177,7 @@ export default class SecretSessionController {
         } else {
           Notification.showInfoNotification(constants.imageCapturedFailedMessage);
         }
+        await this.submitGeolocationProof();
         this.context.globalState.update(constants.secureSessionsKey, true);
         this.pairingWebviewPanel!.webview.postMessage({
           command: constants.webviewMessageActions.BIOMETRIC_VERIFICATION_COMPLETED
@@ -231,6 +233,7 @@ export default class SecretSessionController {
       if (photoPath !== undefined) {
         await BioIdService.verifyBioid(token, photoPath, proof);
       }
+      await this.submitGeolocationProof();
     }, constants.BIOID_VERIFY_INTERVAL);
   }
 
@@ -396,5 +399,20 @@ export default class SecretSessionController {
   private removeTimeout() {
     clearTimeout(this.poolingTimeout);
     this.poolingTimeout = undefined;
+  }
+
+  private async submitGeolocationProof() {
+    const token = AuthService.updateTokenGlobalState(this.context);
+    const [geolocation, deviceId] = await Promise.all([
+      GeoService.getGeocoordinatesFromIP(token),
+      ProofsService.getDeviceId(this.context, token)
+    ]);
+    const proof: IProofEvent = {
+      sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
+      deviceId,
+      proofType: ['Geolocation'],
+      geolocation: JSON.stringify(geolocation)
+    };
+    await ProofsService.createProofEvent(token, proof);
   }
 }

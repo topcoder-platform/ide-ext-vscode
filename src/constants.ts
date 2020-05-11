@@ -122,7 +122,8 @@ export interface IENV {
     TOPCODER: string,
     REVIEW_TYPES: string,
     AUTH_AUDIENCE: string,
-    BIOMETRIC_API_ENDPOINT: string
+    BIOMETRIC_API_ENDPOINT: string,
+    GEOIP_API_ENDPOINT: string
   };
   PROFILEKEYS: {
     USERID: string,
@@ -158,7 +159,8 @@ export const DEV_ENV: IENV = {
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
-    BIOMETRIC_API_ENDPOINT: 'https://topcoder-dev-bioid-proxy-api.herokuapp.com/v5'
+    BIOMETRIC_API_ENDPOINT: 'https://topcoder-dev-bioid-proxy-api.herokuapp.com/v5',
+    GEOIP_API_ENDPOINT: ''
   },
   PROFILEKEYS: {
     USERID: 'https://topcoder-dev-test.com/userId',
@@ -194,7 +196,8 @@ export const PROD_ENV: IENV = {
     TOPCODER: 'https://topcoder.com',
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://api.topcoder.com/',
-    BIOMETRIC_API_ENDPOINT: '' // UPDATE AFTER DEPLOYMENT
+    BIOMETRIC_API_ENDPOINT: '', // UPDATE AFTER DEPLOYMENT
+    GEOIP_API_ENDPOINT: ''
   },
   PROFILEKEYS: {
     USERID: '',
