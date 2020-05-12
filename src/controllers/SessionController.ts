@@ -402,7 +402,7 @@ export default class SecretSessionController {
   }
 
   private async submitGeolocationProof() {
-    const token = AuthService.updateTokenGlobalState(this.context);
+    const token = await AuthService.updateTokenGlobalState(this.context);
     const [geolocation, deviceId] = await Promise.all([
       GeoService.getGeocoordinatesFromIP(token),
       ProofsService.getDeviceId(this.context, token)

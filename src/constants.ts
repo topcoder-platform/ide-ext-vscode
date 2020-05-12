@@ -160,7 +160,7 @@ export const DEV_ENV: IENV = {
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
     AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
     BIOMETRIC_API_ENDPOINT: 'https://topcoder-dev-bioid-proxy-api.herokuapp.com/v5',
-    GEOIP_API_ENDPOINT: ''
+    GEOIP_API_ENDPOINT: 'https://topcoder-dev-geoproxy-api.herokuapp.com/v5'
   },
   PROFILEKEYS: {
     USERID: 'https://topcoder-dev-test.com/userId',
