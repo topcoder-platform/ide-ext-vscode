@@ -67,9 +67,11 @@ export default class SecretSessionController {
       if (!token) {
         throw new Error(constants.notLoggedInMessage);
       }
-      Notification.showInfoNotification(constants.generatingSecureSession);
       // Start session and get its id
-      const sessionId = await ProofsService.generateSecureSessionId(token);
+      const sessionId = await Notification.showProgressNotification(
+        constants.generatingSecureSession,
+        ProofsService.generateSecureSessionId(token)
+      );
       this.context.globalState.update(constants.sessionIdKey, sessionId);
       if (!this.pairingWebviewPanel) {
         this.pairingWebviewPanel = this.makeWebViewAvailable(constants.secureSessionStartPageTitle);
@@ -162,18 +164,29 @@ export default class SecretSessionController {
       case constants.webviewMessageActions.BIOMETRIC_COMPLETE_VERIFICATION: {
         const token = await AuthService.updateTokenGlobalState(this.context);
         const imagePath = path.join(this.context.extensionPath, 'images', constants.BIOMETRIC_IMAGE_NAME);
-        Notification.showInfoNotification(constants.submitForVerification);
-        const deviceId = await ProofsService.getDeviceId(this.context, token);
-        const proof: IProofEvent = {
-          sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
-          deviceId,
-          proofType: ['Identity'],
-          // TODO - figure out how to pass large payload to Proofs API without it complaining about the size
-          // idProof: this.capturedVerificationImage
-          idProof: JSON.stringify({ Success: true })
-        };
         if (this.capturedVerificationImage) {
-          await BioIdService.verifyBioid(token, imagePath, proof);
+          try {
+            const deviceId = await Notification.showProgressNotification(
+              constants.fetchDeviceId,
+              ProofsService.getDeviceId(this.context, token)
+            );
+            const proof: IProofEvent = {
+              sessionId: this.context.globalState.get(constants.sessionIdKey) as string,
+              deviceId,
+              proofType: ['Identity'],
+              // TODO - figure out how to pass large payload to Proofs API without it complaining about the size
+              // idProof: this.capturedVerificationImage
+              idProof: JSON.stringify({ Success: true })
+            };
+            await Notification.showProgressNotification(
+              constants.submitForVerification,
+              BioIdService.verifyBioid(token, imagePath, proof)
+            );
+          } catch (error) {
+            Notification.showErrorNotification(constants.biometricVerificationFailed);
+
+            return;
+          }
         } else {
           Notification.showInfoNotification(constants.imageCapturedFailedMessage);
         }

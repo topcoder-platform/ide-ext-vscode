@@ -77,7 +77,9 @@ export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
 export const secureSessionStartPageTitle = 'Topcoder: Secure Session';
 export const generatingSecureSession = 'Generating secure session';
-export const submitForVerification = 'Submiting for verification. Please wait..';
+export const fetchDeviceId = 'Identifying device...';
+export const submitForVerification = 'Submiting for verification. Please wait...';
+export const biometricVerificationFailed = 'Biometric verification has failed.';
 export const biometricSessionPageTitle = 'Topcoder: Biometric Verification';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
