@@ -15,7 +15,7 @@ import { IProofEvent } from '../interfaces';
 // tslint:disable-next-line: no-var-requires
 const NodeWebcam = require('node-webcam');
 
-export default class SecretSessionController {
+export default class SecureSessionController {
 
   private pairingWebviewPanel: vscode.WebviewPanel | undefined = undefined;
   private poolingInterval: any = undefined;
@@ -106,6 +106,22 @@ export default class SecretSessionController {
     await this.setWebviewContent(
       this.pairingWebviewPanel, await Html.generateEndSecureSessionHtml());
   }
+
+  /**
+   * Ends the secure session
+   */
+  private async endSession(throughWebView: boolean): void {
+    const sessionId = this.context.globalState.get(constants.sessionIdKey);
+    const token = await AuthService.updateTokenGlobalState(this.context);
+    clearInterval(this.verifyBioIdInterval);
+    ProofsService.closeSession(token, sessionId);
+    this.hasOnGoingSession = false;
+    if (throughWebView) {
+      this.pairingWebviewPanel!.dispose();
+    }
+    this.context.globalState.update(constants.secureSessionsKey, false);
+  }
+
   /**
    * Handle messages received from webview page
    * @param message message object
@@ -214,13 +230,7 @@ export default class SecretSessionController {
       }
       case constants.webviewMessageActions.BIOMETRIC_VERIFICATION_END_SESSION: {
         // clear the session
-        const sessionId = this.context.globalState.get(constants.sessionIdKey);
-        const token = await AuthService.updateTokenGlobalState(this.context);
-        clearInterval(this.verifyBioIdInterval);
-        ProofsService.closeSession(token, sessionId);
-        this.hasOnGoingSession = false;
-        this.pairingWebviewPanel!.dispose();
-        this.context.globalState.update(constants.secureSessionsKey, false);
+        await this.endSession(true);
       }
     }
   }
@@ -244,7 +254,13 @@ export default class SecretSessionController {
         idProof: JSON.stringify({ Success: true })
       };
       if (photoPath !== undefined) {
-        await BioIdService.verifyBioid(token, photoPath, proof);
+        try {
+          await BioIdService.verifyBioid(token, photoPath, proof);
+        } catch (error) {
+          await this.endSession(false);
+          Notification.showErrorNotification(constants.biometricVerificationFailedEndSession);
+          return;
+        }
       }
       await this.submitGeolocationProof();
     }, constants.BIOID_VERIFY_INTERVAL);

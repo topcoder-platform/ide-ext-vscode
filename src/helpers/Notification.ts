@@ -52,7 +52,7 @@ export default class Notification {
     }
   }
 
-  public static async showProgressNotification(message: string, action: Promise) {
+  public static async showProgressNotification(message: string, action: Promise<any>) {
     return vscode.window.withProgress({
       location: vscode.ProgressLocation.Notification,
       title: message,

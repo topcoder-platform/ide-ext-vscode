@@ -10,7 +10,7 @@ import ChallengeController from '../controllers/ChallengeController';
 import VSCode from '../helpers/VSCode';
 import AuthService from '../services/AuthService';
 import TelemetryService from '../services/TelemetryService';
-import SecretSessionController from '../controllers/SessionController';
+import SecureSessionController from '../controllers/SecureSessionController';
 export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
 
   /**
@@ -22,14 +22,14 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   public static Register(
     authController: AuthController,
     challengeController: ChallengeController,
-    secretSessionController: SecretSessionController,
+    secureSessionController: SecureSessionController,
     context: vscode.ExtensionContext,
   ) {
     if (!this.provider) {
       this.provider = new HomeViewProvider(
         authController,
         challengeController,
-        secretSessionController,
+        secureSessionController,
         context,
       );
     }
@@ -92,7 +92,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   private constructor(
     private authController: AuthController,
     private challengeController: ChallengeController,
-    private secretSessionController: SecretSessionController,
+    private secureSessionController: SecureSessionController,
     context: vscode.ExtensionContext,
   ) {
     this.context = context;
@@ -124,7 +124,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
             break;
           }
           case this.secureSession.id: {
-            await this.secretSessionController.initializeSecretSession();
+            await this.secureSessionController.initializeSecretSession();
             break;
           }
         }

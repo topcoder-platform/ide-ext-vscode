@@ -80,6 +80,7 @@ export const generatingSecureSession = 'Generating secure session';
 export const fetchDeviceId = 'Identifying device...';
 export const submitForVerification = 'Submiting for verification. Please wait...';
 export const biometricVerificationFailed = 'Biometric verification has failed.';
+export const biometricVerificationFailedEndSession = 'Biometric verification has failed. Your secure session is no longer active.';
 export const biometricSessionPageTitle = 'Topcoder: Biometric Verification';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',

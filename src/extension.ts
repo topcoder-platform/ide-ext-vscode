@@ -12,7 +12,7 @@ import TelemetryService from './services/TelemetryService';
 import { ActiveSubmissionsProvider, ActiveContestsProvider, HomeViewProvider } from './view-providers';
 
 import VSCode from './helpers/VSCode';
-import SecretSessionController from './controllers/SessionController';
+import SecureSessionController from './controllers/SecureSessionController';
 
 // This method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -23,11 +23,11 @@ export function activate(context: vscode.ExtensionContext) {
 
   const authController = new AuthController(context);
   const challengeController = new ChallengeController(context);
-  const secretSessionController = new SecretSessionController(context);
+  const secureSessionController = new SecureSessionController(context);
   // Setup tree view providers
   ActiveContestsProvider.Register(challengeController, context);
   ActiveSubmissionsProvider.Register(challengeController, context);
-  HomeViewProvider.Register(authController, challengeController, secretSessionController, context);
+  HomeViewProvider.Register(authController, challengeController, secureSessionController, context);
 
   // Register commands
   context.subscriptions.push(createTcSecureSessionBarItem(context));
