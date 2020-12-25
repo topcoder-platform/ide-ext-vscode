@@ -5,7 +5,7 @@ import * as url from 'url';
 import * as vscode from 'vscode';
 import * as constants from '../../constants';
 import AuthService from '../../services/AuthService';
-import { oauthToken, oauthRefreshedToken, expiredToken } from './testData';
+import { oauthToken, oauthRefreshedToken, expiredToken, adminToken, copilotToken, regularUserToken } from './testData';
 suite('AuthService Unit tests', () => {
   suiteSetup(() => {
     const env = getEnv();
@@ -49,5 +49,17 @@ suite('AuthService Unit tests', () => {
     const inOneMinute = Math.floor(Date.now() / 1000) + 60 * 1;
     const token = { exp: inOneMinute };
     expect(AuthService.isTokenExpired(token)).to.be.equal(false);
+  });
+
+  test('canCreateChallenge() should return true when user is admin', async () => {
+    expect(AuthService.canCreateChallenge(adminToken)).to.be.equal(true);
+  });
+
+  test('canCreateChallenge() should return true when user is copilot', async () => {
+    expect(AuthService.canCreateChallenge(copilotToken)).to.be.equal(true);
+  });
+
+  test('canCreateChallenge() should return false when user is not admin or copilot', async () => {
+    expect(AuthService.canCreateChallenge(regularUserToken)).to.be.equal(false);
   });
 });

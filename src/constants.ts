@@ -74,6 +74,82 @@ export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-StarterPack_Node-Backend'
 ];
 
+export const userRoles = {
+  admin: 'administrator',
+  copilot: 'copilot'
+  // add more when necessary
+};
+
+export const contestCreationStepNames = {
+  askProject: 'ASK_PROJECT',
+  askChallengeTrack: 'ASK_CHALLENGE_TRACK',
+  askChallengeType: 'ASK_CHALLENGE_TYPE',
+  askChallengeName: 'ASK_CHALLENGE_NAME',
+  askChallengePrizes: 'ASK_CHALLENGE_PRIZES',
+  askChallengeCopilotPayment: 'ASK_CHALLENGE_COPILOT_PAYMENT',
+  askChallengeTags: 'ASK_CHALLENGE_TAGS'
+};
+
+/**
+ * Interfaces for `contestCreationConfig`
+ */
+export interface IStepConfig {
+  name: string;
+  placeholder: string;
+  loadingMsg?: string;
+  invalidInputMsg?: string;
+  multiSelection?: boolean;
+}
+export interface IContestCreationConfig {
+  title: string;
+  steps: IStepConfig[];
+}
+
+/**
+ * Contest Creation Config
+ */
+export const contestCreationConfig: IContestCreationConfig = {
+  title: 'Create Challenge',
+  steps: [
+    {
+      name: contestCreationStepNames.askProject,
+      placeholder: 'Select the project',
+      loadingMsg: 'Please wait while loading projects...'
+    },
+    {
+      name: contestCreationStepNames.askChallengeTrack,
+      placeholder: 'Select the challenge track',
+      loadingMsg: 'Please wait while loading challenge tracks...'
+    },
+    {
+      name: contestCreationStepNames.askChallengeType,
+      placeholder: 'Select the challenge type',
+      loadingMsg: 'Please wait while loading challenge types...'
+    },
+    {
+      name: contestCreationStepNames.askChallengeName,
+      placeholder: 'Enter your work name',
+      invalidInputMsg: 'Please enter a name with at least 1 character.'
+    },
+    {
+      name: contestCreationStepNames.askChallengePrizes,
+      placeholder: 'Enter multiple, comma separated, challenge prizes',
+      invalidInputMsg: 'Please enter valid numbers for challenge prizes, in comma separated format.'
+    },
+    {
+      name: contestCreationStepNames.askChallengeCopilotPayment,
+      placeholder: 'Enter the copilot fee',
+      invalidInputMsg: 'Please enter a valid number for copilot fee.'
+    },
+    {
+      name: contestCreationStepNames.askChallengeTags,
+      placeholder: 'Select the challenge tag(s)',
+      loadingMsg: 'Please wait while loading tags...',
+      multiSelection: true
+    }
+  ]
+};
+
 /**
  * Interface of a constant set, which fully defines a Topcoder environment
  * to work against.
@@ -88,6 +164,13 @@ export interface IENV {
     AUTH_TOKEN: string,
     DEVICE_AUTH: string,
     REFRESH_TOKEN: string,
+    FETCH_PROJECTS: string,
+    FETCH_CHALLENGE_TRACKS: string,
+    FETCH_CHALLENGE_TYPES: string,
+    FETCH_PLATFORMS: string,
+    FETCH_TECHNOLOGIES: string,
+    FETCH_CHALLENGE_TIMELINES: string;
+    FETCH_TIMELINE_TEMPLATES: string;
     ACTIVATE_CHALLENGES: string,
     UPLOAD_SUBMISSION: string,
     CHALLENGE_DETAILS: string,
@@ -116,6 +199,13 @@ export const DEV_ENV: IENV = {
     AUTH_TOKEN: 'https://topcoder-dev.auth0.com/oauth/token',
     AUTHZ: 'https://api.topcoder-dev.com/v3/authorizations',
     REFRESH_TOKEN: 'https://api.topcoder-dev.com/v3/authorizations/1',
+    FETCH_PROJECTS: 'https://api.topcoder-dev.com/v5/projects?memberOnly=true&sort=lastActivityAt%20desc&status=active',
+    FETCH_CHALLENGE_TRACKS: 'https://api.topcoder-dev.com/v5/challenge-tracks?page=1&perPage=100',
+    FETCH_CHALLENGE_TYPES: 'https://api.topcoder-dev.com/v5/challenge-types?page=1&perPage=100',
+    FETCH_PLATFORMS: 'https://api.topcoder-dev.com/v4/platforms',
+    FETCH_TECHNOLOGIES: 'https://api.topcoder-dev.com/v4/technologies',
+    FETCH_CHALLENGE_TIMELINES: 'https://api.topcoder-dev.com/v5/challenge-timelines?isDefault=true&page=1&perPage=100',
+    FETCH_TIMELINE_TEMPLATES: 'https://api.topcoder-dev.com/v5/timeline-templates?page=1&perPage=100',
     ACTIVATE_CHALLENGES: 'https://api.topcoder-dev.com/v4/challenges/?filter=status%3DACTIVE',
     UPLOAD_SUBMISSION: 'https://api.topcoder-dev.com/v5',
     CHALLENGE_DETAILS: 'https://api.topcoder-dev.com/v4/challenges',
@@ -144,6 +234,13 @@ export const PROD_ENV: IENV = {
     DEVICE_AUTH: 'https://topcoder.auth0.com/oauth/device/code',
     AUTH_TOKEN: 'https://topcoder.auth0.com/oauth/token',
     REFRESH_TOKEN: 'https://api.topcoder.com/v3/authorizations/1',
+    FETCH_PROJECTS: 'https://api.topcoder.com/v5/projects?memberOnly=true&sort=lastActivityAt%20desc&status=active',
+    FETCH_CHALLENGE_TRACKS: 'https://api.topcoder.com/v5/challenge-tracks?page=1&perPage=100',
+    FETCH_CHALLENGE_TYPES: 'https://api.topcoder.com/v5/challenge-types?page=1&perPage=100',
+    FETCH_PLATFORMS: 'https://api.topcoder.com/v4/platforms',
+    FETCH_TECHNOLOGIES: 'https://api.topcoder.com/v4/technologies',
+    FETCH_CHALLENGE_TIMELINES: 'https://api.topcoder.com/v5/challenge-timelines?isDefault=true&page=1&perPage=100',
+    FETCH_TIMELINE_TEMPLATES: 'https://api.topcoder.com/v5/timeline-templates?page=1&perPage=100',
     ACTIVATE_CHALLENGES: 'https://api.topcoder.com/v4/challenges/?filter=status%3DACTIVE',
     UPLOAD_SUBMISSION: 'https://api.topcoder.com/v5',
     CHALLENGE_DETAILS: 'https://api.topcoder.com/v4/challenges',

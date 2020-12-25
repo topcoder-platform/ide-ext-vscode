@@ -17,6 +17,10 @@ export const oauthRefreshedToken = {
 
 export const expiredToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NTQzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.zULI6dqM8xyOgz5B_x9etVwB4WSeeeSq49OtgJrdhw8';
 
+export const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL3RvcGNvZGVyLWRldi5jb20vcm9sZXMiOlsiYWRtaW5pc3RyYXRvciJdLCJpYXQiOjE2MDg5MjgxODV9.YHIYskvCBZwfv8Q9Gr0Y8AAbWqix6li9kU2HfifrUKI';
+export const copilotToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL3RvcGNvZGVyLWRldi5jb20vcm9sZXMiOlsiY29waWxvdCJdLCJpYXQiOjE2MDg5MjgyNjh9.GvKY5c-dU2rB9dzmCD6nlut5eC_G_qjkHzH_hjYbF20';
+export const regularUserToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL3RvcGNvZGVyLWRldi5jb20vcm9sZXMiOlsidXNlciJdLCJpYXQiOjE2MDg5MjgyOTB9.HfWselqieSTqiAQER3lO9WEOTxYm3Yr_cJJIC3IjCc0';
+
 export const challenges = {
   "id": "-7151b0f2:16b0caee32c:3392",
   "result": {
@@ -11112,3 +11116,56 @@ export const orgRepos = {
     }
   ]
 };
+
+export const projects = [
+  'Mock Project Content'
+];
+
+export const challengeTracks = [
+  'Mock Challenge Track Content'
+];
+
+export const challengeTypes = [
+  'Mock Challenge Type Content'
+];
+
+export const platforms = {
+  result: {
+    content: [
+      {
+        id: 1,
+        name: 'Mock Platform Content'
+      }
+    ]
+  }
+};
+
+export const technologies = {
+  result: {
+    content: [
+      {
+        id: 1,
+        name: 'Mock Technology',
+        status: {
+          description: 'Active'
+        }
+      }
+    ]
+  }
+};
+
+export const tags = [
+  ...platforms.result.content,
+  {
+    id: 1,
+    name: 'Mock Technology'
+  }
+];
+
+export const challengeTimelines = [
+  'Mock ChallengeTimeline Content'
+];
+
+export const timelineTemplates = [
+  'Mock TimelineTemplate Content'
+];

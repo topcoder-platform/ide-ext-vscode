@@ -260,7 +260,7 @@ export default class ChallengeService {
    * @param challengeId The challenge id to write to the .topcoderrc file
    */
   public static async initializeWorkspace(workspacePath: string, challengeId: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       fs.writeFile(path.join(workspacePath, '.topcoderrc'), JSON.stringify({
         challengeId: `${challengeId}`
       }), (err) => {
@@ -282,6 +282,167 @@ export default class ChallengeService {
       return data;
     } catch (err) {
       throw new Error(constants.failedToLoadOrganizationRepos);
+    }
+  }
+
+  /**
+   * Fetches projects from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} projects from response
+   */
+  public static async fetchProjects(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_PROJECTS;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return data;
+    } catch (err) {
+      throw new Error('Unexpected Error!');
+    }
+  }
+
+  /**
+   * Fetches challenge tracks from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} challenge tracks from response
+   */
+  public static async fetchChallengeTracks(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_CHALLENGE_TRACKS;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return data;
+    } catch (err) {
+      throw new Error('Unexpected Error!');
+    }
+  }
+
+  /**
+   * Fetches challenge types from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} challenge types from response
+   */
+  public static async fetchChallengeTypes(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_CHALLENGE_TYPES;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return data;
+    } catch (err) {
+      throw new Error('Unexpected Error!');
+    }
+  }
+
+  /**
+   * Fetches platforms from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} platforms from response
+   */
+  public static async fetchPlatforms(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_PLATFORMS;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return _.get(data, 'result.content', []);
+    } catch (err) {
+      throw new Error('Unexpected Error!');
+    }
+  }
+
+  /**
+   * Fetches technologies from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} technologies from response
+   */
+  public static async fetchTechnologies(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_TECHNOLOGIES;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return _.get(data, 'result.content', []);
+    } catch (err) {
+      throw new Error('Unexpected Error!');
+    }
+  }
+
+  /**
+   * Fetches available challenge tags using `fetchPlatforms` and `fetchTechnologies`.
+   * Challenge tags are obtained by adding of both platforms and technologies.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} available challenge tags
+   */
+  public static async fetchTags(token: string): Promise<any[]> {
+    const platforms = await ChallengeService.fetchPlatforms(token);
+    const technologies = await ChallengeService.fetchTechnologies(token);
+    const activeTechnologies = technologies.filter((t: any) => t.status.description === 'Active');
+    return [
+      ...platforms.map((p: any) => _.pick(p, ['id', 'name'])),
+      ...activeTechnologies.map((t: any) => _.pick(t, ['id', 'name']))
+    ];
+  }
+
+  /**
+   * Fetches challenge timelines from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {any} filter object to apply filtering, consists of keys/values
+   * @return {Promise<any[]>} challenge timelines from response
+   */
+  public static async fetchChallengeTimelines(token: string, filter?: any): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_CHALLENGE_TIMELINES;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: filter
+      });
+      return data;
+    } catch (err) {
+      throw new Error('Unexpected Error!');
+    }
+  }
+
+  /**
+   * Fetches timeline templates from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {any} filter object to apply filtering, consists of keys/values
+   * @return {Promise<any[]>} timeline templates from response
+   */
+  public static async fetchTimelineTemplates(token: string, filter?: any): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_TIMELINE_TEMPLATES;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: filter
+      });
+      return data;
+    } catch (err) {
+      throw new Error('Unexpected Error!');
     }
   }
 
@@ -317,7 +478,7 @@ export default class ChallengeService {
    * @param zipFilePath zip file path
    */
   private static async zipFiles(workspaceRootDir: string, filesToZip: string[], zipFilePath: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const output = fs.createWriteStream(zipFilePath);
       const archive = archiver('zip');
       // listen for all archive data to be written

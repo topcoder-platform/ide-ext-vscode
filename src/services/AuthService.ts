@@ -6,6 +6,7 @@ import axios from 'axios';
 import TCAuth = require('topcoder-api-utils/TCAuth');
 import * as constants from '../constants';
 import { getEnv } from '../config';
+import { AuthTokenDecoder, IDecodedToken } from '../helpers/Decoding';
 interface IDeviceAuthData {
   device_code: string;
   user_code: string;
@@ -192,5 +193,24 @@ export default class AuthService {
     }
 
     return !(decodedToken.exp > (nowInSeconds + offsetSeconds));
+  }
+
+  /**
+   * Checks if logged-in user (passed via `token`)
+   * has sufficient permissions to create a challenge.
+   *
+   * Decodes the token and checks roles. Only admin and copilot role users can create challenges.
+   *
+   * @param {string} token Token
+   * @return {Boolean} whether the logged-in user has permission to create a challenge
+   */
+  public static canCreateChallenge(token: string): boolean {
+    const sufficientRoles = [constants.userRoles.admin, constants.userRoles.copilot];
+    if (token) {
+      const decodedToken: IDecodedToken = AuthTokenDecoder.decode(token);
+      const userRoles = _.get(decodedToken, 'roles', []);
+      return _.some(userRoles, (role) => sufficientRoles.includes(role));
+    }
+    return false;
   }
 }

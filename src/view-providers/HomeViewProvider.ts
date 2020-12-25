@@ -62,6 +62,11 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
     id: 'logout',
     iconPath: '10-icon-logout.svg'
   };
+  private readonly draftChallengeItem: IListItem = {
+    name: 'Draft a Challenge',
+    id: 'draft-challenge',
+    iconPath: '01-icon-challenge.svg'
+  };
   private readonly activeChallengesItem: IListItem = {
     name: 'Active Challenges',
     id: 'active-challenges',
@@ -105,6 +110,9 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
           case this.logoutItem.id: {
             await this.authController.logout();
           }                        break;
+          case this.draftChallengeItem.id: {
+            await this.challengeController.draftChallenge();
+          }                                break;
           case this.reportProblem.id: {
             await this.createGithubIssue();
           }                           break;
@@ -164,6 +172,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
         AuthService.updateTokenGlobalState(this.context).then((token) => {
           resolve([
             this.activeChallengesItem,
+            ...(AuthService.canCreateChallenge(token) ? [this.draftChallengeItem] : []),
             this.reportProblem,
             this.configureSettings,
             token ? this.logoutItem : this.loginItem

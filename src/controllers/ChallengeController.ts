@@ -10,6 +10,8 @@ import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
 import TelemetryService from '../services/TelemetryService';
 import { getEnv } from '../config';
+import ContestCreation from '../helpers/ContestCreationHelper';
+import { QuickPickItem } from '../helpers/QuickPickItem';
 
 /**
  * Controller for handling challenge commands.
@@ -266,6 +268,32 @@ export default class ChallengeController {
     } catch (err) {
       Notification.showErrorNotification(constants.cloneTemplateFailed);
     }
+  }
+
+  /**
+   * Draft a Challenge
+   */
+  public async draftChallenge() {
+    const { title, steps } = constants.contestCreationConfig;
+    const choices = await ContestCreation.askSequentially(this.context, title, steps);
+
+    const challengeTypeChoice = choices.get(constants.contestCreationStepNames.askChallengeType) as QuickPickItem;
+    const challengeTrackChoice = choices.get(constants.contestCreationStepNames.askChallengeTrack) as QuickPickItem;
+
+    const typeId = challengeTypeChoice.id;
+    const trackId = challengeTrackChoice.id;
+
+    const token = await AuthService.updateTokenGlobalState(this.context);
+
+    const challengeTimelines = await ChallengeService.fetchChallengeTimelines(token, { typeId, trackId });
+    const challengeTimelineIds: string[] = challengeTimelines.map((t: any) => t.id);
+
+    const timelineTemplates = await ChallengeService.fetchTimelineTemplates(token);
+    const matchingTemplates = timelineTemplates.filter((t: any) => challengeTimelineIds.includes(t.id));
+    // template to be used in payload
+    const challengeTemplate = matchingTemplates[0];
+    // temp notification until completing the rest
+    Notification.showInfoNotification('Contest Creation Complete');
   }
 
   /**
