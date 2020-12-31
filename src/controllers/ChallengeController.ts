@@ -368,7 +368,10 @@ export default class ChallengeController {
         });
         progress.report({ increment: 50 });
         // creation complete
-        Notification.showInfoNotification(contestCreationCompleteMsg);
+        const linkToContest = getEnv().URLS.LINK_TO_CONTEST
+          .replace('{projectId}', projectId)
+          .replace('{challengeId}', challenge.id);
+        Notification.showInfoNotification(contestCreationCompleteMsg.replace('{LINK_TO_CONTEST}', linkToContest));
         return challenge;
       });
 

@@ -70,7 +70,7 @@ export const contestActivatingMsg = 'Activating the contest';
 export const creatingChallengeMsg = 'Creating challenge...';
 export const activatingChallengeMsg = 'Activating challenge...';
 export const assigningCopilotMsg = 'Assigning copilot...';
-export const contestCreationCompleteMsg = 'Contest has been created as draft and will be activated in several seconds. Don\'t close the VSCode in the mean time.';
+export const contestCreationCompleteMsg = 'Contest has been created as draft and will be activated in several seconds. Don\'t close the VSCode in the mean time. The contest can be accessed [here]({LINK_TO_CONTEST}).';
 export const contestActivationCompleteMsg = 'Contest is now active and is set to start at {START_TIME}';
 
 export const extensionConfigSectionName = 'TCVSCodeIDE';
@@ -210,6 +210,7 @@ export interface IENV {
     UPLOAD_SUBMISSION: string,
     CONTEST_CREATION: string,
     CONTEST_ACTIVATION: string;
+    LINK_TO_CONTEST: string;
     GET_RESOURCES: string;
     ASSIGN_COPILOT: string;
     CHALLENGE_DETAILS: string,
@@ -250,6 +251,7 @@ export const DEV_ENV: IENV = {
     UPLOAD_SUBMISSION: 'https://api.topcoder-dev.com/v5',
     CONTEST_CREATION: 'https://api.topcoder-dev.com/v5/challenges',
     CONTEST_ACTIVATION: 'https://api.topcoder-dev.com/v5/challenges/{challengeId}',
+    LINK_TO_CONTEST: 'https://challenges.topcoder-dev.com/projects/{projectId}/challenges/{challengeId}/view',
     GET_RESOURCES: 'https://api.topcoder-dev.com/v5/resource-roles',
     ASSIGN_COPILOT: 'https://api.topcoder-dev.com/v5/resources',
     CHALLENGE_DETAILS: 'https://api.topcoder-dev.com/v4/challenges',
@@ -290,6 +292,7 @@ export const PROD_ENV: IENV = {
     UPLOAD_SUBMISSION: 'https://api.topcoder.com/v5',
     CONTEST_CREATION: 'https://api.topcoder.com/v5/challenges',
     CONTEST_ACTIVATION: 'https://api.topcoder.com/v5/challenges/{challengeId}',
+    LINK_TO_CONTEST: 'https://challenges.topcoder.com/projects/{projectId}/challenges/{challengeId}/view',
     GET_RESOURCES: 'https://api.topcoder.com/v5/resource-roles',
     ASSIGN_COPILOT: 'https://api.topcoder.com/v5/resources',
     CHALLENGE_DETAILS: 'https://api.topcoder.com/v4/challenges',
