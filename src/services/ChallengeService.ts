@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
 import {AuthTokenDecoder , IDecodedToken} from '../helpers/Decoding';
+import Notification from '../helpers/Notification';
 import * as archiver from 'archiver';
 import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
 
@@ -17,6 +18,55 @@ function getSubmissionApi() {
   return submissionApi({
     SUBMISSION_API_URL: getEnv().URLS.UPLOAD_SUBMISSION,
   });
+}
+
+/**
+ * Gets single page response from paginated endpoints.
+ *
+ * @param {string} token User token
+ * @param {string} url URL of the endpoint.
+ * @param {number} page Page number to get.
+ * @param {number} perPage Items per page.
+ * @param {any} additionalParams any additional params (optional)
+ * @return {Promise<any>} response of the specified page
+ */
+function getSinglePageResponse(
+  token: string, url: string, page: number, perPage: number, additionalParams?: any
+): Promise<any> {
+
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+    params: { ...additionalParams, page, perPage }
+  });
+}
+
+/**
+ * Gets responses for all pages, from paginated endpoints.
+ *
+ * @param {string} token User token
+ * @param {string} url URL of the endpoint.
+ * @param {any} params request params
+ * @return {Promise<any[]>} concatenated responses
+ */
+async function getPaginatedResponse(
+  token: string, url: string, params?: any
+): Promise<any[]> {
+
+  const page = _.get(params, 'page', 1);
+  const perPage = _.get(params, 'perPage', 100);
+  const additionalParams = _.omit(params, ['page', 'perPage']);
+
+  const firstPageResponse = await getSinglePageResponse(token, url, page, perPage, additionalParams);
+  const firstPageItems: any[] = _.get(firstPageResponse, 'data', []);
+  const totalPages = firstPageResponse.headers['x-total-pages'];
+  if (totalPages > page) {
+    const pageNumRange = Array.from({ length: totalPages - page }, (el, idx) => idx + page + 1);
+    const responses = await Promise.all(
+      pageNumRange.map((pageNum) => getSinglePageResponse(token, url, pageNum, perPage, additionalParams))
+    );
+    return firstPageItems.concat(...responses.map((r) => r.data));
+  }
+  return firstPageItems;
 }
 
 /**
@@ -301,7 +351,8 @@ export default class ChallengeService {
       });
       return data;
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      Notification.showErrorNotification(constants.couldntFetchProjectsErrMsg);
+      throw new Error(constants.couldntFetchProjectsErrMsg);
     }
   }
 
@@ -314,14 +365,11 @@ export default class ChallengeService {
   public static async fetchChallengeTracks(token: string): Promise<any[]> {
     try {
       const url = getEnv().URLS.FETCH_CHALLENGE_TRACKS;
-      const { data } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return data;
+      return await getPaginatedResponse(token, url);
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      Notification.showErrorNotification(constants.couldntFetchChallengeTracksErrMsg);
+      // throw new Error(constants.couldntFetchChallengeTracksErrMsg);
+      throw err;
     }
   }
 
@@ -334,14 +382,11 @@ export default class ChallengeService {
   public static async fetchChallengeTypes(token: string): Promise<any[]> {
     try {
       const url = getEnv().URLS.FETCH_CHALLENGE_TYPES;
-      const { data } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return data;
+      return await getPaginatedResponse(token, url);
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      Notification.showErrorNotification(constants.couldntFetchChallengeTypesErrMsg);
+      // throw new Error(constants.couldntFetchChallengeTypesErrMsg);
+      throw err;
     }
   }
 
@@ -361,7 +406,8 @@ export default class ChallengeService {
       });
       return _.get(data, 'result.content', []);
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      Notification.showErrorNotification(constants.couldntFetchPlatformsErrMsg);
+      throw new Error(constants.couldntFetchPlatformsErrMsg);
     }
   }
 
@@ -381,7 +427,8 @@ export default class ChallengeService {
       });
       return _.get(data, 'result.content', []);
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      Notification.showErrorNotification(constants.couldntFetchTechnologiesErrMsg);
+      throw new Error(constants.couldntFetchTechnologiesErrMsg);
     }
   }
 
@@ -412,15 +459,11 @@ export default class ChallengeService {
   public static async fetchChallengeTimelines(token: string, filter?: any): Promise<any[]> {
     try {
       const url = getEnv().URLS.FETCH_CHALLENGE_TIMELINES;
-      const { data } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: filter
-      });
-      return data;
+      return await getPaginatedResponse(token, url, filter);
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      Notification.showErrorNotification(constants.couldntFetchChallengeTimelinesErrMsg);
+      // throw new Error(constants.couldntFetchChallengeTimelinesErrMsg);
+      throw err;
     }
   }
 
@@ -434,15 +477,91 @@ export default class ChallengeService {
   public static async fetchTimelineTemplates(token: string, filter?: any): Promise<any[]> {
     try {
       const url = getEnv().URLS.FETCH_TIMELINE_TEMPLATES;
-      const { data } = await axios.get(url, {
+      return await getPaginatedResponse(token, url, filter);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchTimelineTemplatesErrMsg);
+      // throw new Error(constants.couldntFetchTimelineTemplatesErrMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Creates a challenge with Draft status.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {any} body request body i.e. challenge object
+   * @return {Promise<any>} created challenge
+   */
+  public static async draftChallenge(token: string, body: any): Promise<any> {
+    try {
+      const { data } = await axios.post(getEnv().URLS.CONTEST_CREATION, { ...body, status: 'Draft' }, {
         headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: filter
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
       return data;
     } catch (err) {
-      throw new Error('Unexpected Error!');
+      const errMsgFromResponse = _.get(err, 'response.data.message', '');
+      const errMsg = constants.couldntCreateChallengeErrMsg + errMsgFromResponse;
+      Notification.showErrorNotification(errMsg);
+      // throw new Error(errMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Activates a challenge.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {string} challengeId id of the challenge
+   * @return {Promise<any>} response
+   */
+  public static async activateChallenge(token: string, challengeId: string): Promise<any> {
+    const url = getEnv().URLS.CONTEST_ACTIVATION.replace('{challengeId}', challengeId);
+    try {
+      return await axios.patch(url, { status: 'Active' }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (err) {
+      const errMsgFromResponse = _.get(err, 'response.data.message', '');
+      const errMsg = constants.couldntActivateChallengeErrMsg + errMsgFromResponse;
+      Notification.showErrorNotification(errMsg);
+      // throw new Error(errMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Assign current user as copilot to challenge.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {string} challengeId id of the challenge
+   * @return {Promise<any>} created challenge
+   */
+  public static async assignCopilot(token: string, challengeId: string): Promise<any> {
+    try {
+      // handle of the current user
+      const memberHandle = AuthTokenDecoder.decode(token).handle;
+      // get resources to find copilot role id
+      const resourceRoles = await getPaginatedResponse(token, getEnv().URLS.GET_RESOURCES);
+      const roleId = _.find(resourceRoles, (r) => r.name === 'Copilot').id;
+      // assign the copilot
+      return await axios.post(getEnv().URLS.ASSIGN_COPILOT, { challengeId, memberHandle, roleId  }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (err) {
+      const errMsgFromResponse = _.get(err, 'response.data.message', '');
+      const errMsg = constants.couldntAsssignCopilotErrMsg + errMsgFromResponse;
+      Notification.showErrorNotification(errMsg);
+      // throw new Error(errMsg);
+      throw err;
     }
   }
 

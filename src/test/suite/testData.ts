@@ -11169,3 +11169,11 @@ export const challengeTimelines = [
 export const timelineTemplates = [
   'Mock TimelineTemplate Content'
 ];
+
+export const draftChallengeMock = { id: 'mock_id', status: 'Draft' };
+export const getResourcesMock = [
+  {
+    id:'mock_id',
+    name: 'Copilot'
+  }
+];

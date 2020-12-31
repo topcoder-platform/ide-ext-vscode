@@ -10,7 +10,8 @@ import {
   unregisteredChallengeDetails, closedForSubmissionChallengeDetails,
   memberChallengesList, submissionDetails, artifactsDetails,
   orgRepos, projects, challengeTracks, challengeTypes, platforms,
-  technologies, tags, challengeTimelines, timelineTemplates
+  technologies, tags, challengeTimelines, timelineTemplates, draftChallengeMock,
+  getResourcesMock
 } from './testData';
 import * as fs from 'fs';
 import * as assert from 'assert';
@@ -48,12 +49,16 @@ suite('ChallengeService Unit tests', () => {
       .replace('{artifactId}', `${validArtifactId}`));
 
     const fetchProjectsUrl = url.parse(env.URLS.FETCH_PROJECTS);
-    const fetchChallengeTracksUrl = url.parse(env.URLS.FETCH_CHALLENGE_TRACKS);
-    const fetchChallengeTypesUrl = url.parse(env.URLS.FETCH_CHALLENGE_TYPES);
+    const fetchChallengeTracksUrl = url.parse(env.URLS.FETCH_CHALLENGE_TRACKS + '?page=1&perPage=100');
+    const fetchChallengeTypesUrl = url.parse(env.URLS.FETCH_CHALLENGE_TYPES + '?page=1&perPage=100');
     const fetchPlatformsUrl = url.parse(env.URLS.FETCH_PLATFORMS);
     const fetchTechnologiesUrl = url.parse(env.URLS.FETCH_TECHNOLOGIES);
-    const fetchChallengeTimelinesUrl = url.parse(env.URLS.FETCH_CHALLENGE_TIMELINES);
-    const fetchTimelineTemplatesUrl = url.parse(env.URLS.FETCH_TIMELINE_TEMPLATES);
+    const fetchChallengeTimelinesUrl = url.parse(env.URLS.FETCH_CHALLENGE_TIMELINES + '&page=1&perPage=100');
+    const fetchTimelineTemplatesUrl = url.parse(env.URLS.FETCH_TIMELINE_TEMPLATES + '?page=1&perPage=100');
+    const draftChallengeUrl = url.parse(env.URLS.CONTEST_CREATION);
+    const activateChallengeUrl = url.parse(env.URLS.CONTEST_ACTIVATION.replace('{challengeId}', 'mock_id'));
+    const getResourcesUrl = url.parse(env.URLS.GET_RESOURCES + '?page=1&perPage=100');
+    const assignCopilotUrl = url.parse(env.URLS.ASSIGN_COPILOT);
 
     nock(/\.com/)
       .persist()
@@ -84,17 +89,25 @@ suite('ChallengeService Unit tests', () => {
       .get(fetchProjectsUrl.path as string)
       .reply(200, projects)
       .get(fetchChallengeTracksUrl.path as string)
-      .reply(200, challengeTracks)
+      .reply(200, challengeTracks, { 'X-Total-Pages': '1' })
       .get(fetchChallengeTypesUrl.path as string)
-      .reply(200, challengeTypes)
+      .reply(200, challengeTypes, { 'X-Total-Pages': '1' })
       .get(fetchPlatformsUrl.path as string)
       .reply(200, platforms)
       .get(fetchTechnologiesUrl.path as string)
       .reply(200, technologies)
       .get(fetchChallengeTimelinesUrl.path as string)
-      .reply(200, challengeTimelines)
+      .reply(200, challengeTimelines, { 'X-Total-Pages': '1' })
       .get(fetchTimelineTemplatesUrl.path as string)
-      .reply(200, timelineTemplates);
+      .reply(200, timelineTemplates, { 'X-Total-Pages': '1' } )
+      .post(draftChallengeUrl.path as string)
+      .reply(200, draftChallengeMock)
+      .patch(activateChallengeUrl.path as string)
+      .reply(200)
+      .get(getResourcesUrl.path as string)
+      .reply(200, getResourcesMock, { 'X-Total-Pages': '1' })
+      .post(assignCopilotUrl.path as string)
+      .reply(200);
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
@@ -283,5 +296,20 @@ suite('ChallengeService Unit tests', () => {
   test('fetchTimelineTemplates() should return the Timeline Template list', async () => {
     const data = await ChallengeService.fetchTimelineTemplates(oauthToken.access_token);
     expect(data).to.be.deep.eq(timelineTemplates);
+  });
+
+  test('draftChallenge() should create a challenge with status Draft', async () => {
+    const data = await ChallengeService.draftChallenge(oauthToken.access_token, { id: 'mock_id' });
+    expect(data).to.be.deep.eq(draftChallengeMock);
+  });
+
+  test('activateChallenge() should set the status to Active', async () => {
+    const response = await ChallengeService.activateChallenge(oauthToken.access_token, 'mock_id');
+    expect(response.status).to.be.eq(200);
+  });
+
+  test('assignCopilot() should add current user as copilot', async () => {
+    const response = await ChallengeService.assignCopilot(oauthToken.access_token, 'mock_id');
+    expect(response.status).to.be.eq(200);
   });
 });

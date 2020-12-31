@@ -4,7 +4,7 @@ import Notification from '../helpers/Notification';
 import ChallengeService from '../services/ChallengeService';
 import AuthService from '../services/AuthService';
 import { QuickPickItem } from './QuickPickItem';
-import { contestCreationStepNames as stepNames, IStepConfig } from '../constants';
+import { contestCreationStepNames as stepNames, IStepConfig, couldntGetSpecsErrMsg } from '../constants';
 
 // If there is no mapped function for `fetchItems` (like below examples),
 // it will ask the input with a InputBox instead of QuickPick.
@@ -35,6 +35,20 @@ const functionMappings = {
 };
 
 export default class ContestCreation {
+
+  /**
+   * Shows a confirmation dialog with Yes/No buttons.
+   *
+   * @param {string} message The message will be shown when asking confirmation.
+   * @return {boolean} True if confirmed, false otherwise.
+   */
+  public static async askConfirmation(message: string): Promise<boolean> {
+    const choice = await vscode.window.showInformationMessage(message, 'Yes', 'No');
+    if (choice === 'Yes') {
+      return true;
+    }
+    return false;
+  }
 
   /**
    * Shows a QuickInput or InputBox to ask an input.
@@ -115,6 +129,20 @@ export default class ContestCreation {
       choices.set(config.name, await ContestCreation.ask(context, title, stepNum, steps.length, config));
     }
     return choices;
+  }
+
+  /**
+   * Gets/returns specs from currently open document/tab.
+   *
+   * @return {string} File content of currently open tab.
+   */
+  public static getSpecsFromOpenTab(): string {
+    const specs = vscode.window.activeTextEditor?.document.getText();
+    if (specs === undefined) {
+      Notification.showErrorNotification(couldntGetSpecsErrMsg);
+      throw new Error(couldntGetSpecsErrMsg);
+    }
+    return specs;
   }
 
   /**

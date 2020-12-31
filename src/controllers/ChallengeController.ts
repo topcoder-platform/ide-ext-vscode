@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as constants from '../constants';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -274,26 +275,124 @@ export default class ChallengeController {
    * Draft a Challenge
    */
   public async draftChallenge() {
-    const { title, steps } = constants.contestCreationConfig;
-    const choices = await ContestCreation.askSequentially(this.context, title, steps);
+    const {
+      contestCreationStepNames, contestCreationConfig, contestCreationConfirmationMsg,
+      contestCreatingMsg, creatingChallengeMsg, contestCreationCompleteMsg,
+      contestActivatingMsg, assigningCopilotMsg, activatingChallengeMsg,
+      contestActivationCompleteMsg
+    } = constants;
+    const isConfirmed = await ContestCreation.askConfirmation(contestCreationConfirmationMsg);
+    if (isConfirmed) {
+      const { title, steps } = contestCreationConfig;
+      const challengeSpecs = ContestCreation.getSpecsFromOpenTab();
+      const choices = await ContestCreation.askSequentially(this.context, title, steps);
+      // show a loading indicator while creating
+      const createdChallenge = await vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: contestCreatingMsg
+      }, async (progress) => {
+        // gather inputs/choices
+        const projectChoice = choices.get(contestCreationStepNames.askProject) as QuickPickItem;
+        const challengeTypeChoice = choices.get(contestCreationStepNames.askChallengeType) as QuickPickItem;
+        const challengeTrackChoice = choices.get(contestCreationStepNames.askChallengeTrack) as QuickPickItem;
+        const challengeName = choices.get(contestCreationStepNames.askChallengeName) as string;
+        const prizesInput = choices.get(contestCreationStepNames.askChallengePrizes) as string;
+        const copilotPaymentInput = choices.get(contestCreationStepNames.askChallengeCopilotPayment);
+        const tagsChoices = choices.get(contestCreationStepNames.askChallengeTags) as QuickPickItem[];
+        // prepare properties for challenge body
+        const projectId = projectChoice.id;
+        const typeId = challengeTypeChoice.id;
+        const trackId = challengeTrackChoice.id;
+        const prizes = prizesInput.split(',').map((p) => ({ type: 'USD', value: Number(p) }));
+        const copilotPayment = Number(copilotPaymentInput);
+        const tags = tagsChoices.map((t) => t.label);
 
-    const challengeTypeChoice = choices.get(constants.contestCreationStepNames.askChallengeType) as QuickPickItem;
-    const challengeTrackChoice = choices.get(constants.contestCreationStepNames.askChallengeTrack) as QuickPickItem;
+        const contestStartDate = moment().add(30, 'minutes');
 
-    const typeId = challengeTypeChoice.id;
-    const trackId = challengeTrackChoice.id;
+        progress.report({ increment: 20 });
 
-    const token = await AuthService.updateTokenGlobalState(this.context);
+        const token = await AuthService.updateTokenGlobalState(this.context);
 
-    const challengeTimelines = await ChallengeService.fetchChallengeTimelines(token, { typeId, trackId });
-    const challengeTimelineIds: string[] = challengeTimelines.map((t: any) => t.id);
+        const challengeTimelines = await ChallengeService.fetchChallengeTimelines(token, { typeId, trackId });
+        const templateIdsToMatch: string[] = challengeTimelines.map((t: any) => t.timelineTemplateId);
 
-    const timelineTemplates = await ChallengeService.fetchTimelineTemplates(token);
-    const matchingTemplates = timelineTemplates.filter((t: any) => challengeTimelineIds.includes(t.id));
-    // template to be used in payload
-    const challengeTemplate = matchingTemplates[0];
-    // temp notification until completing the rest
-    Notification.showInfoNotification('Contest Creation Complete');
+        const timelineTemplates = await ChallengeService.fetchTimelineTemplates(token);
+        const matchingTemplates = timelineTemplates.filter((t: any) => templateIdsToMatch.includes(t.id));
+        // template to be used in payload
+        const challengeTimelineTemplate = matchingTemplates[0];
+        progress.report({ message: creatingChallengeMsg, increment: 30 });
+        // Create the challenge
+        const challenge = await ChallengeService.draftChallenge(token, {
+          descriptionFormat: 'markdown',
+          discussions: [{
+            name: challengeName,
+            provider: 'vanilla',
+            type: 'challenge'
+          }],
+          phases: challengeTimelineTemplate.phases.map(
+            (p: any) => ({ phaseId: p.phaseId, duration: p.defaultDuration })
+          ),
+          name: challengeName,
+          description: challengeSpecs,
+          tags,
+          startDate: contestStartDate.toISOString(),
+          terms: [
+            {
+              id: getEnv().CONTEST_CREATION_TERMS_ID,
+              roleId: '732339e7-8e30-49d7-9198-cccf9451e221'
+            }
+          ],
+          prizeSets: [
+            {
+              type: 'placement',
+              prizes
+            },
+            {
+              type: 'copilot',
+              prizes: [
+                {
+                  type: 'USD',
+                  value: copilotPayment
+                }
+              ]
+            }
+          ],
+          legacy: {
+            reviewType: 'internal',
+            confidentialityType: 'public'
+          },
+          projectId,
+          timelineTemplateId: challengeTimelineTemplate.id,
+          trackId,
+          typeId
+        });
+        progress.report({ increment: 50 });
+        // creation complete
+        Notification.showInfoNotification(contestCreationCompleteMsg);
+        return challenge;
+      });
+
+      // activate after 10 seconds
+      setTimeout(async () => {
+        vscode.window.withProgress({
+          location: vscode.ProgressLocation.Notification,
+          title: contestActivatingMsg
+        }, async (progress) => {
+          const token = await AuthService.updateTokenGlobalState(this.context);
+          progress.report({ message: assigningCopilotMsg, increment: 20 });
+          // assign copilot
+          await ChallengeService.assignCopilot(token, createdChallenge.id);
+          progress.report({ message: activatingChallengeMsg, increment: 40 });
+          // activate
+          await ChallengeService.activateChallenge(token, createdChallenge.id);
+          progress.report({ increment: 40 });
+          // activation complete
+          const hhMMStartTime = moment(createdChallenge.startDate).format('HH:mm');
+          const activationMsg = contestActivationCompleteMsg.replace('{START_TIME}', hhMMStartTime);
+          Notification.showInfoNotification(activationMsg);
+        });
+      }, 10000);
+    }
   }
 
   /**
