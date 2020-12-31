@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import ignore, { Ignore } from 'ignore';
 import {AuthTokenDecoder , IDecodedToken} from '../helpers/Decoding';
+import Notification from '../helpers/Notification';
 import * as archiver from 'archiver';
 import submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper');
 
@@ -17,6 +18,55 @@ function getSubmissionApi() {
   return submissionApi({
     SUBMISSION_API_URL: getEnv().URLS.UPLOAD_SUBMISSION,
   });
+}
+
+/**
+ * Gets single page response from paginated endpoints.
+ *
+ * @param {string} token User token
+ * @param {string} url URL of the endpoint.
+ * @param {number} page Page number to get.
+ * @param {number} perPage Items per page.
+ * @param {any} additionalParams any additional params (optional)
+ * @return {Promise<any>} response of the specified page
+ */
+function getSinglePageResponse(
+  token: string, url: string, page: number, perPage: number, additionalParams?: any
+): Promise<any> {
+
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+    params: { ...additionalParams, page, perPage }
+  });
+}
+
+/**
+ * Gets responses for all pages, from paginated endpoints.
+ *
+ * @param {string} token User token
+ * @param {string} url URL of the endpoint.
+ * @param {any} params request params
+ * @return {Promise<any[]>} concatenated responses
+ */
+async function getPaginatedResponse(
+  token: string, url: string, params?: any
+): Promise<any[]> {
+
+  const page = _.get(params, 'page', 1);
+  const perPage = _.get(params, 'perPage', 100);
+  const additionalParams = _.omit(params, ['page', 'perPage']);
+
+  const firstPageResponse = await getSinglePageResponse(token, url, page, perPage, additionalParams);
+  const firstPageItems: any[] = _.get(firstPageResponse, 'data', []);
+  const totalPages = firstPageResponse.headers['x-total-pages'];
+  if (totalPages > page) {
+    const pageNumRange = Array.from({ length: totalPages - page }, (el, idx) => idx + page + 1);
+    const responses = await Promise.all(
+      pageNumRange.map((pageNum) => getSinglePageResponse(token, url, pageNum, perPage, additionalParams))
+    );
+    return firstPageItems.concat(...responses.map((r) => r.data));
+  }
+  return firstPageItems;
 }
 
 /**
@@ -260,7 +310,7 @@ export default class ChallengeService {
    * @param challengeId The challenge id to write to the .topcoderrc file
    */
   public static async initializeWorkspace(workspacePath: string, challengeId: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       fs.writeFile(path.join(workspacePath, '.topcoderrc'), JSON.stringify({
         challengeId: `${challengeId}`
       }), (err) => {
@@ -282,6 +332,236 @@ export default class ChallengeService {
       return data;
     } catch (err) {
       throw new Error(constants.failedToLoadOrganizationRepos);
+    }
+  }
+
+  /**
+   * Fetches projects from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} projects from response
+   */
+  public static async fetchProjects(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_PROJECTS;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return data;
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchProjectsErrMsg);
+      throw new Error(constants.couldntFetchProjectsErrMsg);
+    }
+  }
+
+  /**
+   * Fetches challenge tracks from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} challenge tracks from response
+   */
+  public static async fetchChallengeTracks(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_CHALLENGE_TRACKS;
+      return await getPaginatedResponse(token, url);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchChallengeTracksErrMsg);
+      // throw new Error(constants.couldntFetchChallengeTracksErrMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Fetches challenge types from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} challenge types from response
+   */
+  public static async fetchChallengeTypes(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_CHALLENGE_TYPES;
+      return await getPaginatedResponse(token, url);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchChallengeTypesErrMsg);
+      // throw new Error(constants.couldntFetchChallengeTypesErrMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Fetches platforms from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} platforms from response
+   */
+  public static async fetchPlatforms(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_PLATFORMS;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return _.get(data, 'result.content', []);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchPlatformsErrMsg);
+      throw new Error(constants.couldntFetchPlatformsErrMsg);
+    }
+  }
+
+  /**
+   * Fetches technologies from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} technologies from response
+   */
+  public static async fetchTechnologies(token: string): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_TECHNOLOGIES;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return _.get(data, 'result.content', []);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchTechnologiesErrMsg);
+      throw new Error(constants.couldntFetchTechnologiesErrMsg);
+    }
+  }
+
+  /**
+   * Fetches available challenge tags using `fetchPlatforms` and `fetchTechnologies`.
+   * Challenge tags are obtained by adding of both platforms and technologies.
+   *
+   * @param {string} token User's JWT for requests
+   * @return {Promise<any[]>} available challenge tags
+   */
+  public static async fetchTags(token: string): Promise<any[]> {
+    const platforms = await ChallengeService.fetchPlatforms(token);
+    const technologies = await ChallengeService.fetchTechnologies(token);
+    const activeTechnologies = technologies.filter((t: any) => t.status.description === 'Active');
+    return [
+      ...platforms.map((p: any) => _.pick(p, ['id', 'name'])),
+      ...activeTechnologies.map((t: any) => _.pick(t, ['id', 'name']))
+    ];
+  }
+
+  /**
+   * Fetches challenge timelines from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {any} filter object to apply filtering, consists of keys/values
+   * @return {Promise<any[]>} challenge timelines from response
+   */
+  public static async fetchChallengeTimelines(token: string, filter?: any): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_CHALLENGE_TIMELINES;
+      return await getPaginatedResponse(token, url, filter);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchChallengeTimelinesErrMsg);
+      // throw new Error(constants.couldntFetchChallengeTimelinesErrMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Fetches timeline templates from API endpoint.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {any} filter object to apply filtering, consists of keys/values
+   * @return {Promise<any[]>} timeline templates from response
+   */
+  public static async fetchTimelineTemplates(token: string, filter?: any): Promise<any[]> {
+    try {
+      const url = getEnv().URLS.FETCH_TIMELINE_TEMPLATES;
+      return await getPaginatedResponse(token, url, filter);
+    } catch (err) {
+      Notification.showErrorNotification(constants.couldntFetchTimelineTemplatesErrMsg);
+      // throw new Error(constants.couldntFetchTimelineTemplatesErrMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Creates a challenge with Draft status.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {any} body request body i.e. challenge object
+   * @return {Promise<any>} created challenge
+   */
+  public static async draftChallenge(token: string, body: any): Promise<any> {
+    try {
+      const { data } = await axios.post(getEnv().URLS.CONTEST_CREATION, { ...body, status: 'Draft' }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return data;
+    } catch (err) {
+      const errMsgFromResponse = _.get(err, 'response.data.message', '');
+      const errMsg = constants.couldntCreateChallengeErrMsg + errMsgFromResponse;
+      Notification.showErrorNotification(errMsg);
+      // throw new Error(errMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Activates a challenge.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {string} challengeId id of the challenge
+   * @return {Promise<any>} response
+   */
+  public static async activateChallenge(token: string, challengeId: string): Promise<any> {
+    const url = getEnv().URLS.CONTEST_ACTIVATION.replace('{challengeId}', challengeId);
+    try {
+      return await axios.patch(url, { status: 'Active' }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (err) {
+      const errMsgFromResponse = _.get(err, 'response.data.message', '');
+      const errMsg = constants.couldntActivateChallengeErrMsg + errMsgFromResponse;
+      Notification.showErrorNotification(errMsg);
+      // throw new Error(errMsg);
+      throw err;
+    }
+  }
+
+  /**
+   * Assign current user as copilot to challenge.
+   *
+   * @param {string} token User's JWT for requests
+   * @param {string} challengeId id of the challenge
+   * @return {Promise<any>} created challenge
+   */
+  public static async assignCopilot(token: string, challengeId: string): Promise<any> {
+    try {
+      // handle of the current user
+      const memberHandle = AuthTokenDecoder.decode(token).handle;
+      // get resources to find copilot role id
+      const resourceRoles = await getPaginatedResponse(token, getEnv().URLS.GET_RESOURCES);
+      const roleId = _.find(resourceRoles, (r) => r.name === 'Copilot').id;
+      // assign the copilot
+      return await axios.post(getEnv().URLS.ASSIGN_COPILOT, { challengeId, memberHandle, roleId  }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (err) {
+      const errMsgFromResponse = _.get(err, 'response.data.message', '');
+      const errMsg = constants.couldntAsssignCopilotErrMsg + errMsgFromResponse;
+      Notification.showErrorNotification(errMsg);
+      // throw new Error(errMsg);
+      throw err;
     }
   }
 
@@ -317,7 +597,7 @@ export default class ChallengeService {
    * @param zipFilePath zip file path
    */
   private static async zipFiles(workspaceRootDir: string, filesToZip: string[], zipFilePath: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const output = fs.createWriteStream(zipFilePath);
       const archive = archiver('zip');
       // listen for all archive data to be written
