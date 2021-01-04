@@ -31,6 +31,7 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
     public readonly onDidChangeTreeData: vscode.Event<IListItem | undefined>;
     private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
         new vscode.EventEmitter<IListItem | undefined>();
+    private data: IListItem[] | null = null;
     private extensionPath: string;
 
     private constructor(
@@ -52,6 +53,7 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
         vs.registerCommand(
             'activeSubmissions.reload',
             async () => {
+                this.data = null;
                 this.onDidChangeTreeDataEmitter.fire();
             });
     }
@@ -83,11 +85,22 @@ export class ActiveSubmissionsProvider implements vscode.TreeDataProvider<IListI
      */
     public async getChildren(element?: IListItem | undefined): Promise<IListItem[]> {
         if (element === undefined) {
-            const activeSubmissions = await this.challengeController.loadActiveSubmissions();
-            if (_.isEmpty(activeSubmissions)) {
-                return [{ name: '', description: 'You have no active submissions', id: '' }];
+            if (this.data === null) {
+              this.challengeController.loadActiveSubmissions().then((activeSubmissions) => {
+                if (_.isEmpty(activeSubmissions)) {
+                  this.data = [{ name: '', id: '', description: 'You have no active submissions' }];
+                } else {
+                  this.data = activeSubmissions;
+                }
+                this.onDidChangeTreeDataEmitter.fire();
+              }).catch((err) => {
+                this.data = [{name: '', id: '', description: err.message}];
+                this.onDidChangeTreeDataEmitter.fire();
+              });
+              return this.data || [{name: '', id: '', description: 'Loading...' }];
+            } else {
+              return this.data;
             }
-            return activeSubmissions;
         }
         return []; // since we don't have nested elements
     }

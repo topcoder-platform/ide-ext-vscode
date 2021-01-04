@@ -1,53 +1,19 @@
 // Test data for unit tests.
 /* tslint:disable */
-export const v2Token = {
-  "id_token": "id_token",
-  "refresh_token": "refresh_token",
-  "access_token": "access_token",
-  "token_type": "bearer"
-};
+export const oauthToken = {
+      "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5VSkZORGd4UlRVME5EWTBOVVkzTlRkR05qTXlRamxETmpOQk5UYzVRVUV3UlRFeU56TTJRUSJ9.eyJodHRwczovL3RvcGNvZGVyLWRldi10ZXN0LmNvbS91c2VySWQiOiIyMzIyNTU0NCIsImh0dHBzOi8vdG9wY29kZXItZGV2LXRlc3QuY29tL2VtYWlsIjoiY3dkQHRvcGNvZGVyLmNvbSIsImh0dHBzOi8vdG9wY29kZXItZGV2LXRlc3QuY29tL2hhbmRsZSI6ImxhenliYWVyIiwiaHR0cHM6Ly90b3Bjb2Rlci1kZXYtdGVzdC5jb20vcm9sZXMiOlsidXNlciJdLCJpc3MiOiJodHRwczovL3RvcGNvZGVyLWRldi5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8MjMyMjU1NDQiLCJhdWQiOlsiaHR0cHM6Ly9tMm0udG9wY29kZXItZGV2LmNvbS8iLCJodHRwczovL3RvcGNvZGVyLWRldi5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNTg2MDk5ODM5LCJleHAiOjE1ODYxODYyMzksImF6cCI6IjFOcGRkbk1lNU0zcjA0VzcxRjk1d0RaWlROdWJXbDV1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBvZmZsaW5lX2FjY2VzcyJ9.hQMv_2Vddc2pQplejx56pqlzB3wtqS3Xs68Q-a5Vh2MDtxdFyacJR__GiVm03VvUO5rMDjELtXjjtcpz_BTgk_yf60OO1knzqzIYUHi6DyzR6dqXV58iPmYBe6FxGrHksrg3_NHobyXjZ42PvN5tZtmO0oCsHP5FMazMBH-iBS0hMNKNyrOxhKMYnVqdQlg5rUEpTigdbgRZzXQYkpflEB5cRApTp63nYQSabRisEd3uIgyMTmj9GcZt6Ti0vDEgKiuCU0Fk732rJ51n42jDG36yQk5NHuKfWq4mGJ1bWQd_jq3pT41uJ97nmNwpc1OjHRvkiktmYa4sALw6TCB9qg",
+      "refresh_token": "Blqie4h0sfEWme4AT9yNVj9GAC-hZCU8igHdgFLJALqkd",
+      "scope": "openid profile offline_access",
+      "expires_in": 86400,
+      "token_type": "Bearer",
+}
 
-export const v3Token = {
-  "id": "id",
-  "result": {
-    "success": true,
-    "status": 200,
-    "metadata": null,
-    "content": {
-      "id": "id",
-      "modifiedBy": null,
-      "modifiedAt": null,
-      "createdBy": null,
-      "createdAt": null,
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NTkzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.6Kmb_VmH3LFPJGXYk6hOQ9NN1QI9IvXb33kMpb_QBkQ",
-      "refreshToken": "refresh_token",
-      "target": "1",
-      "externalToken": "external_token"
-    }
-  },
-  "version": "v3"
-};
-
-export const refreshedToken = {
-  "id": "id",
-  "result": {
-    "success": true,
-    "status": 200,
-    "metadata": null,
-    "content": {
-      "id": "id",
-      "modifiedBy": null,
-      "modifiedAt": null,
-      "createdBy": null,
-      "createdAt": null,
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NzkzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.pxSRzacohYPI_2j0jhUt7-lDYW6FbJtMg6FBAYUu2t8",
-      "refreshToken": "refresh_token",
-      "target": "1",
-      "externalToken": "external_token"
-    }
-  },
-  "version": "v3"
-};
+export const oauthRefreshedToken = {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NzkzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.pxSRzacohYPI_2j0jhUt7-lDYW6FbJtMg6FBAYUu2t8",
+    "expires_in": 86400,
+    "token_type": "Bearer",
+    "scope": "offline_access openid profile refresh_token"
+}
 
 export const expiredToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJUb3Bjb2RlciBVc2VyIl0sImlzcyI6Imh0dHBzOi8vYXBpLnRvcGNvZGVyLmNvbSIsImhhbmRsZSI6Im1lc3MiLCJleHAiOjE1NTQzMzU4NjUsInVzZXJJZCI6Ijk5OTk4ODg4IiwiaWF0IjoxNTU5MzM1MjY1LCJlbWFpbCI6Im1lc3NAZXhhbXBsZS5jb20iLCJqdGkiOiIxYmZiNzExNi0xNjBmLTQxMGQtYjM2MC1hYzM3NDFkZDM3NWQifQ.zULI6dqM8xyOgz5B_x9etVwB4WSeeeSq49OtgJrdhw8';
 
@@ -6624,13 +6590,6 @@ export const unregisteredChallengeDetails = {
       "registrationDate": "2019-01-29T18:47:08.000Z",
       "submissionDate": "2019-01-29T18:48:53.000Z",
       "handle": "KriegBaer"
-    },
-    {
-      "reliability": null,
-      "colorStyle": "color: #000000",
-      "registrationDate": "2018-09-05T20:25:52.000Z",
-      "submissionDate": "2019-01-31T06:18:10.000Z",
-      "handle": "lazybaer"
     },
     {
       "reliability": null,

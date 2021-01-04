@@ -6,7 +6,7 @@ import { getEnv } from '../../config';
 import * as constants from '../../constants';
 import ChallengeService from '../../services/ChallengeService';
 import {
-  v3Token, challenges, submitSuccessResponse, validChallengeDetails,
+  oauthToken, challenges, submitSuccessResponse, validChallengeDetails,
   unregisteredChallengeDetails, closedForSubmissionChallengeDetails,
   memberChallengesList, submissionDetails, artifactsDetails,
   orgRepos
@@ -38,10 +38,10 @@ suite('ChallengeService Unit tests', () => {
     const unregisteredChallengeDetailsUrl = url.parse(
       env.URLS.CHALLENGE_DETAILS + `/${unregisteredChallengeId}`);
     const memberChallengesUrl = url.parse(
-      env.URLS.MEMBER_CHALLENGES.replace('{memberId}', 'mess'));
+      env.URLS.MEMBER_CHALLENGES.replace('{memberId}', 'lazybaer'));
     const submissionUrl = url.parse(
       env.URLS.MEMBER_SUBMISSION
-        .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '99998888'));
+        .replace('{challengeId}', `${validChallengeId}`).replace('{memberId}', '23225544'));
     const artifactsUrl = url.parse(env.URLS.SUBMISSION_ARTIFACTS.replace('{submissionId}', `${validSubmissionId}`));
     const downloadArtifactUrl = url.parse(env.URLS.DOWNLOAD_SUBMISSION.replace('{submissionId}', `${validSubmissionId}`)
       .replace('{artifactId}', `${validArtifactId}`));
@@ -81,7 +81,7 @@ suite('ChallengeService Unit tests', () => {
   });
 
   test('getActiveChallenges() should return the challenges list', async () => {
-    const result = await ChallengeService.getActiveChallenges(v3Token.result.content.token);
+    const result = await ChallengeService.getActiveChallenges(oauthToken.access_token);
     expect(result).to.be.deep.equal(challenges);
   });
 
@@ -92,7 +92,7 @@ suite('ChallengeService Unit tests', () => {
     }
 
     fs.writeFileSync(`${folder}/.topcoderrc`, JSON.stringify({ challengeId: validChallengeId }), 'utf8');
-    const result = await ChallengeService.uploadSubmmission(v3Token.result.content.token, folder);
+    const result = await ChallengeService.uploadSubmmission(oauthToken.access_token, folder);
     expect(result.body).to.be.deep.equal(submitSuccessResponse);
 
     try {
@@ -109,48 +109,48 @@ suite('ChallengeService Unit tests', () => {
 
   test('uploadSubmmission() in an nonexist workspace should throw error', async () => {
     assert.rejects(async () =>
-      await ChallengeService.uploadSubmmission(v3Token.result.content.token, './non-exist-workspace'));
+      await ChallengeService.uploadSubmmission(oauthToken.access_token, './non-exist-workspace'));
   });
 
   test('uploadSubmmission() in a workspace without .topcoderrc should throw error', async () => {
     fs.unlinkSync('./.topcoderrc');
-    assert.rejects(async () => await ChallengeService.uploadSubmmission(v3Token.result.content.token, './'));
+    assert.rejects(async () => await ChallengeService.uploadSubmmission(oauthToken.access_token, './'));
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
   test('uploadSubmmission() in a workspace without .topcoderrc which does not has field challengeId should throw error',
     async () => {
       fs.writeFileSync('./.topcoderrc', JSON.stringify({}), 'utf8');
-      assert.rejects(async () => await ChallengeService.uploadSubmmission(v3Token.result.content.token, './'));
+      assert.rejects(async () => await ChallengeService.uploadSubmmission(oauthToken.access_token, './'));
       fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
     });
 
   test('uploadSubmmission() to an invalid challenge should throw error', async () => {
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: invalidChallengeId }), 'utf8');
-    assert.rejects(async () => await ChallengeService.uploadSubmmission(v3Token.result.content.token, './'));
+    assert.rejects(async () => await ChallengeService.uploadSubmmission(oauthToken.access_token, './'));
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
   test('uploadSubmmission() to an unregistered challenge should throw error', async () => {
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: unregisteredChallengeId }), 'utf8');
-    assert.rejects(async () => await ChallengeService.uploadSubmmission(v3Token.result.content.token, './'));
+    assert.rejects(async () => await ChallengeService.uploadSubmmission(oauthToken.access_token, './'));
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
   test('uploadSubmmission() to a challenge closed for submission should throw error', async () => {
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: closedForSubmissionChallengeId }), 'utf8');
-    assert.rejects(async () => await ChallengeService.uploadSubmmission(v3Token.result.content.token, './'));
+    assert.rejects(async () => await ChallengeService.uploadSubmmission(oauthToken.access_token, './'));
     fs.writeFileSync('./.topcoderrc', JSON.stringify({ challengeId: defaultChallengeId }), 'utf8');
   });
 
   test('getChallengeDetails() should return the challenge details', async () => {
-    const result = await ChallengeService.getChallengeDetails(`${validChallengeId}`, v3Token.result.content.token);
+    const result = await ChallengeService.getChallengeDetails(`${validChallengeId}`, oauthToken.access_token);
     expect(result.result.content).to.be.deep.equal(validChallengeDetails);
   });
 
   test('getChallengeDetails() should throw exception if challenge doesnt exist', async () => {
     assert.rejects(async () =>
-      await ChallengeService.getChallengeDetails(`${invalidChallengeId}`, v3Token.result.content.token));
+      await ChallengeService.getChallengeDetails(`${invalidChallengeId}`, oauthToken.access_token));
   });
 
   test('initialize workspace action should create .topcoderrc file in root directory of workspace',
@@ -181,7 +181,7 @@ suite('ChallengeService Unit tests', () => {
       }
     });
   test('get active challenges of user should return the challenges with valid token', async () => {
-    const data = await ChallengeService.getActiveChallengesOfUser(v3Token.result.content.token);
+    const data = await ChallengeService.getActiveChallengesOfUser(oauthToken.access_token);
     expect(data).to.be.deep.eq(memberChallengesList);
   });
   test('get active challenges of user should fail with invalid token', () => {
@@ -189,7 +189,7 @@ suite('ChallengeService Unit tests', () => {
   });
 
   test('getSubmissionDetails() should return the submission details', async () => {
-    const result = await ChallengeService.getSubmissionDetails(`${validChallengeId}`, v3Token.result.content.token);
+    const result = await ChallengeService.getSubmissionDetails(`${validChallengeId}`, oauthToken.access_token);
     expect(result).to.be.deep.equal(submissionDetails);
   });
   test('getSubmissionDetails() get submission details should fail with invalid token', async () => {
@@ -197,7 +197,7 @@ suite('ChallengeService Unit tests', () => {
   });
 
   test('getSubmissionArtifacts() should return the submission artifacts', async () => {
-    const result = await ChallengeService.getSubmissionArtifacts(`${validSubmissionId}`, v3Token.result.content.token);
+    const result = await ChallengeService.getSubmissionArtifacts(`${validSubmissionId}`, oauthToken.access_token);
     expect(result).to.be.deep.equal(artifactsDetails);
   });
   test('getSubmissionArtifacts() get submission artifacts should fail with invalid token', async () => {
@@ -205,7 +205,7 @@ suite('ChallengeService Unit tests', () => {
   });
   test('downloadArtifact() should return a file', async () => {
     const result = await ChallengeService.downloadArtifact(`${validSubmissionId}`,
-      `${validArtifactId}`, v3Token.result.content.token);
+      `${validArtifactId}`, oauthToken.access_token);
     expect(result.headers['content-disposition']).to.contain('info.txt');
   });
   test('downloadArtifact() should fail with invalid token', async () => {
@@ -214,7 +214,7 @@ suite('ChallengeService Unit tests', () => {
 
   test('getOrganizationRepositories() should return the organization repositories', async () => {
     const result = await ChallengeService.getOrganizationRepositories();
-    expect(result.data).to.be.deep.equal(orgRepos.data);
+    expect(result).to.be.deep.equal(orgRepos);
   });
 
   test('getOrganizationRepositories() should throw exception if any error occurs', async () => {

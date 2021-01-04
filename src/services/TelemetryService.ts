@@ -78,7 +78,9 @@ export default class TelemetryService {
   public static async share(data: any, userToken?: string) {
     const { event, ...rest } = data;
 
-    this.sendEvent(data.event, rest);
+    if (getConfig().get(CONST.shareTelemetryToTC)) {
+      this.sendEvent(data.event, rest);
+    }
     /* Disable telemetry until that is finalized
     const url = getEnv().URLS.TELEMETRY;
     if (url && getConfig().get(CONST.shareTelemetryToTC)) {

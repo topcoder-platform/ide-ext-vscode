@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Setup tree view providers
   ActiveContestsProvider.Register(challengeController, context);
   ActiveSubmissionsProvider.Register(challengeController, context);
-  HomeViewProvider.Register(challengeController, context);
+  HomeViewProvider.Register(authController, challengeController, context);
 
   // Register commands
   context.subscriptions.push(createTcEnvironmentStatusBarItem());

@@ -19,11 +19,8 @@ Temporary file. Will be substituted with the wiki
 
 This extension exposes the following settings:
 
-- `TCVSCodeIDE.credentials.username`: your topcoder username
-- `TCVSCodeIDE.credentials.password`: your topcoder password
-- `TCVSCodeIDE.useDevelopEndpoint`: the option to work against development
-  Topcoder environment instead of the production one (for now, enabled by
-  default).
+- `TCVSCodeIDE.useDevelopEndpoint`: the option to work against development Topcoder environment instead of the production one (for now, enabled by default).
+- `TCVSCodeIDE.shareTelemetryToTC`: the options to share telemetry data (enabled by default)
 
 These can be set in user preferences (`Ctrl+,` or `Cmd+,`)
 

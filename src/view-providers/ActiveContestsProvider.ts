@@ -30,8 +30,8 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
     private static provider: ActiveContestsProvider;
     public readonly onDidChangeTreeData: vscode.Event<IListItem | undefined>;
     private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
-        new vscode.EventEmitter<IListItem | undefined>();
-
+      new vscode.EventEmitter<IListItem | undefined>();
+    private data: IListItem[] | null = null;
     private extensionPath: string;
     private constructor(
         private challengeController: ChallengeController,
@@ -51,6 +51,7 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
         vs.registerCommand(
             'activeContests.reload',
             async () => {
+                this.data = null;
                 this.onDidChangeTreeDataEmitter.fire();
             }
         );
@@ -61,7 +62,7 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
      * @param element The element in the tree that must be mapped into a TreeItem for display
      */
     public getTreeItem(element: IListItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
-        return {
+        return undefined ? {label: 'Loading' } : {
             label: element.name,
             id: element.id,
             description: element.description,
@@ -82,20 +83,24 @@ export class ActiveContestsProvider implements vscode.TreeDataProvider<IListItem
      * @param element the node whose children should be returned
      */
     public getChildren(element?: IListItem | undefined): vscode.ProviderResult<IListItem[]> {
-        if (element === undefined) {
-            return new Promise((resolve) => {
-                this.challengeController.loadChallengesOfLoggedInUser().then((challenges) => {
-                    if (!_.isEmpty(challenges)) {
-                        resolve(_.map(challenges, (challenge) => ({ name: challenge.name, id: challenge.id })));
-                    } else {
-                        resolve([{ name: '', description: 'Successfully connected, but no items found', id: '' }]);
-                    }
-
-                }).catch((err) => {
-                    resolve([{ name: '', id: '', description: err.message }]);
-                });
-            });
+      if (element === undefined) {
+        if (this.data === null) {
+          this.challengeController.loadChallengesOfLoggedInUser().then((challenges) => {
+            if (!_.isEmpty(challenges)) {
+              this.data = _.map(challenges, (challenge) => ({ name: challenge.name, id: challenge.id }));
+            } else {
+              this.data = [{ name: '', id: '', description: 'Successfully connected, but no items found' }];
+            }
+            this.onDidChangeTreeDataEmitter.fire();
+          }).catch((err) => {
+            this.data = [{ name: '', id: '', description: err.message }];
+            this.onDidChangeTreeDataEmitter.fire();
+          });
+          return this.data || [{name: '', id: '', description: 'Loading...'}];
+        } else {
+          return this.data;
         }
-        return []; // since we don't have nested elements
+      }
+      return []; // since we don't have nested elements
     }
 }

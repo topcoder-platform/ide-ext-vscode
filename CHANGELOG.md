@@ -1,5 +1,9 @@
 # Changelog - Topcoder Workflow VSCode Extension
 
+## v1.0.6 - 4th January, 2021
+
+- Implement device authorization flow for login. Members no longer have to provide their login credentials in the extension configuration. With device authorization flow, they will be presented with a unique code that they will then have to enter in a browser through which they will login.
+
 ## v1.0.5 - 20th March, 2020
 
 - Telemetry key updated in the extension. v1.0.4 incorrectly set an unused variable instead. Telemetry is now correctly captured.
