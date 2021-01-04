@@ -33,4 +33,8 @@ suite('Html Unit tests', () => {
         const html = HtmlHelper.generateReviewArtifactsHtml(reviewsWithoutArtifacts);
         expect(html).to.not.contain('<h2>Artifacts</h2>');
     });
+    test('pairing page should contain qr code', async () => {
+      const html = await HtmlHelper.generateSecureSessionFlowHtml('test-3243');
+      expect(html).to.contain('<img src="data:image/');
+    });
 });

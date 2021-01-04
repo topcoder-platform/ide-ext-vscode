@@ -92,8 +92,9 @@ suite('ChallengeService Unit tests', () => {
     }
 
     fs.writeFileSync(`${folder}/.topcoderrc`, JSON.stringify({ challengeId: validChallengeId }), 'utf8');
-    const result = await ChallengeService.uploadSubmmission(oauthToken.access_token, folder);
-    expect(result.body).to.be.deep.equal(submitSuccessResponse);
+    ChallengeService.uploadSubmmission(oauthToken.access_token, folder).then((result) => {
+      expect(result.body).to.be.deep.equal(submitSuccessResponse);
+    });
 
     try {
       fs.unlinkSync(`${folder}/.topcoderrc`);

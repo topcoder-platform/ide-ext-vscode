@@ -10,7 +10,7 @@ import ChallengeController from '../controllers/ChallengeController';
 import VSCode from '../helpers/VSCode';
 import AuthService from '../services/AuthService';
 import TelemetryService from '../services/TelemetryService';
-
+import SecureSessionController from '../controllers/SecureSessionController';
 export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
 
   /**
@@ -22,12 +22,14 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   public static Register(
     authController: AuthController,
     challengeController: ChallengeController,
+    secureSessionController: SecureSessionController,
     context: vscode.ExtensionContext,
   ) {
     if (!this.provider) {
       this.provider = new HomeViewProvider(
         authController,
         challengeController,
+        secureSessionController,
         context,
       );
     }
@@ -77,7 +79,11 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
     id: 'configure-settings',
     iconPath: '06-icon-configure-settings.svg'
   };
-
+  private readonly secureSession: IListItem = {
+    name: 'Secure Session',
+    id: 'secure-session',
+    iconPath: '08-icon-secure-session.svg' // FIXME
+  };
   private onDidChangeTreeDataEmitter: vscode.EventEmitter<IListItem | undefined> =
     new vscode.EventEmitter<IListItem | undefined>();
   private extensionPath: string;
@@ -86,6 +92,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
   private constructor(
     private authController: AuthController,
     private challengeController: ChallengeController,
+    private secureSessionController: SecureSessionController,
     context: vscode.ExtensionContext,
   ) {
     this.context = context;
@@ -98,19 +105,28 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
         switch (id) {
           case this.activeChallengesItem.id: {
             await this.challengeController.viewOpenChallenges(); // errors are handled internally
-          }                                  break;
+            break;
+          }
           case this.loginItem.id: {
             await this.authController.login();
-          }                       break;
+            break;
+          }
           case this.logoutItem.id: {
             await this.authController.logout();
-          }                        break;
+            break;
+          }
           case this.reportProblem.id: {
             await this.createGithubIssue();
-          }                           break;
+            break;
+          }
           case this.configureSettings.id: {
             await this.openSettings();
-          }                               break;
+            break;
+          }
+          case this.secureSession.id: {
+            await this.secureSessionController.initializeSecretSession();
+            break;
+          }
         }
       },
       undefined,
@@ -166,6 +182,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
             this.activeChallengesItem,
             this.reportProblem,
             this.configureSettings,
+            this.secureSession,
             token ? this.logoutItem : this.loginItem
           ]);
         });
@@ -183,7 +200,7 @@ export class HomeViewProvider implements vscode.TreeDataProvider<IListItem> {
     const extensionVersion = extension && extension.packageJSON.version;
     const system = os.type() + ' ' + os.release();
     const uri = vscode.Uri.parse(GITHUB + '?body=**Extension Version:** ' + extensionVersion
-    + '%0A**VSCode Version:** ' + vscode.version + '%0A**Operating System:** ' + system);
+      + '%0A**VSCode Version:** ' + vscode.version + '%0A**Operating System:** ' + system);
     await vscode.commands.executeCommand('vscode.open', uri);
   }
 

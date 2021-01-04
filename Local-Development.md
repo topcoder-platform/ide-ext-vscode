@@ -15,6 +15,9 @@ Temporary file. Will be substituted with the wiki
 - Press `F5` to open a new window with extension loaded.
 - After making changes in the code, relaunch the extension from the debug bar (green circular arrow) or reload the window opened previously with `F5` (`Ctrl+R` or `Cmd+R` on Mac).
 
+### Note
+ Installing `node-webcam` may require some additional steps to follow. Please refer [this link](https://www.npmjs.com/package/node-webcam) for more information.
+ 
 ## Extension Settings
 
 This extension exposes the following settings:
@@ -49,3 +52,4 @@ You may also run the tests by running `npm test` in a terminal
   - Specify the tag with prefix `v`. Example - `v1.0.2`
   - The title will be the tag itself
   - The description will be a copy of the `Changelog.md` file, with the header tags corrected (to indicate the correct level)
+

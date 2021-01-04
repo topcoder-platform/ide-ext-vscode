@@ -1,6 +1,6 @@
 // Constants definition file
 
-export const notLoggedInMessage = 'You are not logged in. Run the `Topcoder: Login` command first.';
+export const notLoggedInMessage = 'You need to login to Topcoder first before you can carry out that action.';
 export const authenticationFailedMessage = 'Failed to authenticate user. Please check your settings and try again.';
 export const tokenRefreshFailedMessage = 'Failed to refresh authentication token. Please login again.';
 export const sessionExpiredMessage = 'You took too long to login. Session expired.';
@@ -53,26 +53,50 @@ export const cloneTemplateSuccess = 'Cloned template with success';
 export const cloneTemplateFailed = 'Clone template failed';
 export const templateNotCloned = 'Template not cloned';
 export const loadReviewTypeInfoError = 'Failed to load review type';
-
+export const sessionPairingStatus = 'Pairing';
+export const sessionActiveStatus = 'Active';
+export const sessionTimedOutStatus = 'Timed-Out';
+export const sessionClosedStatus = 'Closed';
 export const extensionConfigSectionName = 'TCVSCodeIDE';
 export const useDevelopEndpoint = 'useDevelopEndpoint';
 export const shareTelemetryToTC = 'shareTelemetryToTC';
 
+export const imageCapturedFailedMessage = 'Image Could Not Be Captured';
+
 export const tokenStateKey = 'TC_JWT_TOKEN';
 export const refreshTokenStateKey = 'TC_JWT_REFRESH_TOKEN';
+export const sessionIdKey = 'TC_SESSION_ID';
+export const secureSessionsKey = 'SECURE_SESSION';
+export const deviceIdKey = 'DEVICE_ID';
+export const deviceType = 'ide';
 
 export const scheme = 'tcvscodeide';
 export const challengesPageTitle = 'Topcoder: Open challenges';
 export const challengeDetailsPageTitle = 'Topcoder: Challenge details';
 export const deviceAuthorizationPageTitle = 'Topcoder: Device Authorization';
 export const submissionDetailsPageTitle = 'Topcoder: Submission details';
-
+export const secureSessionStartPageTitle = 'Topcoder: Secure Session';
+export const generatingSecureSession = 'Generating secure session';
+export const fetchDeviceId = 'Identifying device...';
+export const submitForVerification = 'Submiting for verification. Please wait...';
+export const biometricVerificationFailed = 'Biometric verification has failed.';
+export const biometricVerificationFailedEndSession = 'Biometric verification has failed. Your secure session is no longer active.';
+export const biometricSessionPageTitle = 'Topcoder: Biometric Verification';
 export const gitRepoUrls = [
   'https://github.com/topcoderinc/Topcoder-Starter-Pack-ASPNET',
   'https://github.com/topcoderinc/Topcoder-StarterPack_Ionic',
   'https://github.com/topcoderinc/Topcoder-StarterPack_BluemixNode',
   'https://github.com/topcoderinc/Topcoder-StarterPack_Node-Backend'
 ];
+export const SECRET_SESSION_STATUS_POOL_ERROR = 'Failed to get session status.';
+// Time values for secure session (in milliseconds)
+export const SECURE_SESSION_POOL_INTERVAL = 15000;
+export const SECURE_SESSION_TIMEOUT = 300000;
+// Setting bio id interval too low will cause an error with QLDB where it is not able to commit the transaction in time
+export const BIOID_VERIFY_INTERVAL = 20000;
+
+export const BIOMETRIC_IMAGE_NAME = 'verification.jpg';
+export const BCID_PREFIX = 'bws/11757/';
 
 /**
  * Interface of a constant set, which fully defines a Topcoder environment
@@ -96,10 +120,19 @@ export interface IENV {
     MEMBER_SUBMISSION: string,
     SUBMISSION_ARTIFACTS: string,
     DOWNLOAD_SUBMISSION: string,
+    PROOFS_API_ENDPOINT: string,
     TELEMETRY: string,
     TOPCODER: string,
     REVIEW_TYPES: string,
     AUTH_AUDIENCE: string,
+    BIOMETRIC_API_ENDPOINT: string,
+    GEOIP_API_ENDPOINT: string
+  };
+  PROFILEKEYS: {
+    USERID: string,
+    EMAIL: string,
+    HANDLE: string,
+    ROLES: string
   };
 }
 
@@ -124,10 +157,19 @@ export const DEV_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder-dev.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder-dev.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
+    PROOFS_API_ENDPOINT: 'https://topcoder-dev-proofs-api.herokuapp.com/api/1.0',
     TELEMETRY: '',
     TOPCODER: 'https://topcoder-dev.com',
     REVIEW_TYPES: 'https://api.topcoder-dev.com/v5/reviewTypes',
-    AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/'
+    AUTH_AUDIENCE: 'https://m2m.topcoder-dev.com/',
+    BIOMETRIC_API_ENDPOINT: 'https://topcoder-dev-bioid-proxy-api.herokuapp.com/v5',
+    GEOIP_API_ENDPOINT: 'https://topcoder-dev-geoproxy-api.herokuapp.com/v5'
+  },
+  PROFILEKEYS: {
+    USERID: 'https://topcoder-dev-test.com/userId',
+    EMAIL: 'https://topcoder-dev-test.com/email',
+    HANDLE: 'https://topcoder-dev-test.com/handle',
+    ROLES: 'https://topcoder-dev-test.com/roles'
   }
 };
 
@@ -152,10 +194,19 @@ export const PROD_ENV: IENV = {
     MEMBER_SUBMISSION: 'https://api.topcoder.com/v5/submissions?challengeId={challengeId}&memberId={memberId}',
     SUBMISSION_ARTIFACTS: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts',
     DOWNLOAD_SUBMISSION: 'http://api.topcoder.com/v5/submissions/{submissionId}/artifacts/{artifactId}/download',
+    PROOFS_API_ENDPOINT: '', // UPDATE AFTER DEPLOYMENT
     TELEMETRY: '',
     TOPCODER: 'https://topcoder.com',
     REVIEW_TYPES: 'https://api.topcoder.com/v5/reviewTypes',
-    AUTH_AUDIENCE: 'https://api.topcoder.com/'
+    AUTH_AUDIENCE: 'https://api.topcoder.com/',
+    BIOMETRIC_API_ENDPOINT: '', // UPDATE AFTER DEPLOYMENT
+    GEOIP_API_ENDPOINT: ''
+  },
+  PROFILEKEYS: {
+    USERID: '',
+    EMAIL: '',
+    HANDLE: '',
+    ROLES: ''
   }
 };
 
@@ -171,6 +222,20 @@ export const webviewMessageActions = {
   NAVIGATE_TO_CHALLENGE: 'NAVIGATE_TO_CHALLENGE',
 
   CLONE_REPOSITORY: 'CLONE_REPOSITORY',
-
-  DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE'
+  SESSION_CREATION_REFRESH: 'SESSION_REFRESH',
+  SESSION_CREATION_TIMED_OUT: 'SESSION_CREATION_TIMED_OUT',
+  SESSION_CREATED: 'SESSION_CREATED',
+  SESSION_CREATION_FAILED: 'SESSION_CREATION_FAILED',
+  SESSION_PAIRING_START: 'SESSION_PAIRING_START',
+  DISPLAY_ERROR_MESSAGE: 'DISPLAY_ERROR_MESSAGE',
+  BIOMETRIC_VERIFICATION_CAMERA_DETECTED: 'BIOMETRIC_VERIFICATION_CAMERA_DETECTED',
+  BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED: 'BIOMETRIC_VERIFICATION_CAMERA_NOT_DETECTED',
+  BIOMETRIC_VERIFICATION_IMAGE_CAPTURED: 'BIOMETRIC_VERIFICATION_IMAGE_CAPTURED',
+  BIOMETRIC_VERIFICATION_COMPLETED: 'BIOMETRIC_VERIFICATION_COMPLETED',
+  BIOMETRIC_VERIFICATION_CAPTURE_IMAGE: 'BIOMETRIC_VERIFICATION_CAPTURE_IMAGE',
+  BIOMETRIC_COMPLETE_VERIFICATION: 'BIOMETRIC_COMPLETE_VERIFICATION',
+  BIOMETRIC_VERIFICATION_REDETECT_CAMERA: 'BIOMETRIC_VERIFICATION_REDETECT_CAMERA',
+  BIOMETRIC_VERIFICATION_CLOSE_WINDOW: 'BIOMETRIC_VERIFICATION_CLOSE_WINDOW',
+  PROCEED_TO_BIOMETERIC_VERIFICATION: 'PROCEED_TO_BIOMETERIC_VERIFICATION',
+  BIOMETRIC_VERIFICATION_END_SESSION: 'BIOMETRIC_VERIFICATION_END_SESSION'
 };

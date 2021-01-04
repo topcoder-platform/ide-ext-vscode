@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import createTcEnvironmentStatusBarItem from './status-bar/tc-environment';
 import createTcTimeStatusBarItem from './status-bar/tc-time';
 import createTcTimeToSubmit from './status-bar/tc-time-to-submit';
+import createTcSecureSessionBarItem from './status-bar/tc-secure-session';
 
 import AuthController from './controllers/AuthController';
 import ChallengeController from './controllers/ChallengeController';
@@ -11,6 +12,7 @@ import TelemetryService from './services/TelemetryService';
 import { ActiveSubmissionsProvider, ActiveContestsProvider, HomeViewProvider } from './view-providers';
 
 import VSCode from './helpers/VSCode';
+import SecureSessionController from './controllers/SecureSessionController';
 
 // This method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -21,13 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
 
   const authController = new AuthController(context);
   const challengeController = new ChallengeController(context);
-
+  const secureSessionController = new SecureSessionController(context);
   // Setup tree view providers
   ActiveContestsProvider.Register(challengeController, context);
   ActiveSubmissionsProvider.Register(challengeController, context);
-  HomeViewProvider.Register(authController, challengeController, context);
+  HomeViewProvider.Register(authController, challengeController, secureSessionController, context);
 
   // Register commands
+  context.subscriptions.push(createTcSecureSessionBarItem(context));
   context.subscriptions.push(createTcEnvironmentStatusBarItem());
   context.subscriptions.push(createTcTimeStatusBarItem());
   context.subscriptions.push(createTcTimeToSubmit(context));

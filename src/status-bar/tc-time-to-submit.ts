@@ -16,7 +16,7 @@ import Notification from '../helpers/Notification';
 export default function create(context: vscode.ExtensionContext):
   vscode.StatusBarItem {
   const item = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Left, 100);
+    vscode.StatusBarAlignment.Left, 150);
   item.tooltip = 'Time to submission deadline of current challenge.';
 
   let tcrc: any;
