@@ -165,6 +165,7 @@
   },
   "dependencies": {
     "@topcoder-platform/topcoder-submission-api-wrapper": "^1.2.0",
+    "@ts-stack/markdown": "^1.4.0",
     "@types/archiver": "^3.0.0",
     "@types/fs-extra": "^8.0.0",
     "@types/moment-timezone": "^0.5.12",
