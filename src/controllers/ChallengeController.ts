@@ -10,6 +10,7 @@ import Notification from '../helpers/Notification';
 import * as git from 'isomorphic-git';
 import TelemetryService from '../services/TelemetryService';
 import { getEnv } from '../config';
+import { Marked } from '@ts-stack/markdown';
 
 /**
  * Controller for handling challenge commands.
@@ -171,6 +172,8 @@ export default class ChallengeController {
       Notification.showErrorNotification(err.toString());
       return;
     }
+
+    challengeDetails.detailedRequirements = Marked.parse(challengeDetails.detailedRequirements);
 
     try { // handle any other errors while generating the html
       // ensure webview is available and then set content
