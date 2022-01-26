@@ -179,7 +179,7 @@
     "qrcode": "^1.4.4",
     "rxjs": "^6.5.4",
     "topcoder-api-utils": "github:cwdcwd/topcoder-api-utils",
-    "vscode-extension-telemetry": "^0.1.2"
+    "vscode-extension-telemetry": "^0.4.4"
   },
   "husky": {
     "hooks": {
